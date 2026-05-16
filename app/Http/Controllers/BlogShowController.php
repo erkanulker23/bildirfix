@@ -1,0 +1,53 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Controllers;
+
+use App\Models\BlogPost;
+use App\Support\Seo;
+use Illuminate\View\View;
+
+final class BlogShowController extends Controller
+{
+    public function __invoke(string $slug): View
+    {
+        $post = BlogPost::query()
+            ->published()
+            ->where('slug', $slug)
+            ->with('author:id,name')
+            ->firstOrFail();
+
+        $canonical = route('blog.show', ['slug' => $post->slug], absolute: true);
+        $description = $post->meta_description
+            ?: ($post->excerpt ? Seo::plainExcerpt($post->excerpt, 160) : Seo::plainExcerpt($post->body));
+
+        $seo = [
+            'description' => $description,
+            'canonical' => $canonical,
+            'og_title' => $post->meta_title ?: $post->title,
+            'og_type' => 'article',
+        ];
+
+        $hero = trim((string) ($post->hero_image_url ?? ''));
+        if ($hero !== '') {
+            $seo['og_image'] = \Illuminate\Support\Str::startsWith($hero, ['http://', 'https://'])
+                ? $hero
+                : url(ltrim($hero, '/'));
+        }
+        $structuredData = [
+            Seo::blogArticleStructuredData($post),
+            Seo::breadcrumbStructuredData([
+                [config('app.name'), route('home', [], true)],
+                [__('Blog'), route('blog.index', [], true)],
+                [\Illuminate\Support\Str::limit($post->title, 90), $canonical],
+            ]),
+        ];
+
+        return view('blog.show', [
+            'post' => $post,
+            'seo' => $seo,
+            'structuredData' => $structuredData,
+        ]);
+    }
+}
