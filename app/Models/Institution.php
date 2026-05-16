@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Institution extends Model
 {
@@ -14,6 +14,11 @@ class Institution extends Model
         'name',
         'type',
         'verified',
+        'logo_url',
+        'website',
+        'public_email',
+        'phone',
+        'address',
     ];
 
     protected function casts(): array
@@ -33,8 +38,24 @@ class Institution extends Model
         return $this->belongsTo(User::class, 'account_user_id');
     }
 
-    public function posts(): HasMany
+    public function posts(): BelongsToMany
     {
-        return $this->hasMany(Post::class);
+        return $this->belongsToMany(Post::class);
+    }
+
+    /** Logo veya kurum adına göre üretilmiş yedek görsel (harici SVG). */
+    public function displayLogoUrl(): string
+    {
+        $u = trim((string) ($this->logo_url ?? ''));
+        if ($u !== '') {
+            if (str_starts_with($u, 'http://') || str_starts_with($u, 'https://')) {
+                return $u;
+            }
+
+            return url(ltrim($u, '/'));
+        }
+
+        return 'https://api.dicebear.com/7.x/shapes/svg?seed='.rawurlencode((string) $this->name)
+            .'&backgroundColor=c7d2fe,bbf7d0,a5b4fc,fecaca';
     }
 }

@@ -27,4 +27,9 @@ class City extends Model
     {
         return $this->hasMany(District::class);
     }
+
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
 }

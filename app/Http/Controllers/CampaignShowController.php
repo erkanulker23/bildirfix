@@ -8,6 +8,7 @@ use App\Models\Campaign;
 use App\Support\Seo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class CampaignShowController extends Controller
@@ -20,12 +21,29 @@ class CampaignShowController extends Controller
 
         $campaign->load(['user:id,name', 'city:id,name', 'moderatedBy:id,name']);
 
+        $campaignSupporters = $campaign->supporters()
+            ->with('user:id,name')
+            ->latest('campaign_supporters.created_at')
+            ->limit(100)
+            ->get()
+            ->filter(static fn ($row) => $row->user !== null)
+            ->values();
+
         if (Auth::check()) {
             $uid = Auth::id();
             $campaign->setAttribute(
                 'viewer_supports',
                 $campaign->supporters()->where('user_id', $uid)->exists()
             );
+        }
+
+        $campaignComments = null;
+        if ($campaign->isPubliclyApproved()) {
+            $campaignComments = $campaign->comments()
+                ->with('user:id,name')
+                ->latest()
+                ->paginate(25)
+                ->fragment('yorumlar');
         }
 
         $canonical = route('campaigns.show', $campaign, absolute: true);
@@ -48,12 +66,14 @@ class CampaignShowController extends Controller
             $structuredData[] = Seo::breadcrumbStructuredData([
                 [config('app.name'), route('home', [], true)],
                 [__('Toplumsal kampanyalar'), route('campaigns.index', [], true)],
-                [\Illuminate\Support\Str::limit($campaign->title, 100), $canonical],
+                [Str::limit($campaign->title, 100), $canonical],
             ]);
         }
 
         return view('campaigns.show', [
             'campaign' => $campaign,
+            'campaignSupporters' => $campaignSupporters,
+            'campaignComments' => $campaignComments,
             'seo' => $seo,
             'structuredData' => $structuredData,
         ]);

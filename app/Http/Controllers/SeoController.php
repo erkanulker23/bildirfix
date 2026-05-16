@@ -41,6 +41,12 @@ final class SeoController extends Controller
                 'lastmod' => now()->startOfMinute()->toAtomString(),
             ],
             [
+                'loc' => $base.'/sehirini-kesfet',
+                'changefreq' => 'daily',
+                'priority' => '0.9',
+                'lastmod' => now()->startOfMinute()->toAtomString(),
+            ],
+            [
                 'loc' => $base.'/blog',
                 'changefreq' => 'daily',
                 'priority' => '0.82',

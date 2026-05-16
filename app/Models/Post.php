@@ -4,9 +4,10 @@ namespace App\Models;
 
 use App\Enums\PostModerationStatus;
 use App\Enums\PostStatus;
-
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
@@ -50,8 +51,8 @@ class Post extends Model
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Builder<Post>  $query
-     * @return \Illuminate\Database\Eloquent\Builder<Post>
+     * @param  Builder<Post>  $query
+     * @return Builder<Post>
      */
     public function scopePublicApproved($query)
     {
@@ -113,6 +114,24 @@ class Post extends Model
     public function institution(): BelongsTo
     {
         return $this->belongsTo(Institution::class);
+    }
+
+    /** @return BelongsToMany<Institution, $this> */
+    public function institutions(): BelongsToMany
+    {
+        return $this->belongsToMany(Institution::class);
+    }
+
+    /**
+     * Çoklu hedef kurumları pivot ile kaydeder; geriye dönük uyumluluk için `institution_id` ilk seçeneğe ayarlanır.
+     *
+     * @param  array<int, mixed>  $institutionIds
+     */
+    public function syncTargetInstitutions(array $institutionIds): void
+    {
+        $ids = array_values(array_unique(array_filter(array_map(static fn ($id) => (int) $id, $institutionIds), static fn (int $id) => $id > 0)));
+        $this->institutions()->sync($ids);
+        $this->forceFill(['institution_id' => $ids[0] ?? null])->saveQuietly();
     }
 
     public function follows(): HasMany

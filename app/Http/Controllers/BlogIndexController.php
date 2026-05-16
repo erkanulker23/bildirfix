@@ -13,7 +13,7 @@ final class BlogIndexController extends Controller
     public function __invoke(): View
     {
         $posts = BlogPost::query()
-            ->published()
+            ->visibleOnPublicSite()
             ->orderByDesc('published_at')
             ->with('author:id,name')
             ->paginate(12);

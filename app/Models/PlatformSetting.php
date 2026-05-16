@@ -12,6 +12,14 @@ class PlatformSetting extends Model
         'google_oauth_enabled',
         'google_client_id',
         'google_client_secret',
+        'mail_use_custom_smtp',
+        'mail_from_address',
+        'mail_from_name',
+        'mail_host',
+        'mail_port',
+        'mail_encryption',
+        'mail_username',
+        'mail_password',
     ];
 
     /**
@@ -22,6 +30,9 @@ class PlatformSetting extends Model
         return [
             'google_oauth_enabled' => 'boolean',
             'google_client_secret' => 'encrypted',
+            'mail_use_custom_smtp' => 'boolean',
+            'mail_port' => 'integer',
+            'mail_password' => 'encrypted',
         ];
     }
 
@@ -44,5 +55,17 @@ class PlatformSetting extends Model
 
         return is_string($this->google_client_id) && trim($this->google_client_id) !== ''
             && is_string($this->google_client_secret) && trim($this->google_client_secret) !== '';
+    }
+
+    public function customSmtpConfigured(): bool
+    {
+        if (! $this->mail_use_custom_smtp) {
+            return false;
+        }
+
+        $host = is_string($this->mail_host) ? trim($this->mail_host) : '';
+        $from = is_string($this->mail_from_address) ? trim($this->mail_from_address) : '';
+
+        return $host !== '' && $from !== '';
     }
 }

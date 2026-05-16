@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\PostModerationStatus;
 use App\Http\Controllers\Controller;
 use App\Models\BlogPost;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -32,14 +34,23 @@ class BlogPostController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $data = $this->validated($request, null);
+        $data['author_user_id'] = $request->user()?->id;
+        $data = $this->applyBlogModerationRules($request->user(), $data);
 
-        $post = new BlogPost($data);
-        $post->author_user_id = $request->user()?->id;
-        $post->save();
+        $post = BlogPost::query()->create($data);
+
+        $message = __('Yazı oluşturuldu.');
+        if (
+            ! $request->user()?->isSuperAdmin()
+            && ($data['is_published'] ?? false)
+            && ($data['moderation_status'] ?? null) === PostModerationStatus::Pending
+        ) {
+            $message = __('Yazı kaydedildi; süper yönetici onayından sonra sitede yayınlanacak.');
+        }
 
         return redirect()
             ->route('admin.blog.edit', $post)
-            ->with('status', __('Yazı oluşturuldu.'));
+            ->with('status', $message);
     }
 
     public function edit(BlogPost $blog): View
@@ -49,12 +60,23 @@ class BlogPostController extends Controller
 
     public function update(Request $request, BlogPost $blog): RedirectResponse
     {
-        $blog->fill($this->validated($request, $blog));
+        $data = $this->validated($request, $blog);
+        $data = $this->applyBlogModerationRules($request->user(), $data);
+        $blog->fill($data);
         $blog->save();
+
+        $message = __('Kaydedildi.');
+        if (
+            ! $request->user()?->isSuperAdmin()
+            && ($data['is_published'] ?? false)
+            && ($data['moderation_status'] ?? null) === PostModerationStatus::Pending
+        ) {
+            $message = __('Kaydedildi; süper yönetici onayı bekleniyor.');
+        }
 
         return redirect()
             ->route('admin.blog.edit', $blog)
-            ->with('status', __('Kaydedildi.'));
+            ->with('status', $message);
     }
 
     public function destroy(BlogPost $blog): RedirectResponse
@@ -131,6 +153,46 @@ class BlogPostController extends Controller
         }
         if (($validated['meta_description'] ?? '') === '') {
             $validated['meta_description'] = null;
+        }
+
+        return $validated;
+    }
+
+    /**
+     * @param  array<string, mixed>  $validated
+     * @return array<string, mixed>
+     */
+    private function applyBlogModerationRules(?User $user, array $validated): array
+    {
+        if ($user === null) {
+            $validated['moderation_status'] = PostModerationStatus::Approved;
+
+            return $validated;
+        }
+
+        if ($user->isSuperAdmin()) {
+            if ($validated['is_published']) {
+                $validated['moderation_status'] = PostModerationStatus::Approved;
+                $validated['moderated_at'] = now();
+                $validated['moderated_by_user_id'] = $user->id;
+                $validated['moderation_note'] = null;
+            } else {
+                $validated['moderation_status'] = PostModerationStatus::Approved;
+                $validated['moderated_at'] = null;
+                $validated['moderated_by_user_id'] = null;
+                $validated['moderation_note'] = null;
+            }
+
+            return $validated;
+        }
+
+        if ($validated['is_published']) {
+            $validated['moderation_status'] = PostModerationStatus::Pending;
+            $validated['moderated_at'] = null;
+            $validated['moderated_by_user_id'] = null;
+            $validated['moderation_note'] = null;
+        } else {
+            $validated['moderation_status'] = PostModerationStatus::Approved;
         }
 
         return $validated;

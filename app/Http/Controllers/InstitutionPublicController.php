@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Institution;
 use App\Models\Post;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 final class InstitutionPublicController extends Controller
@@ -14,7 +15,13 @@ final class InstitutionPublicController extends Controller
     {
         $posts = Post::query()
             ->publicApproved()
-            ->where('institution_id', $institution->id)
+            ->where(function ($q) use ($institution): void {
+                $q->where('institution_id', $institution->id)
+                    ->orWhereHas(
+                        'institutions',
+                        static fn ($sq) => $sq->where('institutions.id', $institution->id)
+                    );
+            })
             ->with([
                 'user:id,name',
                 'category:id,name,slug',
@@ -27,10 +34,10 @@ final class InstitutionPublicController extends Controller
             ->withQueryString();
 
         return view('institutions.show', [
-            'institution' => $institution->load('city:id,name'),
+            'institution' => $institution->load('city:id,name,slug'),
             'posts' => $posts,
             'seo' => [
-                'description' => \Illuminate\Support\Str::limit(
+                'description' => Str::limit(
                     __('Onaylı ve yayında olan şikâyet kayıtları: :kurum.', ['kurum' => $institution->name]),
                     320
                 ),

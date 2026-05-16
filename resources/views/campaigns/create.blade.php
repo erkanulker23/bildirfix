@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('toolbar')
-    <div></div>
-@endsection
-
 @section('title', __('Kampanya başlat'))
 
 @section('content')

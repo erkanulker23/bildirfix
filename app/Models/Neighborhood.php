@@ -9,6 +9,7 @@ class Neighborhood extends Model
 {
     protected $fillable = [
         'district_id',
+        'turkiye_id',
         'name',
         'slug',
     ];

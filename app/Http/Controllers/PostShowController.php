@@ -5,24 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Support\Seo;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class PostShowController extends Controller
 {
-    public function __invoke(Request $request, Post $post): View|\Illuminate\Http\Response
+    public function __invoke(Request $request, Post $post): View|Response
     {
         if (! $post->isVisibleTo($request->user())) {
             abort(404);
         }
 
         $post->load([
-            'user:id,name',
+            'user:id,name,verification_status',
             'category:id,name',
-            'city:id,name',
+            'city:id,name,slug',
             'district:id,name',
             'neighborhood:id,name',
             'institution:id,name,verified',
+            'institutions:id,name,verified',
             'moderatedBy:id,name',
         ]);
         if (Auth::check()) {
@@ -61,8 +64,34 @@ class PostShowController extends Controller
             $structuredData[] = Seo::complaintArticleStructuredData($post);
             $structuredData[] = Seo::breadcrumbStructuredData([
                 [config('app.name'), route('home', [], true)],
-                [\Illuminate\Support\Str::limit($post->title, 100), $canonical],
+                [Str::limit($post->title, 100), $canonical],
             ]);
+        }
+
+        $supportUsers = collect();
+        $followUsers = collect();
+        if ($post->isPubliclyApproved()) {
+            $supportUsers = $post->supports()
+                ->with('user:id,name')
+                ->latest()
+                ->limit(80)
+                ->get()
+                ->map(static fn ($row) => $row->user)
+                ->filter()
+                ->unique('id')
+                ->take(28)
+                ->values();
+
+            $followUsers = $post->follows()
+                ->with('user:id,name')
+                ->latest()
+                ->limit(80)
+                ->get()
+                ->map(static fn ($row) => $row->user)
+                ->filter()
+                ->unique('id')
+                ->take(28)
+                ->values();
         }
 
         return view('posts.show', [
@@ -70,6 +99,8 @@ class PostShowController extends Controller
             'comments' => $comments,
             'seo' => $seo,
             'structuredData' => $structuredData,
+            'supportUsers' => $supportUsers,
+            'followUsers' => $followUsers,
         ]);
     }
 }

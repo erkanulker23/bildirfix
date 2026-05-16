@@ -5,15 +5,12 @@
 @endphp
 @section('title', $pageTitle)
 
-@section('toolbar')
-    <div class="flex flex-1 justify-end gap-2">
-        <a href="{{ route('home') }}"
-            class="rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-semibold text-neutral-800 hover:bg-neutral-50">{{ __('Akış') }}</a>
-    </div>
-@endsection
-
 @section('content')
     <div class="mx-auto max-w-3xl px-1">
+        <div class="mb-4 flex justify-end gap-2">
+            <a href="{{ route('home') }}"
+                class="rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-semibold text-neutral-800 hover:bg-neutral-50">{{ __('Akış') }}</a>
+        </div>
         <header class="relative overflow-hidden rounded-3xl border border-indigo-100 bg-gradient-to-br from-indigo-50 via-white to-teal-50/90 px-6 py-10 shadow-lg shadow-indigo-900/5 ring-1 ring-indigo-100/60 sm:px-10">
             <p class="text-[11px] font-black uppercase tracking-[0.22em] text-indigo-700">{{ __('Güncel') }}</p>
             <h1 class="mt-2 text-3xl font-black tracking-tight text-neutral-900 sm:text-[2.1rem]">{{ __('Blog') }}</h1>

@@ -2,16 +2,13 @@
 
 @section('title', __('Üye girişi • ').config('app.name'))
 
-@section('toolbar')
-    <div class="flex flex-1 justify-end">
+@section('content')
+    <div class="mb-4 flex justify-end">
         <div class="flex flex-wrap gap-2">
             <a href="{{ route('login.brand') }}"
                 class="rounded-full border border-emerald-100 bg-emerald-50 px-3 py-2 text-[11px] font-bold uppercase tracking-wide text-emerald-900 hover:bg-emerald-100">{{ __('Kurum') }}</a>
         </div>
     </div>
-@endsection
-
-@section('content')
     <div class="mx-auto max-w-md rounded-[1.75rem] border border-teal-100/80 bg-white/95 p-8 shadow-xl shadow-teal-500/[0.12] ring-1 ring-teal-50 backdrop-blur-sm">
         <h1 class="text-2xl font-black text-teal-950">{{ __('Vatandaş girişi') }}</h1>
         @if (session()->has(\App\Support\ComplaintDraftSession::SESSION_KEY))

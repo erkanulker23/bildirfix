@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\PostModerationStatus;
+use App\Enums\PostStatus;
+use App\Enums\UserRole;
 use App\Models\Campaign;
-use App\Models\Category;
 use App\Models\City;
 use App\Models\Institution;
 use App\Models\Post;
 use App\Models\Story;
 use App\Models\User;
-use App\Enums\PostStatus;
-use App\Enums\UserRole;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
+use App\Support\PublicPostFeed;
+use App\Support\PublicStoryFeed;
+use App\Support\Seo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
@@ -22,164 +23,13 @@ class HomeController extends Controller
 {
     public function __invoke(): View
     {
-        $today = Carbon::today()->format('Y-m-d');
-        $cookieCity = request()->cookie('bildir_city_id');
+        $ctx = PublicPostFeed::locationContext(request());
+        $cityId = $ctx['cityId'];
+        $lat = $ctx['lat'];
+        $lng = $ctx['lng'];
+        $relaxNearby = $ctx['relaxNearby'];
 
-        $cityFromCookie = null;
-        if (is_numeric($cookieCity)) {
-            $cityFromCookie = (int) $cookieCity;
-        }
-
-        $cityId = request()->integer('city_id') ?: ($cityFromCookie ?: City::query()->where('plate', 34)->value('id'));
-
-        $parsedLatLng = static::coordinatePair();
-
-        $lat = $parsedLatLng['lat'];
-        $lng = $parsedLatLng['lng'];
-
-        $relaxNearby = false;
-        if ($lat !== null && $lng !== null) {
-            $flag = request('relax_city');
-            $relaxNearby = $flag === null ? true : filter_var($flag, FILTER_VALIDATE_BOOL);
-        }
-
-        $postsQuery = Post::query()
-            ->publicApproved()
-            ->with([
-                'user:id,name',
-                'category:id,name,slug',
-                'city:id,name',
-                'district:id,name',
-                'institution:id,name,verified',
-            ]);
-
-        if ($relaxNearby && $lat !== null && $lng !== null) {
-            $delta = 0.52;
-            $minLat = $lat - $delta;
-            $maxLat = $lat + $delta;
-            $minLng = $lng - $delta;
-            $maxLng = $lng + $delta;
-
-            $postsQuery->where(function ($q) use ($cityId, $minLat, $maxLat, $minLng, $maxLng): void {
-                $q->where(function ($gq) use ($minLat, $maxLat, $minLng, $maxLng): void {
-                    $gq->whereNotNull('posts.latitude')
-                        ->whereNotNull('posts.longitude')
-                        ->whereBetween('posts.latitude', [$minLat, $maxLat])
-                        ->whereBetween('posts.longitude', [$minLng, $maxLng]);
-                });
-
-                if ($cityId !== null && (int) $cityId !== 0) {
-                    $q->orWhere(function ($cq) use ($cityId): void {
-                        $cq->where('posts.city_id', (int) $cityId)
-                            ->where(function ($lq): void {
-                                $lq->whereNull('posts.latitude')->orWhereNull('posts.longitude');
-                            });
-                    });
-                }
-            });
-        } elseif ($cityId !== null && (int) $cityId !== 0) {
-            $postsQuery->where('posts.city_id', $cityId);
-        }
-
-        if (request()->filled('category_id')) {
-            $postsQuery->where('category_id', request()->integer('category_id'));
-        }
-
-        if (request()->filled('q')) {
-            $term = '%'.str_replace(['%', '_'], ['\\%', '\\_'], (string) request('q')).'%';
-            $postsQuery->where(function ($query) use ($term): void {
-                $query->where('title', 'like', $term)
-                    ->orWhere('description', 'like', $term);
-            });
-        }
-
-        if (Auth::check()) {
-            $uid = Auth::id();
-            $postsQuery
-                ->withExists(['supports as viewer_supported' => fn ($q) => $q->where('user_id', $uid)])
-                ->withExists(['follows as viewer_following' => fn ($q) => $q->where('user_id', $uid)]);
-        }
-
-        $postsQuery->orderByRaw('CASE WHEN DATE(created_at) = ? THEN 1 ELSE 0 END DESC', [$today]);
-
-        $driver = DB::connection()->getDriverName();
-        if ($lat !== null && $lng !== null) {
-            $postsQuery->orderByRaw(
-                '(CASE WHEN latitude IS NOT NULL AND longitude IS NOT NULL THEN 1 ELSE 0 END) DESC'
-            );
-
-            $postsQuery->when(
-                true,
-                fn ($q) => $driver === 'sqlite'
-                    ? $q->orderByRaw(
-                        '((CAST(latitude AS REAL) - ?) * (CAST(latitude AS REAL) - ?) + (CAST(longitude AS REAL) - ?) * (CAST(longitude AS REAL) - ?)) ASC',
-                        [$lat, $lat, $lng, $lng]
-                    )
-                    : $q->orderByRaw(
-                        '((latitude - ?)*(latitude - ?) + (longitude - ?)*(longitude - ?)) ASC',
-                        [$lat, $lat, $lng, $lng]
-                    )
-            );
-        }
-
-        $postsQuery->orderByRaw('(support_count * 10 + comments_count * 6 + COALESCE(follow_count, 0) * 8) DESC')
-            ->orderByDesc('created_at');
-
-        $posts = $postsQuery->paginate(perPage: 15)->withQueryString();
-
-        $storiesQuery = Story::query()
-            ->active()
-            ->with(['user:id,name', 'city:id,name']);
-
-        if ($relaxNearby && $lat !== null && $lng !== null) {
-            $delta = 0.52;
-            $minLat = $lat - $delta;
-            $maxLat = $lat + $delta;
-            $minLng = $lng - $delta;
-            $maxLng = $lng + $delta;
-
-            $storiesQuery->where(function ($q) use ($cityId, $minLat, $maxLat, $minLng, $maxLng): void {
-                $q->where(function ($gq) use ($minLat, $maxLat, $minLng, $maxLng): void {
-                    $gq->whereNotNull('stories.latitude')
-                        ->whereNotNull('stories.longitude')
-                        ->whereBetween('stories.latitude', [$minLat, $maxLat])
-                        ->whereBetween('stories.longitude', [$minLng, $maxLng]);
-                });
-
-                if ($cityId !== null && (int) $cityId !== 0) {
-                    $q->orWhere(function ($cq) use ($cityId): void {
-                        $cq->where('stories.city_id', (int) $cityId)
-                            ->where(function ($lq): void {
-                                $lq->whereNull('stories.latitude')->orWhereNull('stories.longitude');
-                            });
-                    });
-                }
-            });
-        } elseif ($cityId !== null && (int) $cityId !== 0) {
-            $storiesQuery->where('city_id', $cityId);
-        }
-
-        if ($lat !== null && $lng !== null) {
-            $storiesQuery->orderByRaw(
-                '(CASE WHEN latitude IS NOT NULL AND longitude IS NOT NULL THEN 1 ELSE 0 END) DESC'
-            );
-            $storiesQuery->when(
-                true,
-                fn ($q) => $driver === 'sqlite'
-                    ? $q->orderByRaw(
-                        '((CAST(latitude AS REAL) - ?) * (CAST(latitude AS REAL) - ?) + (CAST(longitude AS REAL) - ?) * (CAST(longitude AS REAL) - ?)) ASC',
-                        [$lat, $lat, $lng, $lng]
-                    )
-                    : $q->orderByRaw(
-                        '((latitude - ?)*(latitude - ?) + (longitude - ?)*(longitude - ?)) ASC',
-                        [$lat, $lat, $lng, $lng]
-                    )
-            );
-        }
-
-        $stories = $storiesQuery->latest()->take(42)->get();
-        $cities = City::query()->orderBy('name')->get(['id', 'name', 'plate']);
-        $categories = Category::query()->orderBy('sort_order')->orderBy('name')->get(['id', 'name', 'slug']);
+        $stories = PublicStoryFeed::forRequest(request(), 42);
 
         $published = Post::query()->publicApproved();
         $publishedTotal = (clone $published)->count();
@@ -213,14 +63,100 @@ class HomeController extends Controller
             });
         }
 
-        $featuredCampaigns = $featuredCampaignQuery->orderByDesc('supporter_count')->take(10)->get();
+        $featuredCampaigns = $featuredCampaignQuery->orderByDesc('supporter_count')->take(16)->get();
+
+        $spotlightVideoPosts = Post::query()
+            ->publicApproved()
+            ->whereNotNull('media_url')
+            ->where(function ($q): void {
+                $q->where('media_url', 'like', '%youtu%')
+                    ->orWhere('media_url', 'like', '%youtube%')
+                    ->orWhere('media_url', 'like', '%vimeo%');
+            })
+            ->with(['user:id,name', 'category:id,name', 'city:id,name'])
+            ->latest()
+            ->limit(2)
+            ->get();
+
+        $spotlightImagePosts = Post::query()
+            ->publicApproved()
+            ->whereNotNull('media_url')
+            ->where(function ($q): void {
+                $q->where('media_url', 'not like', '%youtu%')
+                    ->where('media_url', 'not like', '%youtube%')
+                    ->where('media_url', 'not like', '%vimeo%');
+            })
+            ->with(['user:id,name', 'category:id,name', 'city:id,name'])
+            ->latest()
+            ->limit(6)
+            ->get();
+
+        $spotlightStories = Story::query()
+            ->active()
+            ->with(['user:id,name', 'city:id,name'])
+            ->latest()
+            ->limit(14)
+            ->get();
+
+        $cityComplaintSub = Post::query()
+            ->publicApproved()
+            ->whereNotNull('city_id')
+            ->selectRaw('city_id, COUNT(*) as complaint_count')
+            ->groupBy('city_id');
+
+        $topCitiesByComplaints = City::query()
+            ->joinSub($cityComplaintSub, 'post_counts', 'cities.id', '=', 'post_counts.city_id')
+            ->orderByDesc('post_counts.complaint_count')
+            ->orderBy('cities.name')
+            ->limit(10)
+            ->select('cities.id', 'cities.name', 'cities.slug', 'cities.plate', 'post_counts.complaint_count')
+            ->get();
+
+        $approved = PostModerationStatus::Approved->value;
+
+        $legacyLinks = DB::table('posts')
+            ->where('moderation_status', $approved)
+            ->whereNotNull('institution_id')
+            ->selectRaw('institution_id as institution_id, id as post_id');
+
+        $pivotLinks = DB::table('institution_post')
+            ->join('posts', 'posts.id', '=', 'institution_post.post_id')
+            ->where('posts.moderation_status', $approved)
+            ->selectRaw('institution_post.institution_id as institution_id, posts.id as post_id');
+
+        $institutionComplaintSub = DB::query()
+            ->fromSub($legacyLinks->union($pivotLinks), 'institution_links')
+            ->groupBy('institution_links.institution_id')
+            ->selectRaw('institution_links.institution_id, COUNT(DISTINCT institution_links.post_id) as complaint_count');
+
+        $topInstitutionsByComplaints = Institution::query()
+            ->joinSub($institutionComplaintSub, 'post_counts', 'institutions.id', '=', 'post_counts.institution_id')
+            ->orderByDesc('post_counts.complaint_count')
+            ->orderBy('institutions.name')
+            ->limit(10)
+            ->select('institutions.id', 'institutions.name', 'institutions.verified', 'institutions.city_id', 'institutions.logo_url', 'post_counts.complaint_count')
+            ->with(['city:id,name'])
+            ->get();
+
+        $trendingComplaints = Post::query()
+            ->publicApproved()
+            ->with(['user:id,name,verification_status', 'institution:id,name,verified', 'institutions:id,name,verified', 'city:id,name', 'category:id,name'])
+            ->orderByRaw('(posts.support_count * 10 + posts.comments_count * 6 + COALESCE(posts.follow_count, 0) * 8) DESC')
+            ->orderByDesc('posts.created_at')
+            ->limit(16)
+            ->get()
+            ->shuffle()
+            ->values();
 
         return view('home', [
-            'posts' => $posts,
             'stories' => $stories,
-            'cities' => $cities,
-            'categories' => $categories,
             'featuredCampaigns' => $featuredCampaigns,
+            'spotlightVideoPosts' => $spotlightVideoPosts,
+            'spotlightImagePosts' => $spotlightImagePosts,
+            'spotlightStories' => $spotlightStories,
+            'topCitiesByComplaints' => $topCitiesByComplaints,
+            'topInstitutionsByComplaints' => $topInstitutionsByComplaints,
+            'trendingComplaints' => $trendingComplaints,
             'platformStats' => $platformStats,
             'activeCityId' => $cityId,
             'searchQuery' => (string) request('q', ''),
@@ -235,37 +171,8 @@ class HomeController extends Controller
                 'og_type' => 'website',
             ],
             'structuredData' => [
-                \App\Support\Seo::webSiteStructuredData(),
+                Seo::webSiteStructuredData(),
             ],
         ]);
-    }
-
-    /**
-     * @return array{lat: float|null, lng: float|null}
-     */
-    protected static function coordinatePair(): array
-    {
-        $pairs = [[request('lat'), request('lng')], [request()->cookie('bildir_lat'), request()->cookie('bildir_lng')]];
-        foreach ($pairs as [$la, $lo]) {
-            $lat = static::coordinate($la ?? null);
-            $lng = static::coordinate($lo ?? null);
-
-            if ($lat !== null && $lng !== null) {
-                return ['lat' => $lat, 'lng' => $lng];
-            }
-        }
-
-        return ['lat' => null, 'lng' => null];
-    }
-
-    protected static function coordinate(mixed $value): ?float
-    {
-        if ($value === null || $value === '') {
-            return null;
-        }
-
-        $f = filter_var($value, FILTER_VALIDATE_FLOAT);
-
-        return $f === false ? null : round((float) $f, 6);
     }
 }

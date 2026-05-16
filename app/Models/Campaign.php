@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\CampaignModerationStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -62,14 +63,14 @@ class Campaign extends Model
             if (! $q->exists()) {
                 return $slug;
             }
-            ++$n;
+            $n++;
             $slug = $base.'-'.$n;
         }
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Builder<Campaign>  $query
-     * @return \Illuminate\Database\Eloquent\Builder<Campaign>
+     * @param  Builder<Campaign>  $query
+     * @return Builder<Campaign>
      */
     public function scopePublicApproved($query)
     {
@@ -117,5 +118,11 @@ class Campaign extends Model
     public function supporters(): HasMany
     {
         return $this->hasMany(CampaignSupporter::class);
+    }
+
+    /** @return HasMany<CampaignComment, Campaign> */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(CampaignComment::class);
     }
 }

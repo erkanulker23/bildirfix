@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
 use App\Support\Seo;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 final class BlogShowController extends Controller
@@ -13,7 +14,7 @@ final class BlogShowController extends Controller
     public function __invoke(string $slug): View
     {
         $post = BlogPost::query()
-            ->published()
+            ->visibleOnPublicSite()
             ->where('slug', $slug)
             ->with('author:id,name')
             ->firstOrFail();
@@ -31,7 +32,7 @@ final class BlogShowController extends Controller
 
         $hero = trim((string) ($post->hero_image_url ?? ''));
         if ($hero !== '') {
-            $seo['og_image'] = \Illuminate\Support\Str::startsWith($hero, ['http://', 'https://'])
+            $seo['og_image'] = Str::startsWith($hero, ['http://', 'https://'])
                 ? $hero
                 : url(ltrim($hero, '/'));
         }
@@ -40,7 +41,7 @@ final class BlogShowController extends Controller
             Seo::breadcrumbStructuredData([
                 [config('app.name'), route('home', [], true)],
                 [__('Blog'), route('blog.index', [], true)],
-                [\Illuminate\Support\Str::limit($post->title, 90), $canonical],
+                [Str::limit($post->title, 90), $canonical],
             ]),
         ];
 

@@ -2,23 +2,20 @@
 
 @section('title', $post->title.' • '.__('Blog').' • '.config('app.name'))
 
-@section('toolbar')
-    <div class="flex w-full flex-wrap items-center gap-3 sm:flex-1 sm:justify-end">
+@section('content')
+    <div class="mb-4 flex flex-wrap items-center justify-end gap-3 sm:justify-end">
         <a href="{{ route('blog.index') }}"
             class="rounded-2xl border border-indigo-100 bg-white px-4 py-2 text-sm font-bold text-indigo-900 shadow-sm hover:bg-indigo-50">
             ← {{ __('Blog') }}</a>
         <a href="{{ route('home') }}"
             class="rounded-2xl bg-indigo-600 px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-indigo-700">{{ __('Akış') }}</a>
     </div>
-@endsection
-
-@section('content')
     <article class="mx-auto max-w-3xl" itemscope itemtype="https://schema.org/Article">
         <meta itemprop="headline" content="{{ $post->title }}">
         @if ($post->hero_image_url)
             @php
                 $heroRaw = $post->hero_image_url;
-                $heroPublic = str_starts_with($heroRaw, ['http://', 'https://']) ? $heroRaw : url(ltrim($heroRaw, '/'));
+                $heroPublic = \Illuminate\Support\Str::startsWith($heroRaw, ['http://', 'https://']) ? $heroRaw : url(ltrim($heroRaw, '/'));
             @endphp
             <div class="overflow-hidden rounded-3xl border border-neutral-100 shadow-xl shadow-neutral-900/10">
                 <img src="{{ $heroPublic }}"

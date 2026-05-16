@@ -6,6 +6,7 @@ use App\Enums\PostModerationStatus;
 use App\Enums\PostStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Support\ComplaintDraftSession;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class PostController extends Controller
     {
         $query = Post::query()
             ->publicApproved()
-            ->with(['user:id,name', 'category:id,name', 'city:id,name', 'district:id,name', 'institution:id,name']);
+            ->with(['user:id,name', 'category:id,name', 'city:id,name', 'district:id,name', 'institution:id,name', 'institutions:id,name']);
 
         if ($request->filled('city_id')) {
             $query->where('city_id', $request->integer('city_id'));
@@ -40,7 +41,7 @@ class PostController extends Controller
             abort(404);
         }
 
-        $post->load(['user:id,name', 'category:id,name', 'city:id,name', 'district:id,name', 'neighborhood:id,name', 'institution:id,name', 'moderatedBy:id,name']);
+        $post->load(['user:id,name', 'category:id,name', 'city:id,name', 'district:id,name', 'neighborhood:id,name', 'institution:id,name', 'institutions:id,name', 'moderatedBy:id,name']);
 
         return response()->json(['data' => $post]);
     }
@@ -58,10 +59,15 @@ class PostController extends Controller
             'longitude' => ['nullable', 'numeric'],
             'category_id' => ['nullable', 'integer', 'exists:categories,id'],
             'institution_id' => ['nullable', 'integer', 'exists:institutions,id'],
+            'institution_ids' => ['nullable', 'array', 'max:20'],
+            'institution_ids.*' => ['integer', 'exists:institutions,id'],
         ]);
+
+        $institutionIds = ComplaintDraftSession::normalizeInstitutionIds($data);
 
         $post = Post::query()->create([
             ...$data,
+            'institution_id' => $institutionIds[0] ?? null,
             'user_id' => $request->user()->id,
             'type' => 'complaint',
             'status' => PostStatus::Open,
@@ -71,7 +77,9 @@ class PostController extends Controller
             'moderation_note' => null,
         ]);
 
-        $post->load(['user:id,name', 'category:id,name', 'city:id,name', 'district:id,name']);
+        $post->syncTargetInstitutions($institutionIds);
+
+        $post->load(['user:id,name', 'category:id,name', 'city:id,name', 'district:id,name', 'institutions:id,name']);
 
         return response()->json([
             'message' => __('Şikâyet gönderildi. Süper yönetici onayından sonra herkese açılacak.'),

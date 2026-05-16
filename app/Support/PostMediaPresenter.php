@@ -27,7 +27,7 @@ final class PostMediaPresenter
                     continue;
                 }
                 $type = isset($item['type']) ? (string) $item['type'] : '';
-                $guessed = static::guessTypeFromUrl($url, $type);
+                $guessed = self::guessTypeFromUrl($url, $type);
 
                 return ['type' => $guessed['type'], 'url' => $url, 'poster' => $guessed['poster'] ?? null];
             }
@@ -35,12 +35,60 @@ final class PostMediaPresenter
 
         $single = isset($post->media_url) ? trim((string) $post->media_url) : '';
         if ($single !== '') {
-            $guessed = static::guessTypeFromUrl($single, '');
+            $guessed = self::guessTypeFromUrl($single, '');
 
             return ['type' => $guessed['type'], 'url' => $single, 'poster' => $guessed['poster'] ?? null];
         }
 
         return null;
+    }
+
+    /**
+     * Kart / detay galerisinde kullanılmak üzere tüm medya öğeleri.
+     *
+     * @return list<array{type: string, url: string, poster?: string|null}>
+     */
+    public static function all(?Post $post): array
+    {
+        if (! $post) {
+            return [];
+        }
+
+        $out = [];
+        $mediaArr = $post->media ?? [];
+        if (is_array($mediaArr)) {
+            foreach ($mediaArr as $item) {
+                if (! is_array($item)) {
+                    continue;
+                }
+                $url = isset($item['url']) ? (string) $item['url'] : '';
+                if ($url === '') {
+                    continue;
+                }
+                $type = isset($item['type']) ? (string) $item['type'] : '';
+                $guessed = self::guessTypeFromUrl($url, $type);
+                $row = ['type' => $guessed['type'], 'url' => $url];
+                if (array_key_exists('poster', $guessed)) {
+                    $row['poster'] = $guessed['poster'];
+                }
+                $out[] = $row;
+            }
+        }
+
+        if ($out === []) {
+            $single = isset($post->media_url) ? trim((string) $post->media_url) : '';
+            if ($single !== '') {
+                $guessed = self::guessTypeFromUrl($single, '');
+
+                $row = ['type' => $guessed['type'], 'url' => $single];
+                if (array_key_exists('poster', $guessed)) {
+                    $row['poster'] = $guessed['poster'];
+                }
+                $out[] = $row;
+            }
+        }
+
+        return $out;
     }
 
     /**
@@ -74,7 +122,7 @@ final class PostMediaPresenter
     /** @deprecated use primary(); kept tests */
     public static function thumbnailUrl(?Post $post): ?string
     {
-        $p = static::primary($post);
+        $p = self::primary($post);
 
         if (! $p) {
             return null;

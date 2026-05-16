@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('toolbar')
-    <div></div>
-@endsection
-
 @section('title', __('Sosyal sorumluluk kampanyaları'))
 
 @section('content')

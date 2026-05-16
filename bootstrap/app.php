@@ -2,6 +2,8 @@
 
 use App\Http\Middleware\EnsurePhoneVerified;
 use App\Http\Middleware\EnsureRole;
+use App\Http\Middleware\UseIncomingRequestUrl;
+use App\Http\Middleware\VerifyTurnstile;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,10 +17,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->prependToGroup('web', [
+            UseIncomingRequestUrl::class,
+        ]);
+
         $middleware->alias([
             'role' => EnsureRole::class,
             'verified.phone' => EnsurePhoneVerified::class,
-            'turnstile' => \App\Http\Middleware\VerifyTurnstile::class,
+            'turnstile' => VerifyTurnstile::class,
         ]);
 
         /** Cloudflare / TLS sonlandırma: doğru müşteri IP ve şema için (HTTP_CF_* güvenilir) */

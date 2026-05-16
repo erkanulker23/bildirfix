@@ -4,12 +4,21 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\PostModerationStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class BlogPost extends Model
 {
+    /**
+     * @var array<string, mixed>
+     */
+    protected $attributes = [
+        'moderation_status' => 'approved',
+    ];
+
     /** @var list<string> */
     protected $fillable = [
         'author_user_id',
@@ -22,6 +31,10 @@ class BlogPost extends Model
         'meta_description',
         'is_published',
         'published_at',
+        'moderation_status',
+        'moderated_at',
+        'moderated_by_user_id',
+        'moderation_note',
     ];
 
     protected function casts(): array
@@ -29,6 +42,8 @@ class BlogPost extends Model
         return [
             'is_published' => 'boolean',
             'published_at' => 'datetime',
+            'moderation_status' => PostModerationStatus::class,
+            'moderated_at' => 'datetime',
         ];
     }
 
@@ -43,14 +58,37 @@ class BlogPost extends Model
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Builder<static>  $query
-     * @return \Illuminate\Database\Eloquent\Builder<static>
+     * @param  Builder<static>  $query
+     * @return Builder<static>
      */
     public function scopePublished($query)
     {
         return $query->where('is_published', true)
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now());
+    }
+
+    /**
+     * @param  Builder<static>  $query
+     * @return Builder<static>
+     */
+    public function scopeVisibleOnPublicSite($query)
+    {
+        return $query->published()
+            ->where('moderation_status', PostModerationStatus::Approved);
+    }
+
+    public function isVisibleOnPublicSite(): bool
+    {
+        if ($this->moderation_status !== PostModerationStatus::Approved) {
+            return false;
+        }
+
+        if (! $this->is_published || $this->published_at === null) {
+            return false;
+        }
+
+        return $this->published_at->lte(now());
     }
 
     public static function uniqueSlugFromTitle(string $title): string
@@ -73,5 +111,11 @@ class BlogPost extends Model
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_user_id');
+    }
+
+    /** @return BelongsTo<User, $this> */
+    public function moderatedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'moderated_by_user_id');
     }
 }

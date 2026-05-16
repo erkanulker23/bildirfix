@@ -69,6 +69,11 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
+    public function campaignComments(): HasMany
+    {
+        return $this->hasMany(CampaignComment::class);
+    }
+
     public function managedInstitution(): HasOne
     {
         return $this->hasOne(Institution::class, 'account_user_id');
@@ -107,5 +112,24 @@ class User extends Authenticatable
 
         return $this->phone_verified_at !== null
             && $this->verification_status === VerificationStatus::Verified;
+    }
+
+    public function avatarInitials(): string
+    {
+        $name = (string) $this->name;
+        preg_match_all('/\p{L}/u', $name, $lettersMatch);
+        $letters = $lettersMatch[0] ?? [];
+        $initials = '';
+        if (($letters[0] ?? '') !== '') {
+            $initials .= mb_strtoupper(mb_substr((string) $letters[0], 0, 1));
+        }
+        if (($letters[1] ?? '') !== '') {
+            $initials .= mb_strtoupper(mb_substr((string) $letters[1], 0, 1));
+        }
+        if ($initials === '') {
+            $initials = mb_strtoupper(mb_substr($name, 0, 2));
+        }
+
+        return $initials;
     }
 }

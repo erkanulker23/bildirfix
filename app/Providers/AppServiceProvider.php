@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\CampaignSupporter;
 use App\Models\Comment;
+use App\Models\PlatformSetting;
 use App\Models\Post;
 use App\Models\PostFollow;
 use App\Models\Story;
@@ -14,11 +15,11 @@ use App\Observers\PostFollowObserver;
 use App\Observers\PostObserver;
 use App\Observers\StoryObserver;
 use App\Observers\SupportObserver;
-use App\Models\PlatformSetting;
 use App\Support\AuthLookup;
 use App\Support\Phone;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
@@ -78,5 +79,29 @@ class AppServiceProvider extends ServiceProvider
             }
             $view->with('googleOAuthEnabled', $enabled);
         });
+
+        View::composer('layouts.admin', function ($view): void {
+            $view->with('viewerIsSuperAdmin', request()->user()?->isSuperAdmin() ?? false);
+        });
+
+        try {
+            /** @var PlatformSetting|null $platform */
+            $platform = PlatformSetting::query()->orderBy('id')->first();
+            if ($platform !== null && $platform->customSmtpConfigured()) {
+                $port = $platform->mail_port;
+                Config::set('mail.default', 'smtp');
+                Config::set('mail.mailers.smtp.host', $platform->mail_host);
+                Config::set('mail.mailers.smtp.port', $port ?: 587);
+                Config::set('mail.mailers.smtp.encryption', $platform->mail_encryption);
+                Config::set('mail.mailers.smtp.username', $platform->mail_username);
+                Config::set('mail.mailers.smtp.password', $platform->mail_password);
+                Config::set('mail.mailers.smtp.timeout', null);
+                Config::set('mail.from.address', $platform->mail_from_address);
+                $fromName = $platform->mail_from_name;
+                Config::set('mail.from.name', ($fromName !== null && trim($fromName) !== '') ? $fromName : config('app.name'));
+            }
+        } catch (\Throwable) {
+            //
+        }
     }
 }

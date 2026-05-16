@@ -2,14 +2,11 @@
 
 @section('title', __('Şirket girişi').' • '.config('app.name'))
 
-@section('toolbar')
-    <div class="flex flex-1 justify-end gap-3">
+@section('content')
+    <div class="mb-4 flex justify-end gap-3">
         <a href="{{ route('home') }}"
             class="rounded-full bg-neutral-100 px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-neutral-200">{{ __('← Akış') }}</a>
     </div>
-@endsection
-
-@section('content')
     <div class="mx-auto max-w-md">
         <div class="overflow-hidden rounded-2xl bg-white shadow-[0_2px_12px_rgba(0,0,0,0.08)] ring-1 ring-neutral-100">
             <div class="bg-gradient-to-r from-emerald-600 to-teal-600 px-8 py-10 text-white">
