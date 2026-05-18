@@ -80,6 +80,26 @@ final class PublicStoryFeed
     }
 
     /**
+     * İl / ilçe sayfası: şehre bağlı aktif hikâyeler.
+     *
+     * @return Collection<int, Story>
+     */
+    public static function forCityId(int $cityId, int $limit = 48): Collection
+    {
+        if ($cityId <= 0) {
+            return collect();
+        }
+
+        return Story::query()
+            ->active()
+            ->where('city_id', $cityId)
+            ->with(['user:id,name,role', 'city:id,name'])
+            ->latest()
+            ->take($limit)
+            ->get();
+    }
+
+    /**
      * @param  Collection<int, Story>  $stories
      * @return list<array<string, mixed>>
      */

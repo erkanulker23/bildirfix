@@ -12,6 +12,16 @@
                 class="rounded-full bg-emerald-50 px-3 py-1.5 text-[11px] font-black tabular-nums text-emerald-900 ring-1 ring-emerald-100">{{ $city->plate }}</span>
         @endif
     </div>
+
+    @include('partials.stories-strip', [
+        'stories' => $cityStories,
+        'title' => $city->name.' • '.__('Hikâyeler'),
+        'moreHref' => route('feed.index', ['city_id' => $city->id]),
+        'moreLabel' => __('Akışta gör'),
+    ])
+
+    <x-ad-slot :slot="config('adsense.slots.city_top')" class="mx-auto max-w-[1200px]" />
+
     <div class="space-y-8">
         <header class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm ring-1 ring-black/[0.03] sm:p-8">
             <p class="text-[11px] font-black uppercase tracking-[0.2em] text-primary">{{ __('İl sayfası') }}</p>
@@ -28,7 +38,7 @@
 
             <div class="mt-6 space-y-4">
                 @forelse ($posts as $post)
-                    <x-post-card :post="$post" />
+                    <x-post-card :post="$post" :compact="true" />
                 @empty
                     <p class="rounded-2xl border border-dashed border-gray-200 bg-gray-50 px-6 py-12 text-center text-sm font-semibold text-gray-600">
                         {{ __('Bu il için henüz listelenecek onaylı şikâyet yok.') }}</p>
@@ -38,4 +48,12 @@
             <div class="flex justify-center pt-8">{{ $posts->links() }}</div>
         </section>
     </div>
+
+    <x-story-viewer />
 @endsection
+
+@push('scripts')
+    <script>
+        window.__storiesFeed = {!! \Illuminate\Support\Js::from($storiesViewerPayload) !!};
+    </script>
+@endpush

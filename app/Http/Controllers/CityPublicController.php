@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use App\Models\Post;
+use App\Support\PublicStoryFeed;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -38,9 +39,14 @@ final class CityPublicController extends Controller
             ->paginate(perPage: 15)
             ->withQueryString();
 
+        $cityStories = PublicStoryFeed::forCityId((int) $city->id, 48);
+        $storiesViewerPayload = PublicStoryFeed::viewerPayload($cityStories);
+
         return view('cities.show', [
             'city' => $city,
             'posts' => $posts,
+            'cityStories' => $cityStories,
+            'storiesViewerPayload' => $storiesViewerPayload,
             'seo' => [
                 'description' => Str::limit(
                     __(':city ili için onaylı ve yayında olan şikâyet kayıtları.', ['city' => $city->name]),

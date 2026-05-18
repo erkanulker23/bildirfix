@@ -66,6 +66,10 @@
 
     @fonts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @if (config('adsense.enabled') && filled(config('adsense.client')))
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ config('adsense.client') }}"
+            crossorigin="anonymous"></script>
+    @endif
 </head>
 
 <body class="relative min-h-screen bg-[#F9FAFB] font-sans text-gray-700 antialiased">

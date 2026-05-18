@@ -1,6 +1,7 @@
 {{-- Lucide-style SVG (inline). Veri: Post modeli + viewer_supported (isteğe bağlı). --}}
 @props([
     'post',
+    'compact' => false,
 ])
 
 @php
@@ -9,9 +10,8 @@
     use App\Support\PostMediaPresenter;
 
     $pm = PostMediaPresenter::primary($post);
-    $mediaUrl = $pm['url'] ?? null;
+    $hasMedia = $pm !== null;
     $mediaType = $pm['type'] ?? 'image';
-    $poster = $pm['poster'] ?? null;
 
     $statusClass = match ($post->status) {
         PostStatus::Open => 'badge-open',
@@ -37,7 +37,6 @@
 <article class="card-post group">
     <a href="{{ route('posts.show', $post) }}"
         class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
-        {{-- Header --}}
         <div class="flex items-start justify-between gap-2 px-4 pb-3 pt-4">
             <div class="flex min-w-0 flex-1 items-center gap-3">
                 <div class="relative shrink-0">
@@ -56,7 +55,7 @@
                         </span>
                     @endif
                 </div>
-                <div class="min-w-0">
+                <div class="min-w-0 flex-1">
                     <div class="flex flex-wrap items-center gap-1.5">
                         <span class="truncate text-sm font-semibold leading-none text-gray-900">{{ $uname }}</span>
                         @if ($verified)
@@ -75,55 +74,47 @@
                     </div>
                 </div>
             </div>
+            @if ($hasMedia)
+                <span
+                    class="inline-flex shrink-0 items-center gap-1 rounded-full bg-violet-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-violet-800 ring-1 ring-violet-100"
+                    title="{{ __('Medya detay sayfasında') }}">
+                    {{ $mediaType === 'video' ? __('Video') : __('Fotoğraf') }}
+                </span>
+            @endif
         </div>
 
-        @if ($mediaUrl)
-            <div class="relative w-full overflow-hidden bg-gray-100 aspect-video">
-                @if ($mediaType === 'video')
-                    @if ($poster)
-                        <img src="{{ $poster }}" alt="" class="h-full w-full object-cover opacity-90" loading="lazy">
-                    @endif
-                    <div class="absolute inset-0 flex items-center justify-center bg-black/35">
-                        <span
-                            class="flex h-12 w-12 items-center justify-center rounded-full bg-black/50 backdrop-blur-sm">
-                            <svg class="ml-0.5 h-5 w-5 text-white" viewBox="0 0 24 24" fill="currentColor"
-                                aria-hidden="true">
-                                <polygon points="6 4 20 12 6 20 6 4" />
-                            </svg>
-                        </span>
-                    </div>
-                @else
-                    <img src="{{ $mediaUrl }}" alt="{{ $post->title }}" loading="lazy"
-                        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]">
-                @endif
-            </div>
-        @endif
-
-        <div class="flex flex-wrap items-center gap-2 px-4 pt-3">
+        <div class="flex flex-wrap items-center gap-2 px-4 {{ $compact ? 'pt-0' : 'pt-1' }}">
             @if ($post->category)
                 <span class="badge badge-category text-xs">{{ $post->category->name }}</span>
             @endif
             <span class="badge {{ $statusClass }} text-xs">{{ $post->status->label() }}</span>
+            @if ($hasMedia)
+                <span class="badge bg-violet-50 text-xs text-violet-800 ring-1 ring-violet-100">
+                    {{ $mediaType === 'video' ? __('Videolu') : __('Fotoğraflı') }}
+                </span>
+            @endif
             @php
                 $__ibadges = ($post->relationLoaded('institutions') && $post->institutions->isNotEmpty())
                     ? $post->institutions
                     : ($post->institution ? collect([$post->institution]) : collect());
             @endphp
-            @foreach ($__ibadges as $__ti)
-                <span class="badge bg-gray-100 text-xs text-gray-600">🏛️ {{ $__ti->name }}</span>
+            @foreach ($__ibadges->take(2) as $__ti)
+                <span class="badge bg-gray-100 text-xs text-gray-600">🏛️ {{ \Illuminate\Support\Str::limit($__ti->name, 28) }}</span>
             @endforeach
         </div>
 
         <div class="px-4 pb-3 pt-2">
-            <h3 class="font-heading line-clamp-2 text-base font-bold leading-snug text-gray-900">{{ $post->title }}</h3>
+            <h3 class="font-heading line-clamp-2 text-base font-bold leading-snug text-gray-900 group-hover:text-primary">{{ $post->title }}</h3>
             @if ($post->description)
                 <p class="mt-1 line-clamp-2 text-sm leading-relaxed text-gray-500">
                     {{ strip_tags((string) $post->description) }}</p>
             @endif
+            @if ($compact && $hasMedia)
+                <p class="mt-2 text-[12px] font-semibold text-violet-700">{{ __('Görseller detay sayfasında →') }}</p>
+            @endif
         </div>
     </a>
 
-    {{-- Aksiyonlar (link dışında) --}}
     <div class="flex items-center justify-between gap-2 border-t border-gray-100 px-4 py-3">
         <div class="flex items-center gap-2 sm:gap-4">
             @auth

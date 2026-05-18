@@ -14,6 +14,7 @@
             <table class="w-full min-w-[720px] text-left text-sm">
                 <thead class="border-b border-slate-200 bg-slate-50 text-[10px] font-bold uppercase tracking-wider text-slate-500">
                     <tr>
+                        <th class="px-4 py-3 w-14">{{ __('Logo') }}</th>
                         <th class="px-4 py-3">{{ __('Kurum') }}</th>
                         <th class="px-4 py-3">{{ __('Tür') }}</th>
                         <th class="px-4 py-3">{{ __('Şehir') }}</th>
@@ -25,6 +26,11 @@
                 <tbody class="divide-y divide-slate-100">
                     @foreach ($institutions as $ins)
                         <tr class="text-slate-700">
+                            <td class="px-4 py-3">
+                                <img src="{{ $ins->displayLogoUrl() }}" alt="" width="40" height="40"
+                                    class="h-10 w-10 rounded-xl border border-slate-200 bg-white object-cover shadow-sm"
+                                    loading="lazy">
+                            </td>
                             <td class="px-4 py-3 font-bold text-slate-900">{{ $ins->name }}</td>
                             <td class="px-4 py-3 text-slate-500">{{ $ins->type ?? '—' }}</td>
                             <td class="px-4 py-3 text-slate-500">{{ $ins->city?->name ?? '—' }}</td>

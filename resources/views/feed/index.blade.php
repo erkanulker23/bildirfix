@@ -34,33 +34,13 @@
         </div>
     </div>
 
-    {{-- Hikâyeler — Instagram tarzı yatay şerit --}}
-    <section class="mb-6 scroll-mt-4" aria-label="{{ __('Hikâyeler') }}">
-        <div class="mx-auto max-w-[1200px] px-4 sm:px-5">
-            <div class="rounded-2xl border border-neutral-200/80 bg-white px-3 py-3 shadow-sm ring-1 ring-black/[0.03] sm:px-4 sm:py-3.5">
-                <div class="mb-2 flex flex-wrap items-center justify-between gap-2 px-1">
-                    <p class="text-[11px] font-black uppercase tracking-wider text-emerald-800">{{ __('Kent hikâyeleri') }}</p>
-                    <a href="{{ route('home') }}#hikayeler"
-                        class="text-[11px] font-bold text-violet-700 underline-offset-2 hover:underline">{{ __('Ana sayfada tüm hikâyeler') }}</a>
-                </div>
-                <div
-                    class="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1 pt-1 [-ms-overflow-style:none] [scrollbar-width:thin] [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-neutral-300"
-                    style="-webkit-overflow-scrolling:touch">
-                    <div class="snap-start shrink-0">
-                        <x-story-circle :is-add="true" />
-                    </div>
-                    @foreach ($feedStories as $story)
-                        <div class="snap-start shrink-0">
-                            <x-story-circle :story="$story" :is-viewed="false" />
-                        </div>
-                    @endforeach
-                </div>
-                @if ($feedStories->isEmpty())
-                    <p class="mt-2 px-1 text-[12px] font-medium text-neutral-500">{{ __('Bu bölgede henüz hikâye yok.') }}</p>
-                @endif
-            </div>
-        </div>
-    </section>
+    <div class="mx-auto max-w-[1200px] px-4 sm:px-5">
+        @include('partials.stories-strip', [
+            'stories' => $feedStories,
+            'moreHref' => route('home').'#hikayeler',
+            'moreLabel' => __('Ana sayfada tüm hikâyeler'),
+        ])
+    </div>
 
     <div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_16.5rem] xl:items-start xl:gap-8">
         <div class="min-w-0 space-y-6">
@@ -150,6 +130,9 @@
             <section class="space-y-5" aria-label="{{ __('Gönderi listesi') }}">
                 @forelse ($posts as $post)
                     @include('feed._post-article', ['post' => $post])
+                    @if ($loop->iteration % 4 === 0)
+                        <x-ad-slot :slot="config('adsense.slots.feed_inline')" />
+                    @endif
                 @empty
                     <div
                         class="rounded-3xl border-2 border-dashed border-neutral-200 bg-gradient-to-br from-neutral-50 to-violet-50/30 py-24 text-center text-[17px] font-bold text-neutral-700">
@@ -166,6 +149,8 @@
         </div>
 
         <aside class="hidden space-y-4 xl:block">
+            <x-ad-slot :slot="config('adsense.slots.feed_sidebar')" />
+
             <section class="overflow-hidden rounded-2xl border border-neutral-200/80 bg-white shadow-sm">
                 <div class="border-b border-neutral-100 bg-neutral-50/90 px-4 py-3">
                     <p class="text-[11px] font-black uppercase tracking-wider text-neutral-500">{{ __('Şeffaflık') }}</p>

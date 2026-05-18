@@ -40,6 +40,7 @@ class InstitutionAdminController extends Controller
             'type' => ['nullable', 'string', 'max:120'],
             'city_id' => ['nullable', 'integer', 'exists:cities,id'],
             'verified' => ['required', 'integer', 'in:0,1'],
+            'logo_url' => ['nullable', 'string', 'max:2048'],
             'website' => ['nullable', 'string', 'max:2048'],
             'public_email' => ['nullable', 'string', 'email', 'max:255'],
             'phone' => ['nullable', 'string', 'max:64'],
@@ -48,7 +49,7 @@ class InstitutionAdminController extends Controller
 
         $data['verified'] = ((int) $data['verified']) === 1;
 
-        foreach (['website', 'public_email', 'phone', 'address', 'type'] as $key) {
+        foreach (['logo_url', 'website', 'public_email', 'phone', 'address', 'type'] as $key) {
             if (isset($data[$key]) && $data[$key] === '') {
                 $data[$key] = null;
             }

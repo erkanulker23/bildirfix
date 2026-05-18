@@ -135,7 +135,7 @@
             @endif
 
             @forelse ($posts as $post)
-                <x-post-card :post="$post" />
+                <x-post-card :post="$post" :compact="true" />
             @empty
                 <div class="flex flex-col items-center justify-center rounded-ds-lg border border-dashed border-gray-200 bg-white px-6 py-16 text-center">
                     <div class="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">

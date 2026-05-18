@@ -91,21 +91,48 @@ class InstitutionsTurkeySeeder extends Seeder
         $plate = $row['plate'] ?? null;
         $cityId = $plate !== null ? ($citiesByPlate[(int) $plate] ?? null) : null;
 
-        $logoUrl = null;
-        if ($downloadLogos && ! empty($row['domain']) && ! empty($row['slug'])) {
-            $logoUrl = $this->downloadLogo($row['domain'], $row['slug'], $logoDir);
+        $logoUrl = $this->resolveLogoUrl($row, $downloadLogos, $logoDir);
+
+        $payload = [
+            'city_id' => $cityId,
+            'type' => $row['type'],
+            'verified' => true,
+            'website' => $row['website'] ?? null,
+        ];
+
+        if ($logoUrl !== null) {
+            $payload['logo_url'] = $logoUrl;
         }
 
         Institution::query()->updateOrCreate(
             ['name' => $row['name']],
-            [
-                'city_id' => $cityId,
-                'type' => $row['type'],
-                'verified' => true,
-                'logo_url' => $logoUrl,
-                'website' => $row['website'] ?? null,
-            ],
+            $payload,
         );
+    }
+
+    /**
+     * @param  array{name: string, slug?: string, domain?: string}  $row
+     */
+    private function resolveLogoUrl(array $row, bool $downloadLogos, string $logoDir): ?string
+    {
+        $slug = $row['slug'] ?? null;
+        if ($slug === null || $slug === '') {
+            return null;
+        }
+
+        $filename = $slug.'.png';
+        $absolute = $logoDir.DIRECTORY_SEPARATOR.$filename;
+        $publicPath = '/'.self::LOGO_DIR.'/'.$filename;
+
+        if (File::exists($absolute) && File::size($absolute) > 200) {
+            return $publicPath;
+        }
+
+        if ($downloadLogos && ! empty($row['domain'])) {
+            return $this->downloadLogo($row['domain'], $slug, $logoDir);
+        }
+
+        return null;
     }
 
     private function downloadLogo(string $domain, string $slug, string $logoDir): ?string

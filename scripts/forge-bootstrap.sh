@@ -18,5 +18,7 @@ php artisan turkiye:sync-geo
 echo "==> Kurumlar (logolar repoda varsa --no-logos önerilir)…"
 php artisan institutions:seed-turkey --no-logos --sync-geo
 
+php artisan institutions:backfill-logos
+
 echo "==> İlk kurulum tamamlandı."
 echo "    Üretimde DatabaseSeeder (demo veri) ÇALIŞTIRMAYIN."
