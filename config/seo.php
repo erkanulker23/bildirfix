@@ -6,10 +6,9 @@ declare(strict_types=1);
  * Varsayılan değerler Google / Yandex / Bing ortak ilkelerine göre yapılandırılabilir.
  */
 return [
-    'default_meta_description' => env(
-        'SEO_DEFAULT_DESCRIPTION',
-        'Şehir şikâyetlerini listeleyin, destek olun ve süreci görünür kılın. Vatandaşların yerel sorun bildirimleri ve kurumsal süreçler için simdibildir.com platformu.',
-    ),
+    'default_meta_description' => filled(env('SEO_DEFAULT_DESCRIPTION'))
+        ? (string) env('SEO_DEFAULT_DESCRIPTION')
+        : 'Şehir şikâyetlerini listeleyin, destek olun ve süreci görünür kılın. Vatandaşların yerel sorun bildirimleri ve kurumsal süreçler için simdibildir.com platformu.',
 
     /** Open Graph görsel mutlak URI (HTTPS). Boş ise og:image çıktısı verilmez. */
     'og_image' => env('SEO_OG_IMAGE'),
@@ -33,4 +32,13 @@ return [
 
     /** Yerel yapı için (NewsArticle uygunluğu). */
     'locale_og' => env('SEO_OG_LOCALE', 'tr_TR'),
+
+    /** Google Search Console doğrulama (meta content değeri). */
+    'google_site_verification' => env('SEO_GOOGLE_SITE_VERIFICATION'),
+
+    /** Yandex Webmaster doğrulama. */
+    'yandex_verification' => env('SEO_YANDEX_VERIFICATION'),
+
+    /** Bing Webmaster doğrulama. */
+    'bing_site_verification' => env('SEO_BING_SITE_VERIFICATION'),
 ];

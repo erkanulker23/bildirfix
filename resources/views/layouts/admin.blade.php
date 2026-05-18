@@ -8,7 +8,7 @@
     <meta name="robots" content="noindex, nofollow">
     <title>@yield('title', __('Dashboard')) • {{ config('app.name') }}</title>
     @fonts
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/admin.css', 'resources/js/app.js'])
     @stack('head')
 </head>
 
@@ -33,14 +33,11 @@
 @endphp
 
 <body class="psc-body">
-    <input type="checkbox" id="psc-sidebar-toggle" class="peer sr-only" autocomplete="off">
+    <input type="checkbox" id="psc-sidebar-toggle" autocomplete="off">
 
-    <label for="psc-sidebar-toggle"
-        class="psc-overlay peer-checked:pointer-events-auto peer-checked:opacity-100"
-        aria-hidden="true"></label>
+    <label for="psc-sidebar-toggle" class="psc-overlay" aria-hidden="true"></label>
 
-    <aside
-        class="psc-sidebar fixed inset-y-0 left-0 z-50 -translate-x-full transition-transform duration-200 ease-out peer-checked:translate-x-0 lg:static lg:z-auto lg:max-w-none lg:shrink-0 lg:translate-x-0">
+    <aside class="psc-sidebar">
         <div class="psc-sidebar__head">
             <a href="{{ route('admin.dashboard') }}" class="block">
                 <p class="psc-sidebar__site">{{ config('app.name') }}</p>
@@ -67,10 +64,6 @@
                     <a href="{{ route('admin.campaign-moderation.index') }}" class="psc-nav-link {{ $navActive('admin.campaign-moderation.*') }}">
                         @include('partials.psc.icons', ['name' => 'campaign'])
                         {{ __('Kampanyalar') }}
-                    </a>
-                    <a href="{{ route('admin.blog-moderation.index') }}" class="psc-nav-link {{ $navActive('admin.blog-moderation.*') }}">
-                        @include('partials.psc.icons', ['name' => 'blog'])
-                        {{ __('Blog onayı') }}
                     </a>
                 </div>
 

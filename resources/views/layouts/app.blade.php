@@ -7,7 +7,10 @@
         $structuredLd = isset($structuredData) ? array_values(array_filter((array) $structuredData)) : [];
         $seoDescription = isset($seoParams['description']) && $seoParams['description'] !== ''
             ? (string) $seoParams['description']
-            : config('seo.default_meta_description');
+            : (string) config('seo.default_meta_description');
+        if (trim($seoDescription) === '') {
+            $seoDescription = 'Şehir şikâyetlerini listeleyin, destek olun ve süreci görünür kılın. Vatandaşların yerel sorun bildirimleri ve kurumsal süreçler için simdibildir.com platformu.';
+        }
         $seoCanonical = isset($seoParams['canonical']) && $seoParams['canonical'] !== ''
             ? (string) $seoParams['canonical']
             : request()->fullUrl();
@@ -31,6 +34,15 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <link rel="canonical" href="{{ $seoCanonical }}">
     <meta name="theme-color" content="#FF5A1F">
+    @if (filled(config('seo.google_site_verification')))
+        <meta name="google-site-verification" content="{{ config('seo.google_site_verification') }}">
+    @endif
+    @if (filled(config('seo.yandex_verification')))
+        <meta name="yandex-verification" content="{{ config('seo.yandex_verification') }}">
+    @endif
+    @if (filled(config('seo.bing_site_verification')))
+        <meta name="msvalidate.01" content="{{ config('seo.bing_site_verification') }}">
+    @endif
 
     <meta property="og:site_name" content="{{ config('app.name') }}">
     <meta property="og:title" content="{{ \Illuminate\Support\Str::limit(strip_tags($ogTitle), 70) }}">
@@ -215,7 +227,7 @@
                 <p class="mt-2 max-w-xs leading-relaxed">{{ __('Kent ve mahalle düzeyinde sorun bildirimi: fotoğraf, konum ve moderasyon ile şeffaf süreç. Resmi kanallar yerine geçmez.') }}</p>
             </div>
             <div>
-                <p class="text-[11px] font-bold uppercase tracking-wider text-gray-400">{{ __('Üyelik') }}</p>
+                <p class="text-[11px] font-bold uppercase tracking-wider text-gray-600">{{ __('Üyelik') }}</p>
                 <ul class="mt-3 space-y-2 font-semibold">
                     <li><a href="{{ route('login') }}" class="text-gray-900 hover:text-primary hover:underline">{{ __('Vatandaş girişi') }}</a></li>
                     <li><a href="{{ route('campaigns.index') }}" class="text-gray-900 hover:text-primary hover:underline">{{ __('Sosyal kampanyalar') }}</a></li>
@@ -223,7 +235,7 @@
                 </ul>
             </div>
             <div>
-                <p class="text-[11px] font-bold uppercase tracking-wider text-gray-400">{{ __('İletişim ve yasal') }}</p>
+                <p class="text-[11px] font-bold uppercase tracking-wider text-gray-600">{{ __('İletişim ve yasal') }}</p>
                 <ul class="mt-3 space-y-2">
                     <li><a href="{{ route('how-it-works') }}" class="font-medium underline-offset-4 hover:text-primary hover:underline">{{ __('Nasıl çalışır?') }}</a></li>
                     <li><a href="{{ route('contact') }}" class="font-medium underline-offset-4 hover:text-primary hover:underline">{{ __('İletişim') }}</a></li>
@@ -233,7 +245,7 @@
                 </ul>
             </div>
             <div>
-                <p class="text-[11px] font-bold uppercase tracking-wider text-gray-400">{{ __('Uyarı') }}</p>
+                <p class="text-[11px] font-bold uppercase tracking-wider text-gray-600">{{ __('Uyarı') }}</p>
                 <p class="mt-3 leading-relaxed">{{ __('Resmi başvuru yollarının yerini almaz; yasal haklarınızı etkileyebilecek hususlarda mevzuat ve ilgili kurumları yanınıza alınız.') }}</p>
             </div>
         </div>

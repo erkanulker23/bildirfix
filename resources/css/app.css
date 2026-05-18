@@ -1,10 +1,24 @@
 @import './variables.css';
-@import './panel-shell.css';
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
+@source '../views/**/*.blade.php';
+@source '../views/layouts/app.blade.php';
+@source '../views/components/**/*.blade.php';
+@source '../views/pages/**/*.blade.php';
+@source '../views/campaigns/**/*.blade.php';
+@source '../views/cities/**/*.blade.php';
+@source '../views/feed/**/*.blade.php';
+@source '../views/posts/**/*.blade.php';
+@source '../views/auth/**/*.blade.php';
+@source '../views/blog/**/*.blade.php';
+@source '../views/partials/**/*.blade.php';
+@source not '../views/admin/**';
+@source not '../views/panel/**';
+@source not '../views/institution/**';
+@source not '../views/layouts/admin.blade.php';
+@source not '../views/layouts/panel.blade.php';
 @source '../**/*.js';
 
 @theme {
