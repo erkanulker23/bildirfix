@@ -1,27 +1,51 @@
-@extends('layouts.app')
+@extends('layouts.panel', ['panelKind' => 'institution'])
 
-@section('title', __('Kurum paneli'))
+@section('title', __('Dashboard'))
+
+@section('panel_heading')
+    <p class="text-sm font-bold text-gray-900">{{ __('Kurum paneli') }}</p>
+@endsection
 
 @section('content')
-    <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h1 class="text-xl font-semibold">{{ __('Kurum hesabı') }}</h1>
-        <p class="mt-2 text-sm text-slate-600">
-            {{ $institution ? $institution->name : __('Kurum profilin henüz atanmadı.') }}
-        </p>
-        @if ($institution)
-            <dl class="mt-4 space-y-2 text-sm">
-                <div class="flex justify-between gap-2">
-                    <dt class="text-slate-500">{{ __('Şehir') }}</dt>
-                    <dd>{{ $institution->city?->name ?? '—' }}</dd>
-                </div>
-                <div class="flex justify-between gap-2">
-                    <dt class="text-slate-500">{{ __('Durum') }}</dt>
-                    <dd>{{ $institution->verified ? __('Doğrulanmış') : __('Taslak') }}</dd>
-                </div>
-            </dl>
-        @endif
-        <div class="mt-6 rounded-xl bg-sky-50 p-4 text-sm text-sky-900">
-            {{ __('İlgili şikâyetleri yanıtlama ve durum güncelleme işlevleri sıradaki iterasyonda eklenecek.') }}
+    <div class="mx-auto max-w-5xl space-y-6">
+        <div class="shell-page-head">
+            <div>
+                <h1 class="shell-page-title">{{ __('Kurum hesabı') }}</h1>
+                <p class="shell-page-desc">
+                    {{ $institution ? $institution->name : __('Kurum profilin henüz atanmadı.') }}
+                </p>
+            </div>
         </div>
-    </section>
+
+        @if ($institution)
+            <div class="shell-stat-grid sm:grid-cols-2">
+                <div class="shell-metric">
+                    <div>
+                        <p class="shell-metric__label">{{ __('Şehir') }}</p>
+                        <p class="shell-metric__value text-lg">{{ $institution->city?->name ?? '—' }}</p>
+                    </div>
+                </div>
+                <div class="shell-metric">
+                    <div>
+                        <p class="shell-metric__label">{{ __('Durum') }}</p>
+                        <p class="mt-2">
+                            @if ($institution->verified)
+                                <span class="shell-badge shell-badge--success">{{ __('Doğrulanmış') }}</span>
+                            @else
+                                <span class="shell-badge shell-badge--warn">{{ __('Taslak') }}</span>
+                            @endif
+                        </p>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        <div class="shell-card">
+            <div class="shell-card-pad">
+                <p class="text-sm text-gray-600">
+                    {{ __('İlgili şikâyetleri yanıtlama ve durum güncelleme işlevleri sıradaki iterasyonda eklenecek.') }}
+                </p>
+            </div>
+        </div>
+    </div>
 @endsection
