@@ -117,6 +117,8 @@ php artisan queue:work redis --sleep=3 --tries=3 --max-time=3600
 | 500 / APP_KEY | Environment’da `APP_KEY` tanımlı mı |
 | İl/ilçe listesi boş | `php artisan turkiye:sync-geo` |
 | Kurum araması boş | `php artisan institutions:seed-turkey --no-logos` |
+| Seeder “Command cancelled” (production) | `--force` ekleyin: `php artisan db:seed --class=CampaignTopicSeeder --force` veya `bash scripts/forge-seed-reference-data.sh` |
+| Kampanya konuları / reklam alanları boş | Deploy sonrası otomatik seed edilir; manuel: `bash scripts/forge-seed-reference-data.sh` |
 | Karışık içerik (http) | `APP_URL=https://...`, `FORCE_HTTPS=true` |
 | Oturum sorunu | `SESSION_DRIVER=database`, `sessions` tablosu migrate edildi mi |
 

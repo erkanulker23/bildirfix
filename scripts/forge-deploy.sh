@@ -32,6 +32,9 @@ fi
 
 php artisan migrate --force
 
+php artisan db:seed --class=CampaignTopicSeeder --force --no-interaction
+php artisan db:seed --class=AdPlacementSeeder --force --no-interaction
+
 php artisan storage:link 2>/dev/null || php artisan storage:link --force 2>/dev/null || true
 
 composer run forge-optimize --no-interaction

@@ -12,6 +12,9 @@ php artisan migrate --force
 
 php artisan db:seed --class=EssentialDataSeeder --force
 
+php artisan db:seed --class=CampaignTopicSeeder --force --no-interaction
+php artisan db:seed --class=AdPlacementSeeder --force --no-interaction
+
 echo "==> Türkiye il/ilçe verisi (TurkiyeAPI)…"
 php artisan turkiye:sync-geo
 
