@@ -20,7 +20,7 @@
         'moreLabel' => __('Akışta gör'),
     ])
 
-    <x-ad-slot :slot="config('adsense.slots.city_top')" class="mx-auto max-w-[1200px]" />
+    <x-ad-slot placement="city_top" class="mx-auto max-w-[1200px]" />
 
     <div class="space-y-8">
         <header class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm ring-1 ring-black/[0.03] sm:p-8">

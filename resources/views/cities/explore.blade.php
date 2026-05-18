@@ -9,13 +9,17 @@
         cities: {{ \Illuminate\Support\Js::from($citiesJson) }},
         regionOrder: {{ \Illuminate\Support\Js::from($regionOrder) }},
         regionLabels: {{ \Illuminate\Support\Js::from($regionLabels) }},
+        trFold(v) {
+            return (v || '').toLocaleLowerCase('tr-TR').normalize('NFC');
+        },
         get filtered() {
-            const s = (this.q || '').trim().toLowerCase().normalize('NFC');
+            const s = this.trFold((this.q || '').trim());
             if (!s) return this.cities;
             return this.cities.filter((c) => {
-                const name = (c.name || '').toLowerCase().normalize('NFC');
+                const name = this.trFold(c.name);
+                const slug = this.trFold(c.slug);
                 const plate = c.plate != null ? String(c.plate) : '';
-                return name.includes(s) || plate.includes(s);
+                return name.includes(s) || slug.includes(s) || plate.includes(s);
             });
         },
         get grouped() {

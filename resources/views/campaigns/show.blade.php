@@ -33,6 +33,12 @@
                     @endunless
 
                     <header class="space-y-4">
+                        @if ($campaign->topic)
+                            <a href="{{ route('campaigns.index', ['konu' => $campaign->topic->id]) }}"
+                                class="inline-flex rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-[11px] font-bold text-sky-900 hover:bg-sky-100">
+                                {{ $campaign->topic->name }}
+                            </a>
+                        @endif
                         <h1
                             class="font-heading text-[clamp(1.65rem,4vw,2.35rem)] font-black leading-[1.12] tracking-tight text-[#0a0a0a]">
                             {{ $campaign->title }}</h1>

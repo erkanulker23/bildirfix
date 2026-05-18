@@ -131,7 +131,7 @@
                 @forelse ($posts as $post)
                     @include('feed._post-article', ['post' => $post])
                     @if ($loop->iteration % 4 === 0)
-                        <x-ad-slot :slot="config('adsense.slots.feed_inline')" />
+                        <x-ad-slot placement="feed_inline" />
                     @endif
                 @empty
                     <div
@@ -149,7 +149,7 @@
         </div>
 
         <aside class="hidden space-y-4 xl:block">
-            <x-ad-slot :slot="config('adsense.slots.feed_sidebar')" />
+            <x-ad-slot placement="feed_sidebar" />
 
             <section class="overflow-hidden rounded-2xl border border-neutral-200/80 bg-white shadow-sm">
                 <div class="border-b border-neutral-100 bg-neutral-50/90 px-4 py-3">

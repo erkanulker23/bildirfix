@@ -19,7 +19,7 @@ class CampaignShowController extends Controller
             abort(404);
         }
 
-        $campaign->load(['user:id,name', 'city:id,name', 'moderatedBy:id,name']);
+        $campaign->load(['user:id,name', 'city:id,name', 'topic:id,name,slug', 'moderatedBy:id,name']);
 
         $campaignSupporters = $campaign->supporters()
             ->with('user:id,name')

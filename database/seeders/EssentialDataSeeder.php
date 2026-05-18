@@ -32,5 +32,7 @@ class EssentialDataSeeder extends Seeder
         }
 
         $this->command?->info('Temel kategoriler yüklendi ('.count($categories).').');
+
+        $this->call(CampaignTopicSeeder::class);
     }
 }

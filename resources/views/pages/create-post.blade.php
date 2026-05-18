@@ -161,16 +161,17 @@
 
                     <div>
                         <p class="mb-2 text-xs font-bold uppercase tracking-wide text-neutral-500">{{ __('Kategori') }} <span class="text-red-600">*</span></p>
-                        <div class="flex flex-wrap gap-2">
+                        <div class="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
                             @foreach ($categories as $cat)
                                 <button type="button"
-                                    class="inline-flex min-h-[46px] items-center gap-2 rounded-full border-2 px-4 py-2 text-sm font-bold transition"
+                                    class="inline-flex min-h-[46px] min-w-0 w-full items-center gap-2 rounded-full border-2 px-3 py-2 text-left text-[13px] font-bold leading-snug transition sm:w-auto sm:px-4 sm:text-sm"
                                     @click="categoryId = '{{ $cat->id }}'"
                                     :class="categoryId === '{{ $cat->id }}'
                                         ? 'border-primary bg-primary-light text-primary shadow-sm ring-1 ring-primary/25'
                                         : 'border-neutral-100 bg-neutral-50 text-neutral-800 hover:border-neutral-200'">
-                                    <span class="font-black text-primary">{{ mb_substr($cat->name, 0, 1) }}</span>
-                                    {{ $cat->name }}
+                                    <span
+                                        class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white text-sm font-black text-primary ring-1 ring-primary/15">{{ mb_substr($cat->name, 0, 1) }}</span>
+                                    <span class="min-w-0 flex-1 break-words">{{ $cat->name }}</span>
                                 </button>
                             @endforeach
                         </div>

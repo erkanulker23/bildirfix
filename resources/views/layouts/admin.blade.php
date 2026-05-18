@@ -79,7 +79,9 @@
                     <a href="{{ route('admin.institutions.index') }}"
                         class="flex items-center gap-3 rounded-lg px-3 py-2.5 font-medium transition {{ request()->routeIs('admin.institutions.*') ? 'border-l-4 border-primary bg-white/10 text-white' : 'text-white/80 hover:bg-white/10' }}">{{ __('Kurumlar') }}</a>
                     <a href="{{ route('admin.campaigns.registry') }}"
-                        class="flex items-center gap-3 rounded-lg px-3 py-2.5 font-medium transition {{ request()->routeIs('admin.campaigns.registry') ? 'border-l-4 border-primary bg-white/10 text-white' : 'text-white/80 hover:bg-white/10' }}">{{ __('Tüm kampanyalar') }}</a>
+                        class="flex items-center gap-3 rounded-lg px-3 py-2.5 font-medium transition {{ request()->routeIs('admin.campaigns.*') ? 'border-l-4 border-primary bg-white/10 text-white' : 'text-white/80 hover:bg-white/10' }}">{{ __('Tüm kampanyalar') }}</a>
+                    <a href="{{ route('admin.ads.index') }}"
+                        class="flex items-center gap-3 rounded-lg px-3 py-2.5 font-medium transition {{ request()->routeIs('admin.ads.*') ? 'border-l-4 border-primary bg-white/10 text-white' : 'text-white/80 hover:bg-white/10' }}">{{ __('Reklamlar') }}</a>
 
                     <p class="px-3 pb-1 pt-5 text-[10px] font-bold uppercase tracking-wider text-white/45">{{ __('Sistem') }}</p>
                     <a href="{{ route('admin.platform-settings.edit') }}"
@@ -183,6 +185,7 @@
             </main>
         </div>
     </div>
+    @stack('scripts')
 </body>
 
 </html>

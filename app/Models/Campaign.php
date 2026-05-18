@@ -21,6 +21,7 @@ class Campaign extends Model
         'description',
         'hero_image_url',
         'city_id',
+        'campaign_topic_id',
         'goal_supporters',
         'supporter_count',
         'moderation_status',
@@ -107,6 +108,11 @@ class Campaign extends Model
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function topic(): BelongsTo
+    {
+        return $this->belongsTo(CampaignTopic::class, 'campaign_topic_id');
     }
 
     public function moderatedBy(): BelongsTo

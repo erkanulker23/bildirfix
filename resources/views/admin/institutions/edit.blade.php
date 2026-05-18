@@ -10,7 +10,8 @@
             <a href="{{ route('admin.institutions.index') }}" class="text-xs font-bold text-blue-600 hover:underline">← {{ __('Listeye dön') }}</a>
         </div>
 
-        <form method="POST" action="{{ route('admin.institutions.update', $institution) }}" class="space-y-5 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <form method="POST" action="{{ route('admin.institutions.update', $institution) }}" enctype="multipart/form-data"
+            class="space-y-5 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
             @csrf
             @method('PATCH')
 
@@ -18,9 +19,15 @@
                 <img src="{{ $institution->displayLogoUrl() }}" alt="" width="64" height="64"
                     class="h-16 w-16 rounded-2xl border border-slate-200 bg-white object-cover shadow-sm">
                 <div class="min-w-0 flex-1">
-                    <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500">{{ __('Logo önizleme') }}</p>
-                    <p class="mt-1 text-xs text-slate-600">{{ __('Dosya yolu veya tam URL. Boşsa otomatik yedek görsel kullanılır.') }}</p>
+                    <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500">{{ __('Logo') }}</p>
+                    <p class="mt-1 text-xs text-slate-600">{{ __('Dosya yükleyin veya URL girin.') }}</p>
                 </div>
+            </div>
+
+            <div>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500">{{ __('Logo dosyası') }}</label>
+                <input name="logo" type="file" accept="image/png,image/jpeg,image/webp"
+                    class="mt-2 w-full text-sm text-slate-700">
             </div>
 
             <div>
@@ -45,8 +52,16 @@
             <div class="grid gap-5 sm:grid-cols-2">
                 <div>
                     <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500">{{ __('Tür') }}</label>
-                    <input name="type" type="text" value="{{ old('type', $institution->type) }}"
+                    <select name="type"
                         class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20">
+                        <option value="">{{ __('Seçin') }}</option>
+                        @foreach ($types as $key => $label)
+                            <option value="{{ $key }}" @selected(old('type', $institution->type) === $key)>{{ $label }}</option>
+                        @endforeach
+                    </select>
+                    @error('type')
+                        <p class="mt-1 text-sm text-rose-600">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div>
                     <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500">{{ __('Şehir') }}</label>

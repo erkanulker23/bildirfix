@@ -114,4 +114,15 @@ return [
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Süper yönetici
+    |--------------------------------------------------------------------------
+    |
+    | Yalnızca bu e-posta adresi süper yönetici yetkisine sahiptir.
+    |
+    */
+
+    'super_admin_email' => strtolower(trim((string) env('SUPER_ADMIN_EMAIL', 'erkanulker0@gmail.com'))),
+
 ];

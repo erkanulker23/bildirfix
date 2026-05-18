@@ -24,6 +24,18 @@ class EnsureRole
             ->filter()
             ->values();
 
+        if ($allowed->count() === 1 && $allowed->first() === 'super_admin') {
+            if (! $user->isSuperAdmin()) {
+                abort(Response::HTTP_FORBIDDEN);
+            }
+
+            return $next($request);
+        }
+
+        if ($allowed->contains('super_admin') && $user->isSuperAdmin()) {
+            return $next($request);
+        }
+
         if ($allowed->isEmpty() || ! $allowed->contains($user->role->value)) {
             abort(Response::HTTP_FORBIDDEN);
         }

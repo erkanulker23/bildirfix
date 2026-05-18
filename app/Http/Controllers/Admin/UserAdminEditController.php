@@ -8,6 +8,7 @@ use App\Enums\UserRole;
 use App\Enums\VerificationStatus;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Support\SuperAdmin;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -17,10 +18,16 @@ class UserAdminEditController extends Controller
 {
     public function edit(User $user): View
     {
+        $roles = collect(UserRole::cases())
+            ->filter(fn (UserRole $role): bool => SuperAdmin::canAssignRole($role) || SuperAdmin::is($user))
+            ->values()
+            ->all();
+
         return view('admin.users.edit', [
             'user' => $user,
-            'roles' => UserRole::cases(),
+            'roles' => $roles,
             'verificationStatuses' => VerificationStatus::cases(),
+            'isDesignatedSuperAdmin' => SuperAdmin::is($user),
         ]);
     }
 
@@ -40,30 +47,31 @@ class UserAdminEditController extends Controller
             ? $data['role']
             : UserRole::from((string) $data['role']);
 
+        $email = strtolower(trim((string) $data['email']));
+        $isDesignatedEmail = $email === SuperAdmin::email();
+
+        if ($newRole === UserRole::SuperAdmin && ! $isDesignatedEmail) {
+            return back()->withErrors([
+                'role' => __('Süper yönetici yalnızca :email adresine atanabilir.', ['email' => SuperAdmin::email()]),
+            ])->withInput();
+        }
+
+        if (SuperAdmin::is($user)) {
+            if (! $isDesignatedEmail) {
+                return back()->withErrors([
+                    'email' => __('Süper yönetici e-postası değiştirilemez.'),
+                ])->withInput();
+            }
+            $newRole = UserRole::SuperAdmin;
+        }
+
+        if ($isDesignatedEmail) {
+            $newRole = UserRole::SuperAdmin;
+        }
+
         $verificationStatus = $data['verification_status'] instanceof VerificationStatus
             ? $data['verification_status']
             : VerificationStatus::from((string) $data['verification_status']);
-
-        if ($user->role === UserRole::SuperAdmin && $newRole !== UserRole::SuperAdmin) {
-            $remaining = User::query()
-                ->where('role', UserRole::SuperAdmin)
-                ->where('id', '!=', $user->id)
-                ->exists();
-            if (! $remaining) {
-                return back()->withErrors(['role' => __('En az bir süper yönetici hesabı kalmalıdır.')])->withInput();
-            }
-        }
-
-        $actor = $request->user();
-        if ($actor !== null && (int) $user->id === (int) $actor->id && $newRole !== UserRole::SuperAdmin) {
-            $remaining = User::query()
-                ->where('role', UserRole::SuperAdmin)
-                ->where('id', '!=', $actor->id)
-                ->exists();
-            if (! $remaining) {
-                return back()->withErrors(['role' => __('Kendinizi süper yöneticilikten çıkaramazsınız; önce başka bir süper yönetici tanımlayın.')])->withInput();
-            }
-        }
 
         $emailVerifiedAt = $data['email_verified']
             ? ($user->email_verified_at ?? now())

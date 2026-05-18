@@ -6,36 +6,42 @@ namespace App\Http\Controllers;
 
 use App\Enums\CampaignModerationStatus;
 use App\Models\Campaign;
+use App\Support\CampaignDraftBuilder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class CampaignStoreController extends Controller
 {
     public function __invoke(Request $request): RedirectResponse
     {
         $data = $request->validate([
+            'purpose' => ['required', 'string', 'min:10', 'max:2000'],
+            'personal_story' => ['nullable', 'string', 'max:5000'],
+            'scope' => ['required', Rule::in(['local', 'national', 'global'])],
+            'campaign_topic_id' => ['required', 'integer', 'exists:campaign_topics,id'],
+            'city_id' => ['nullable', 'integer', 'exists:cities,id', 'required_if:scope,local'],
             'title' => ['required', 'string', 'max:140'],
-            'excerpt' => ['nullable', 'string', 'max:480'],
-            'description' => ['required', 'string', 'max:15000'],
-            'hero_image_url' => ['nullable', 'url', 'max:2000'],
-            'city_id' => ['nullable', 'integer', 'exists:cities,id'],
             'goal_supporters' => ['nullable', 'integer', 'min:10', 'max:2147483646'],
-            'ends_at' => ['nullable', 'date'],
+            'hero_image_url' => ['nullable', 'url', 'max:2000'],
         ]);
 
-        $base = Campaign::slugFromTitle((string) $data['title']);
+        $composed = CampaignDraftBuilder::compose($data);
+
+        $base = Campaign::slugFromTitle($composed['title']);
         $slug = Campaign::uniqueSlug($base);
 
         $campaign = Campaign::query()->create([
             'user_id' => (int) $request->user()->id,
-            'title' => (string) $data['title'],
+            'title' => $composed['title'],
             'slug' => $slug,
-            'excerpt' => isset($data['excerpt']) ? (string) $data['excerpt'] : null,
-            'description' => (string) $data['description'],
+            'excerpt' => $composed['excerpt'],
+            'description' => $composed['description'],
             'hero_image_url' => isset($data['hero_image_url']) ? (string) $data['hero_image_url'] : null,
-            'city_id' => isset($data['city_id']) ? (int) $data['city_id'] : null,
+            'city_id' => $composed['city_id'],
+            'campaign_topic_id' => (int) $data['campaign_topic_id'],
             'goal_supporters' => $data['goal_supporters'] ?? null,
-            'ends_at' => $data['ends_at'] ?? null,
+            'ends_at' => null,
             'moderation_status' => CampaignModerationStatus::Pending,
             'moderated_at' => null,
             'moderated_by_user_id' => null,

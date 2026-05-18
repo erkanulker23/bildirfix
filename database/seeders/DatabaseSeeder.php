@@ -1582,6 +1582,9 @@ class DatabaseSeeder extends Seeder
         InstitutionsTurkeySeeder::$downloadLogos = false;
         $this->call(InstitutionsTurkeySeeder::class);
 
+        $this->call(AdPlacementSeeder::class);
+        $this->call(CampaignTopicSeeder::class);
+
         $this->command?->info('Örnek veriler eklendi. Süper admin: erkanulker0@gmail.com (kurulum şifreniz DatabaseSeeder’da tanımlı).');
         $this->command?->line('Kurum logoları için: php artisan institutions:seed-turkey --sync-geo');
         $this->command?->line('Admin: +905530000001 (password) | Kurum: +905530000002 | Vatandaş: +905530000003–005');

@@ -46,12 +46,17 @@
 
             <div>
                 <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500">{{ __('Rol') }}</label>
-                <select name="role"
-                    class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20">
-                    @foreach ($roles as $role)
-                        <option value="{{ $role->value }}" @selected(old('role', $user->role->value) === $role->value)>{{ $role->value }}</option>
-                    @endforeach
-                </select>
+                @if (! empty($isDesignatedSuperAdmin))
+                    <input type="hidden" name="role" value="super_admin">
+                    <p class="mt-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-bold text-amber-900">{{ __('Süper yönetici (sabit)') }}</p>
+                @else
+                    <select name="role"
+                        class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20">
+                        @foreach ($roles as $role)
+                            <option value="{{ $role->value }}" @selected(old('role', $user->role->value) === $role->value)>{{ $role->value }}</option>
+                        @endforeach
+                    </select>
+                @endif
                 @error('role')
                     <p class="mt-1 text-sm text-rose-600">{{ $message }}</p>
                 @enderror

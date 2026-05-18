@@ -18,7 +18,28 @@
         @endauth
     </div>
 
+    @if ($topics->isNotEmpty())
+        <section class="mb-8 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-neutral-100">
+            <h2 class="text-lg font-black text-neutral-950">{{ __('Konular') }}</h2>
+            <div class="mt-4 flex flex-wrap gap-2">
+                <a href="{{ route('campaigns.index', request()->only('city_id')) }}"
+                    class="rounded-full border px-3 py-1.5 text-xs font-bold transition {{ empty($activeTopicFilter) ? 'border-sky-600 bg-sky-50 text-sky-900' : 'border-sky-200/80 bg-white text-sky-950 hover:bg-sky-50' }}">
+                    {{ __('Tümü') }}
+                </a>
+                @foreach ($topics as $topic)
+                    <a href="{{ route('campaigns.index', array_filter(['konu' => $topic->id, 'city_id' => $activeCityFilter ?: null])) }}"
+                        class="rounded-full border px-3 py-1.5 text-xs font-bold transition {{ (int) $activeTopicFilter === (int) $topic->id ? 'border-sky-600 bg-sky-50 text-sky-900' : 'border-sky-200/80 bg-white text-sky-950 hover:bg-sky-50' }}">
+                        {{ $topic->name }}
+                    </a>
+                @endforeach
+            </div>
+        </section>
+    @endif
+
     <form method="get" action="{{ route('campaigns.index') }}" class="mb-8 flex flex-wrap items-end gap-3 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-neutral-100">
+        @if ($activeTopicFilter)
+            <input type="hidden" name="konu" value="{{ $activeTopicFilter }}">
+        @endif
         <div class="min-w-[10rem] flex-1">
             <label class="text-[11px] font-bold uppercase tracking-wide text-neutral-500" for="cmp-city">{{ __('İl (isteğe bağlı)') }}</label>
             <select id="cmp-city" name="city_id"
@@ -52,7 +73,11 @@
                         </a>
                     @endif
                     <div class="flex flex-1 flex-col p-5">
-                        <p class="text-[11px] font-black uppercase tracking-wider text-indigo-700">{{ __('SSR kampanyası') }}</p>
+                        @if ($campaign->topic)
+                            <p class="text-[11px] font-black uppercase tracking-wider text-sky-800">{{ $campaign->topic->name }}</p>
+                        @else
+                            <p class="text-[11px] font-black uppercase tracking-wider text-indigo-700">{{ __('SSR kampanyası') }}</p>
+                        @endif
                         <h2 class="mt-1 text-[1.125rem] font-black leading-snug tracking-tight text-neutral-950">
                             <a href="{{ route('campaigns.show', $campaign) }}" class="hover:text-indigo-800">{{ $campaign->title }}</a></h2>
                         <p class="mt-2 line-clamp-3 flex-1 text-[13px] font-medium leading-relaxed text-neutral-700">

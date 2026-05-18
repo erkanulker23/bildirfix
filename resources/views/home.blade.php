@@ -169,6 +169,8 @@
         @endisset
     </section>
 
+    @include('partials.home-how-it-works')
+
     {{-- Kampanyalar — öne çıkan ızgarası --}}
     <section class="mb-10 scroll-mt-8 sm:mb-12" aria-labelledby="kampanya-csr-baslik">
         <div class="home-container">

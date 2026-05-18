@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\UserRole;
 use App\Enums\VerificationStatus;
+use App\Support\SuperAdmin;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -32,6 +33,21 @@ class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
+
+    protected static function booted(): void
+    {
+        static::saving(function (User $user): void {
+            if (SuperAdmin::is($user)) {
+                $user->role = UserRole::SuperAdmin;
+
+                return;
+            }
+
+            if ($user->role === UserRole::SuperAdmin) {
+                $user->role = UserRole::Admin;
+            }
+        });
+    }
 
     protected function casts(): array
     {
@@ -86,7 +102,7 @@ class User extends Authenticatable
 
     public function isSuperAdmin(): bool
     {
-        return $this->role === UserRole::SuperAdmin;
+        return \App\Support\SuperAdmin::is($this);
     }
 
     public function isAdmin(): bool

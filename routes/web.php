@@ -3,7 +3,8 @@
 use App\Http\Controllers\Admin\BlogModerationController;
 use App\Http\Controllers\Admin\BlogPostController;
 use App\Http\Controllers\Admin\CampaignModerationController;
-use App\Http\Controllers\Admin\CampaignRegistryController;
+use App\Http\Controllers\Admin\AdPlacementAdminController;
+use App\Http\Controllers\Admin\CampaignAdminController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\InstitutionAdminController;
 use App\Http\Controllers\Admin\MailSettingsController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\Auth\StaffAuthenticatedSessionController;
 use App\Http\Controllers\Auth\VerifyPhoneController;
 use App\Http\Controllers\BlogIndexController;
 use App\Http\Controllers\BlogShowController;
+use App\Http\Controllers\CitySearchController;
 use App\Http\Controllers\CampaignCreateController;
 use App\Http\Controllers\CampaignIndexController;
 use App\Http\Controllers\CampaignShowController;
@@ -66,6 +68,7 @@ Route::get('kampanya/{campaign:slug}', CampaignShowController::class)->name('cam
 Route::get('sikayet/{post}', PostShowController::class)->name('posts.show');
 Route::get('kurum/{institution}', InstitutionPublicController::class)->name('institutions.show');
 Route::get('sehirini-kesfet', CityExploreController::class)->name('cities.explore');
+Route::get('api/sehir-ara', CitySearchController::class)->name('api.cities.search')->middleware('throttle:60,1');
 Route::get('il/{city:slug}', CityPublicController::class)->name('cities.show');
 Route::get('blog', BlogIndexController::class)->name('blog.index');
 Route::get('blog/{slug}', BlogShowController::class)->name('blog.show')->where('slug', '[a-z0-9]+(?:-[a-z0-9]+)*');
@@ -172,7 +175,16 @@ Route::middleware(['auth', 'verified.phone', 'role:admin,super_admin'])
             Route::post('kampanya-moderasyon/{campaign:id}/reddet', [CampaignModerationController::class, 'reject'])->name('campaign-moderation.reject');
             Route::post('kampanya-moderasyon/{campaign:id}/yayindan-kaldir', [CampaignModerationController::class, 'unpublish'])->name('campaign-moderation.unpublish');
 
-            Route::get('kampanyalar', CampaignRegistryController::class)->name('campaigns.registry');
+            Route::get('kampanyalar', [CampaignAdminController::class, 'index'])->name('campaigns.registry');
+            Route::get('kampanyalar/olustur', [CampaignAdminController::class, 'create'])->name('campaigns.create');
+            Route::post('kampanyalar', [CampaignAdminController::class, 'store'])->name('campaigns.store');
+            Route::get('kampanyalar/{campaign:id}/duzenle', [CampaignAdminController::class, 'edit'])->name('campaigns.edit');
+            Route::patch('kampanyalar/{campaign:id}', [CampaignAdminController::class, 'update'])->name('campaigns.update');
+            Route::delete('kampanyalar/toplu', [CampaignAdminController::class, 'bulkDestroy'])->name('campaigns.bulk-destroy');
+
+            Route::get('reklamlar', [AdPlacementAdminController::class, 'index'])->name('ads.index');
+            Route::get('reklamlar/{ad}/duzenle', [AdPlacementAdminController::class, 'edit'])->name('ads.edit');
+            Route::patch('reklamlar/{ad}', [AdPlacementAdminController::class, 'update'])->name('ads.update');
 
             Route::get('kullanicilar', UserAdminController::class)->name('users.index');
             Route::get('kullanicilar/{user}/duzenle', [UserAdminEditController::class, 'edit'])->name('users.edit');

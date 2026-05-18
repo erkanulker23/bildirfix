@@ -94,9 +94,27 @@
                     @endif
 
                     @if (count($__galleryAll) > 0)
-                        <section class="mt-10 border-t border-teal-100/80 pt-10" aria-labelledby="post-medya-baslik">
+                        @php
+                            $photoItems = collect($__galleryAll)
+                                ->filter(fn ($gx) => ($gx['type'] ?? '') !== 'video')
+                                ->values()
+                                ->all();
+                        @endphp
+                        <section class="mt-10 border-t border-teal-100/80 pt-10" aria-labelledby="post-medya-baslik"
+                            x-data="{
+                                lightboxOpen: false,
+                                lightboxIndex: 0,
+                                photos: {{ \Illuminate\Support\Js::from(array_column($photoItems, 'url')) }},
+                                openAt(i) { this.lightboxIndex = i; this.lightboxOpen = true; document.body.classList.add('overflow-hidden'); },
+                                close() { this.lightboxOpen = false; document.body.classList.remove('overflow-hidden'); },
+                                prev() { this.lightboxIndex = (this.lightboxIndex + this.photos.length - 1) % this.photos.length; },
+                                next() { this.lightboxIndex = (this.lightboxIndex + 1) % this.photos.length; },
+                            }"
+                            @keydown.escape.window="close()"
+                            @keydown.arrow-left.window="lightboxOpen && prev()"
+                            @keydown.arrow-right.window="lightboxOpen && next()">
                             <h2 id="post-medya-baslik" class="mb-4 text-xs font-black uppercase tracking-[0.18em] text-teal-900">{{ __('Fotoğraf ve videolar') }}</h2>
-                            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                            <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
                                 @foreach ($__galleryAll as $gx)
                                     @php
                                         $gYt = null;
@@ -105,14 +123,17 @@
                                             preg_match('~(?:youtube\.com/watch\?v=|youtu\.be/)([\w-]+)~', $gUrl, $gm);
                                             $gYt = $gm[1] ?? null;
                                         }
+                                        $photoIndex = ($gx['type'] ?? '') !== 'video'
+                                            ? array_search($gUrl, array_column($photoItems, 'url'), true)
+                                            : false;
                                     @endphp
                                     @if (($gx['type'] ?? '') === 'video' && $gYt !== null && $gYt !== '')
-                                        <div class="overflow-hidden rounded-2xl border border-teal-100 shadow-md sm:col-span-2">
+                                        <div class="col-span-full overflow-hidden rounded-2xl border border-teal-100 shadow-md">
                                             <iframe class="aspect-video w-full" src="https://www.youtube.com/embed/{{ $gYt }}?rel=0"
                                                 title="{{ __('Video') }}" allowfullscreen loading="lazy"></iframe>
                                         </div>
                                     @elseif (($gx['type'] ?? '') === 'video')
-                                        <div class="relative aspect-video overflow-hidden rounded-2xl border border-teal-100 bg-slate-900 shadow-md sm:col-span-2">
+                                        <div class="relative col-span-full aspect-video overflow-hidden rounded-2xl border border-teal-100 bg-slate-900 shadow-md">
                                             @if (! empty($gx['poster'] ?? null))
                                                 <img src="{{ $gx['poster'] }}" alt="" class="h-full w-full object-cover opacity-60" loading="lazy">
                                             @endif
@@ -122,13 +143,25 @@
                                             </a>
                                         </div>
                                     @else
-                                        <a href="{{ $gx['url'] }}" target="_blank" rel="noopener noreferrer"
-                                            class="block overflow-hidden rounded-2xl ring-1 ring-teal-100">
-                                            <img src="{{ $gx['url'] }}" alt="" class="max-h-80 w-full object-cover transition hover:brightness-105" loading="lazy">
-                                        </a>
+                                        <button type="button" @click="openAt({{ (int) $photoIndex }})"
+                                            class="aspect-square w-full overflow-hidden rounded-2xl ring-1 ring-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                                            <img src="{{ $gx['url'] }}" alt="" class="h-full w-full object-cover transition hover:brightness-105" loading="lazy">
+                                        </button>
                                     @endif
                                 @endforeach
                             </div>
+                            <template x-teleport="body">
+                                <div x-show="lightboxOpen" x-cloak class="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 p-4"
+                                    @click.self="close()" role="dialog" aria-modal="true">
+                                    <button type="button" @click="close()"
+                                        class="absolute right-4 top-4 z-10 rounded-full bg-white/10 px-3 py-2 text-xs font-bold text-white hover:bg-white/20">{{ __('Kapat') }}</button>
+                                    <button type="button" @click="prev()" x-show="photos.length > 1"
+                                        class="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 px-3 py-4 text-white hover:bg-white/20 sm:left-4">‹</button>
+                                    <img :src="photos[lightboxIndex]" alt="" class="max-h-[90vh] max-w-full rounded-lg object-contain shadow-2xl">
+                                    <button type="button" @click="next()" x-show="photos.length > 1"
+                                        class="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 px-3 py-4 text-white hover:bg-white/20 sm:right-4">›</button>
+                                </div>
+                            </template>
                         </section>
                     @endif
 
