@@ -85,8 +85,8 @@ class DatabaseSeeder extends Seeder
         $admin = User::query()->updateOrCreate(
             ['phone' => Phone::normalize('5530000001')],
             [
-                'name' => 'Bildir Admin',
-                'email' => 'admin@sorunbildir.local',
+                'name' => 'simdibildir.com Admin',
+                'email' => 'admin@simdibildir.local',
                 'password' => Hash::make('password'),
                 'role' => UserRole::Admin,
                 'verification_status' => VerificationStatus::Verified,
@@ -99,7 +99,7 @@ class DatabaseSeeder extends Seeder
             ['phone' => Phone::normalize('5530000002')],
             [
                 'name' => 'Demo Kurum Hesabı',
-                'email' => 'iski@sorunbildir.local',
+                'email' => 'iski@simdibildir.local',
                 'password' => Hash::make('password'),
                 'role' => UserRole::Institution,
                 'verification_status' => VerificationStatus::Verified,
@@ -1575,7 +1575,15 @@ class DatabaseSeeder extends Seeder
             $__c->forceFill(['supporter_count' => $__c->supporters()->count()])->saveQuietly();
         }
 
+        if (\App\Models\City::query()->count() < 81) {
+            $this->command?->call('turkiye:sync-geo');
+        }
+
+        InstitutionsTurkeySeeder::$downloadLogos = false;
+        $this->call(InstitutionsTurkeySeeder::class);
+
         $this->command?->info('Örnek veriler eklendi. Süper admin: erkanulker0@gmail.com (kurulum şifreniz DatabaseSeeder’da tanımlı).');
+        $this->command?->line('Kurum logoları için: php artisan institutions:seed-turkey --sync-geo');
         $this->command?->line('Admin: +905530000001 (password) | Kurum: +905530000002 | Vatandaş: +905530000003–005');
     }
 }

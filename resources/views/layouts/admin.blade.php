@@ -48,7 +48,7 @@
             class="fixed inset-y-0 left-0 z-40 flex w-[260px] max-w-[85vw] -translate-x-full flex-col border-r border-white/10 bg-secondary transition-transform duration-200 ease-out peer-checked:translate-x-0 lg:relative lg:z-10 lg:max-w-none lg:shrink-0 lg:translate-x-0">
             <div class="border-b border-white/10 px-4 py-5">
                 <a href="{{ route('admin.dashboard') }}" class="block">
-                    <p class="font-heading text-xs font-bold uppercase tracking-wide text-white/50">{{ config('app.name') }}</p>
+                    <p class="font-heading text-xs font-bold tracking-wide text-white/50">{{ config('app.name') }}</p>
                     <p class="mt-1 text-lg font-extrabold leading-tight text-white">{{ __('Yönetim paneli') }}</p>
                     <p class="mt-0.5 text-xs text-white/55">{{ __('Operasyon ve onay özeti') }}</p>
                 </a>

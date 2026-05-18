@@ -98,7 +98,7 @@
                         <label class="text-[11px] font-bold uppercase tracking-wide text-neutral-500">{{ __('İl') }}</label>
                         <select name="city_id" title="{{ __('Şehir') }}"
                             class="mt-1.5 w-full rounded-2xl border-0 bg-neutral-100 px-4 py-3 text-sm font-bold text-neutral-900 shadow-inner outline-none ring-2 ring-transparent focus:ring-violet-500"
-                            onchange="document.cookie='bildir_city_id='+encodeURIComponent(this.value)+';path=/;max-age='+60*60*24*365+';SameSite=Lax'; this.form.submit();">
+                            onchange="document.cookie='simdibildir_city_id='+encodeURIComponent(this.value)+';path=/;max-age='+60*60*24*365+';SameSite=Lax'; this.form.submit();">
                             @foreach ($cities as $city)
                                 <option value="{{ $city->id }}" @selected((int) $activeCityId === (int) $city->id)>{{ $city->name }}</option>
                             @endforeach

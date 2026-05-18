@@ -52,6 +52,12 @@ final class SeoController extends Controller
                 'priority' => '0.82',
                 'lastmod' => now()->startOfMinute()->toAtomString(),
             ],
+            [
+                'loc' => $base.'/nasil-calisir',
+                'changefreq' => 'monthly',
+                'priority' => '0.75',
+                'lastmod' => now()->startOfMinute()->toAtomString(),
+            ],
         ];
 
         $blogPosts = BlogPost::query()

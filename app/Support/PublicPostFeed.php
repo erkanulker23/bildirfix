@@ -19,7 +19,7 @@ final class PublicPostFeed
      */
     public static function locationContext(Request $request): array
     {
-        $cookieCity = $request->cookie('bildir_city_id');
+        $cookieCity = $request->cookie('simdibildir_city_id');
 
         $cityFromCookie = null;
         if (is_numeric($cookieCity)) {
@@ -157,7 +157,7 @@ final class PublicPostFeed
      */
     public static function coordinatePair(Request $request): array
     {
-        $pairs = [[$request->query('lat'), $request->query('lng')], [$request->cookie('bildir_lat'), $request->cookie('bildir_lng')]];
+        $pairs = [[$request->query('lat'), $request->query('lng')], [$request->cookie('simdibildir_lat'), $request->cookie('simdibildir_lng')]];
         foreach ($pairs as [$la, $lo]) {
             $lat = self::coordinate($la ?? null);
             $lng = self::coordinate($lo ?? null);

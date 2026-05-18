@@ -1,0 +1,1062 @@
+
+
+<!DOCTYPE HTML>
+<html>
+<head html="Head1">
+    <!-- Google Tag Manager -->
+
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' l: ''; j.async = true; j.src =
+
+                    'https://www.googletagmanager.com/gtm.js?id=' i dl; f.parentNode.insertBefore(j, f);
+
+        })(window, document, 'script', 'dataLayer', 'GTM-NBRSX3G');</script>
+
+    <!-- End Google Tag Manager -->
+    
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="-1" />
+<meta http-equiv="Content-Type" content="text/html; charset=uft-8" />
+<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800&amp;subset=latin-ext" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&amp;subset=latin-ext" rel="stylesheet">
+<link rel="stylesheet" href="/Content/Lib/PluginBundle.css" media="projection,screen" />
+<link rel="stylesheet" href="/Content/Css/Clckwrk.css" media="projection,screen" />
+<link href="/Content/Css/select2.min.css" rel="stylesheet" />
+<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="8bdf86e6-fd1e-47fb-9408-63db9a321fbb" type="text/javascript"></script>
+<script type="text/javascript" src="/Content/Js/jquery.3.5.1.min.js"></script>
+<script type="text/javascript" src="Content/Js/ua-parser.min.js"></script>
+
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<link rel="apple-touch-icon" sizes="57x57" href="/Content/Images/Favicon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/Content/Images/Favicon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/Content/Images/Favicon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/Content/Images/Favicon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/Content/Images/Favicon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/Content/Images/Favicon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/Content/Images/Favicon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/Content/Images/Favicon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/Content/Images/Favicon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/Content/Images/Favicon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/Content/Images/Favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/Content/Images/Favicon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/Content/Images/Favicon/favicon-16x16.png">
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="manifest" href="/Content/Images/Favicon/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/Content/Images/Favicon/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+<meta name="facebook-domain-verification" content="543ipk3v58brv4pno1abckp0r8oyfw" />
+
+
+
+    <script>
+        //if (location.protocol !== 'https:') {
+        //    location.replace(`https:${location.href.substring(location.protocol.length)}`);
+        //}
+    </script>
+    <style type="text/css" data-react-helmet="true">
+        #psn-widget-root {
+            -webkit-transition: opacity .1s linear;
+            transition: opacity .1s linear
+        }
+
+            #psn-widget-root, #psn-widget-root * {
+                font-style: normal;
+                letter-spacing: normal;
+                font-stretch: normal;
+                -webkit-font-feature-settings: normal;
+                font-feature-settings: normal;
+                font-variant: normal;
+                font-size: 100%;
+                text-align: left;
+                -moz-text-align-last: auto;
+                text-align-last: auto;
+                text-decoration: none;
+                -webkit-text-emphasis: none;
+                text-emphasis: none;
+                text-indent: 0;
+                text-justify: auto;
+                text-shadow: none;
+                text-transform: none;
+                text-wrap: normal;
+                alignment-baseline: baseline;
+                -webkit-animation: none 0 ease 0 1 normal;
+                animation: none 0 ease 0 1 normal;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                -webkit-backface-visibility: visible;
+                backface-visibility: visible;
+                background-color: transparent;
+                background-image: none;
+                baseline-shift: baseline;
+                border: 0 none transparent;
+                border-radius: 0;
+                bottom: auto;
+                -webkit-column-break-inside: auto;
+                break-inside: auto;
+                caption-side: top;
+                clear: none;
+                clip: auto;
+                -webkit-column-fill: balance;
+                -moz-column-fill: balance;
+                column-fill: balance;
+                -webkit-column-gap: normal;
+                -moz-column-gap: normal;
+                column-gap: normal;
+                -webkit-columns: auto auto;
+                -moz-columns: auto auto;
+                columns: auto auto;
+                content: normal;
+                counter-increment: none;
+                counter-reset: none;
+                cursor: auto;
+                direction: ltr;
+                display: inline;
+                dominant-baseline: auto;
+                empty-cells: show;
+                float: none;
+                height: auto;
+                -webkit-hyphens: none;
+                -ms-hyphens: none;
+                hyphens: none;
+                left: auto;
+                line-height: inherit;
+                margin: 0;
+                max-height: none;
+                max-width: none;
+                min-height: 0;
+                min-width: 0;
+                opacity: 1;
+                orphans: 2;
+                outline-offset: 0;
+                overflow: visible;
+                padding: 0;
+                page: auto;
+                page-break-after: auto;
+                page-break-before: auto;
+                page-break-inside: auto;
+                -webkit-perspective: none;
+                perspective: none;
+                -webkit-perspective-origin: 50% 50%;
+                perspective-origin: 50% 50%;
+                pointer-events: auto;
+                position: static;
+                quotes: none;
+                resize: none;
+                right: auto;
+                rotation: 0;
+                rotation-point: 50% 50%;
+                ruby-align: auto;
+                ruby-overhang: none;
+                ruby-position: before;
+                size: auto;
+                string-set: none;
+                table-layout: auto;
+                top: auto;
+                -webkit-transform: none;
+                transform: none;
+                -webkit-transform-origin: 50% 50% 0;
+                transform-origin: 50% 50% 0;
+                -webkit-transform-style: flat;
+                transform-style: flat;
+                -webkit-transition: all 0 ease 0;
+                transition: all 0 ease 0;
+                unicode-bidi: normal;
+                vertical-align: baseline;
+                white-space: normal;
+                widows: 2;
+                width: auto;
+                word-break: normal;
+                word-spacing: normal;
+                word-wrap: normal;
+                z-index: auto;
+                -webkit-tap-highlight-color: transparent
+            }
+
+        .psn-widget-invisible {
+            z-index: -9999 !important;
+            pointer-events: none !important;
+            opacity: 0 !important
+        }
+
+            .psn-widget-invisible, .psn-widget-invisible * {
+                -webkit-animation: none !important;
+                animation: none !important
+            }
+
+        #psn-widget-button-frame {
+            opacity: 1 !important;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            position: fixed;
+            -webkit-box-shadow: 0 0 10px hsla(0,0%,53%,.4);
+            box-shadow: 0 0 10px hsla(0,0%,53%,.4);
+            -webkit-transition: opacity .1s linear;
+            transition: opacity .1s linear;
+            -webkit-transition-delay: .25s;
+            transition-delay: .25s;
+            border: none
+        }
+
+            #psn-widget-button-frame.psn-widget-invisible {
+                opacity: 0 !important
+            }
+
+            #psn-widget-button-frame:hover {
+                -webkit-box-shadow: 0 0 15px hsla(0,0%,53%,.65);
+                box-shadow: 0 0 15px hsla(0,0%,53%,.65)
+            }
+
+        #psn-widget-content-frame {
+            display: block !important;
+            max-width: calc(100% - 20px);
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            position: fixed;
+            border: none;
+            z-index: 2147483647
+        }
+
+        @media screen and (max-width:480px) {
+            #psn-widget-content-frame.mobile-full-page {
+                min-height: 100% !important;
+                max-height: 100% !important;
+                min-width: 100% !important;
+                max-width: 100% !important;
+                top: 0;
+                left: 0;
+                -webkit-transform: none;
+                transform: none
+            }
+        }
+
+        @media screen and (max-width:991px) {
+            #psn-widget-content-frame.psn-widget-invisible {
+                position: static !important
+            }
+        }
+
+        iframe#psn-widget-button-frame {
+            right: 0;
+            width: 44px !important
+        }
+
+        #psn-widget-content-frame {
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+            -webkit-transition: opacity .25s linear;
+            transition: opacity .25s linear;
+            opacity: 1
+        }
+
+            #psn-widget-content-frame.psn-widget-invisible {
+                opacity: 0
+            }
+
+        #psn-modal-overlay {
+            background-color: transparent;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0;
+            -webkit-transition: opacity .1s linear;
+            transition: opacity .1s linear
+        }
+
+            #psn-modal-overlay.psn-widget-visible {
+                background-color: rgba(0,0,0,.45);
+                pointer-events: all;
+                z-index: 2147483646 !important;
+                opacity: 1
+            }
+    </style>
+    <style>
+        .CWValidate {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .flex-direction-nav a {
+            background-color: #fff;
+            text-align: center !important;
+            box-shadow: 0 0 8px rgba(0, 0, 0, .3);
+            line-height: 40px;
+        }
+
+            .flex-direction-nav a:before {
+                font-size: 18px;
+                text-shadow: none;
+            }
+
+        .mainPromo:hover .flex-direction-nav .flex-prev {
+            opacity: 1;
+            left: 20px;
+        }
+
+        .mainPromo:hover .flex-direction-nav .flex-next {
+            opacity: 1;
+            right: 20px;
+        }
+
+        .flex-direction-nav a{
+            width:35px !important;
+            height:35px !important;
+        }
+    </style>
+
+
+
+<title>
+
+</title></head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NBRSX3G"
+            height="0" width="0" style="display: none; visibility: hidden"></iframe>
+    </noscript>
+
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="wrapper">
+        <form name="aspnetForm" method="post" action="./favicon.ico?404%3bhttp%3a%2f%2fwww.osmangaziedas.com.tr%3a80%2ffavicon.ico" id="aspnetForm">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJNDMyNDU0NjAzDxYCHhNWYWxpZGF0ZVJlcXVlc3RNb2RlAgEWAmYPZBYCAgMPZBYEAgEPZBYGAgEPFgIeC18hSXRlbUNvdW50AgYWDGYPZBYCAgEPDxYEHgRUZXh0BQhLVVJVTVNBTB4LTmF2aWdhdGVVcmwFCy9oYWtraW1pemRhFgIeBWNsYXNzBQhuYXYtbGlua2QCAQ9kFgICAQ8PFgQfAgUJRFVZVVJVTEFSHwMFGi9wbGFubGkta2VzaW50aS1kdXl1cnVsYXJpFgIfBAUIbmF2LWxpbmtkAgIPZBYCAgEPDxYEHwIFJELEsExHxLAgRUTEsE5NRS9LVUxMQU5JQ0kgQkHFnlZVUlVTVR8DBQ8vaWxldGlzaW0tZm9ybXUWAh8EBQhuYXYtbGlua2QCAw9kFgICAQ8PFgQfAgUTVEFaTcSwTkFUIFNPUkdVTEFNQR8DBSpodHRwczovL3Nvcmd1Lm9lZGFzLmNvbS50ci9UYXptaW5hdHNvcmd1bGEWAh8EBQhuYXYtbGlua2QCBA9kFgICAQ8PFgQfAgUgRUxFS1RSxLBLIEtBTMSwVEUgR8OWU1RFUkdFTEVSxLAfAwUYL3RpY2FyaS1rYWxpdGUtdGFibG9sYXJpFgIfBAUIbmF2LWxpbmtkAgUPZBYCAgEPDxYEHwIFC0JBU0lOIE9EQVNJHwMFFy9zaXJrZXRpbWl6ZGVuLWhhYmVybGVyFgIfBAUIbmF2LWxpbmtkAgMPFgIfAQIGFgxmD2QWAgIBDw8WAh8DBRNqYXZhc2NyaXB0OnZvaWQoMCk7FgIeDGRhdGEtb3Blbm5lcgUMa3VydW1zYWwtc3ViFgJmDxYCHwIFCEtVUlVNU0FMZAIBD2QWAgIBDw8WAh8DBRNqYXZhc2NyaXB0OnZvaWQoMCk7FgIfBQUNZHV5dXJ1bGFyLXN1YhYCZg8WAh8CBQlEVVlVUlVMQVJkAgIPZBYCAgEPDxYCHwMFE2phdmFzY3JpcHQ6dm9pZCgwKTsWAh8FBSNiaWxnaS1lZGlubWVrdWxsYW5pY2ktYmFzdnVydXN1LXN1YhYCZg8WAh8CBSRCxLBMR8SwIEVExLBOTUUvS1VMTEFOSUNJIEJBxZ5WVVJVU1VkAgMPZBYCAgEPDxYCHwMFKmh0dHBzOi8vc29yZ3Uub2VkYXMuY29tLnRyL1Rhem1pbmF0c29yZ3VsYWQWAmYPFgIfAgUTVEFaTcSwTkFUIFNPUkdVTEFNQWQCBA9kFgICAQ8PFgIfAwUYL3RpY2FyaS1rYWxpdGUtdGFibG9sYXJpZBYCZg8WAh8CBSBFTEVLVFLEsEsgS0FMxLBURSBHw5ZTVEVSR0VMRVLEsGQCBQ9kFgICAQ8PFgIfAwUTamF2YXNjcmlwdDp2b2lkKDApOxYCHwUFD2Jhc2luLW9kYXNpLXN1YhYCZg8WAh8CBQtCQVNJTiBPREFTSWQCBQ8WAh8BAgQWCGYPZBYCAgEPFgIfBAURc3VicyBrdXJ1bXNhbC1zdWIWBAIBDxYCHwIFCEtVUlVNU0FMZAIDDxYCHwECBxYOZg9kFgQCAQ8PFgQfAgURUG9saXRpa2FsYXLEsW3EsXofAwUTamF2YXNjcmlwdDp2b2lkKDApO2RkAgMPZBYCAgEPFgIfAQIJFhJmD2QWAgIBDw8WBB8CBRBCR1lTIFBvbGl0aWthc8SxHwMFMC9iaWxnaS1ndXZlbmxpZ2kteW9uZXRpbS1zaXN0ZW1pLWJneXMtcG9saXRpa2FzaWRkAgEPZBYCAgEPDxYEHwIFEMSwU0cgUG9saXRpa2FzxLEfAwUjL2lzLXNhZ2xpZ2ktdmUtZ3V2ZW5saWdpLXBvbGl0aWthc2lkZAICD2QWAgIBDw8WBB8CBRLDh2V2cmUgUG9saXRpa2FzxLEfAwURL2NldnJlLXBvbGl0aWthc2lkZAIDD2QWAgIBDw8WBB8CBSFNw7zFn3RlcmkgTWVtbnVuaXlldGkgUG9saXRpa2FzxLEfAwUfL211c3RlcmktbWVtbnVuaXlldGktcG9saXRpa2FzaWRkAgQPZBYCAgEPDxYEHwIFEkthbGl0ZSBQb2xpdGlrYXPEsR8DBRIva2FsaXRlLXBvbGl0aWthc2lkZAIFD2QWAgIBDw8WBB8CBSlLacWfaXNlbCBWZXJpbGVyaW4gS29ydW5tYXPEsSBQb2xpdGlrYXPEsR8DBSgva2lzaXNlbC12ZXJpbGVyaW4ta29ydW5tYXNpLXBvbGl0aWthbWl6ZGQCBg9kFgICAQ8PFgQfAgUVR8O8dmVubGlrIFBvbGl0aWthc8SxHwMFFC9ndXZlbmxpay1wb2xpdGlrYXNpZGQCBw9kFgICAQ8PFgQfAgUvT0VEQcWeIFlhcGF5IFpla8OiIFnDtm5ldGltIFNpc3RlbWkgUG9saXRpa2FzxLEfAwUrL29lZGFzLXlhcGF5LXplay15b25ldGltLXNpc3RlbWktcG9saXRpa2FzaWRkAggPZBYCAgEPDxYEHwIFLsOHZXZyZXNlbCBWZSBTb3N5YWwgUmlzayBZw7ZuZXRpbWkgUG9saXRpa2FzxLEfAwUsL2NldnJlc2VsLXZlLXNvc3lhbC1yaXNrLXlvbmV0aW1pLXBvbGl0aWthc2lkZAIBD2QWBAIBDw8WBB8CBRlLdXJ1bXNhbCBLaW1saWsgQmlsZ2lsZXJpHwMFGi9rdXJ1bXNhbC1raW1saWstYmlsZ2lsZXJpZGQCAw8WAh4Fc3R5bGUFDGRpc3BsYXk6bm9uZRYCAgEPFgIfAQL/////D2QCAg9kFgQCAQ8PFgQfAgUSxLBuc2FuIEtheW5ha2xhcsSxHwMFE2phdmFzY3JpcHQ6dm9pZCgwKTtkZAIDD2QWAgIBDxYCHwECBxYOZg9kFgICAQ8PFgQfAgUexLBuc2FuIEtheW5ha2xhcsSxIFBvbGl0aWthc8SxHwMFHC9pbnNhbi1rYXluYWtsYXJpLXBvbGl0aWthc2lkZAIBD2QWAgIBDw8WBB8CBSDEsG5zYW4gS2F5bmFrbGFyxLEgVXlndWxhbWFsYXLEsR8DBR4vaW5zYW4ta2F5bmFrbGFyaS11eWd1bGFtYWxhcmlkZAICD2QWAgIBDw8WBB8CBSbDh2FsxLHFn2FubGFyxLFuIFnDtm5ldGltZSBLYXTEsWzEsW3EsR8DBR8vY2FsaXNhbmxhcmluLXlvbmV0aW1lLWthdGlsaW1pZGQCAw9kFgICAQ8PFgQfAgUiw4dhbMSxxZ9hbiBIYWtsYXLEsSB2ZSDEsMWfIEV0acSfaR8DBRwvY2FsaXNhbi1oYWtsYXJpLXZlLWlzLWV0aWdpZGQCBA9kFgICAQ8PFgQfAgUQUGF5ZGHFn2xhcsSxbcSxeh8DBQ4vcGF5ZGFzbGFyaW1pemRkAgUPZBYCAgEPDxYEHwIFC0F5xLFuIEVraWJpHwMFCy9heWluLWVraWJpZGQCBg9kFgICAQ8PFgQfAgVCQ2luc2VsIFRhY2l6IFZlIENpbnNpeWV0ZSBEYXlhbMSxIMWeaWRkZXRpbiDDlm5sZW5tZXNpIFBvbGl0aWthc8SxHwMFPy9jaW5zZWwtdGFjaXotdmUtY2luc2l5ZXRlLWRheWFsaS1zaWRkZXRpbi1vbmxlbm1lc2ktcG9saXRpa2FzaWRkAgMPZBYEAgEPDxYEHwIFDEhha2vEsW3EsXpkYR8DBQsvaGFra2ltaXpkYWRkAgMPFgIfBgUMZGlzcGxheTpub25lFgICAQ8WAh8BAv////8PZAIED2QWBAIBDw8WBB8CBRRNaXN5b24gdmUgVml6eW9udW11eh8DBRUvbWlzeW9uLXZlLXZpenlvbnVtdXpkZAIDDxYCHwYFDGRpc3BsYXk6bm9uZRYCAgEPFgIfAQL/////D2QCBQ9kFgQCAQ8PFgQfAgUdU8O8cmTDvHLDvGxlYmlsaXJsaWsgS29taXRlc2kfAwUbL3N1cmR1cnVsZWJpbGlybGlrLWtvbWl0ZXNpZGQCAw8WAh8GBQxkaXNwbGF5Om5vbmUWAgIBDxYCHwEC/////w9kAgYPZBYEAgEPDxYEHwIFG1PDvHJkw7xyw7xsZWJpbGlybGlrIFJhcG9ydR8DBRkvc3VyZHVydWxlYmlsaXJsaWstcmFwb3J1ZGQCAw8WAh8GBQxkaXNwbGF5Om5vbmUWAgIBDxYCHwEC/////w9kAgEPZBYCAgEPFgIfBAUSc3VicyBkdXl1cnVsYXItc3ViFgQCAQ8WAh8CBQlEVVlVUlVMQVJkAgMPFgIfAQIQFiBmD2QWBAIBDw8WBB8CBRtQbGFubMSxIEtlc2ludGkgRHV5dXJ1bGFyxLEfAwUaL3BsYW5saS1rZXNpbnRpLWR1eXVydWxhcmlkZAIDDxYCHwYFDGRpc3BsYXk6bm9uZRYCAgEPFgIfAQL/////D2QCAQ9kFgQCAQ8PFgQfAgUJxLBoYWxlbGVyHwMFE2phdmFzY3JpcHQ6dm9pZCgwKTtkZAIDD2QWAgIBDxYCHwECBBYIZg9kFgICAQ8PFgQfAgUSxLBoYWxlIER1eXVydWxhcsSxHwMFES9paGFsZS1kdXl1cnVsYXJpZGQCAQ9kFgICAQ8PFgQfAgUVU29udcOnbGFuYW4gxLBoYWxlbGVyHwMFFC9zb251Y2xhbmFuLWloYWxlbGVyZGQCAg9kFgICAQ8PFgQfAgUpU2F0xLFuIGFsbWEgLSBTYXRtYSB2ZSDEsGhhbGUgUHJvc2Vkw7xyw7wfAwUkL3NhdGluLWFsbWEtc2F0bWEtdmUtaWhhbGUtcHJvc2VkdXJ1ZGQCAw9kFgICAQ8PFgQfAgULS8Sxc2EgTGlzdGUfAwULL2tpc2EtbGlzdGVkZAICD2QWBAIBDw8WBB8CBR9BeWTEsW5sYXRtYSBLb21pc3lvbiBLYXJhcmxhcsSxHwMFHy9heWRpbmxhdG1hLWtvbWlzeW9uLWR1eXVydWxhcmlkZAIDDxYCHwYFDGRpc3BsYXk6bm9uZRYCAgEPFgIfAQL/////D2QCAw9kFgQCAQ8PFgQfAgUdRWxla3RyaWsgS2FsaXRlIEfDtnN0ZXJnZWxlcmkfAwUTamF2YXNjcmlwdDp2b2lkKDApO2RkAgMPZBYCAgEPFgIfAQIEFghmD2QWAgIBDw8WBB8CBRVUZWRhcmlrIFPDvHJla2xpbGnEn2kfAwUUL3RlZGFyaWstc3VyZWtsaWxpZ2lkZAIBD2QWAgIBDw8WBB8CBRhUaWNhcmkgS2FsaXRlIFRhYmxvbGFyxLEfAwUYL3RpY2FyaS1rYWxpdGUtdGFibG9sYXJpZGQCAg9kFgICAQ8PFgQfAgU1w5ZuY2VraSBZxLFsbGFyYSBBaXQgVGVkYXJpayBTw7xyZWtsaWxpxJ9pIFRhYmxvbGFyxLEfAwUxL29uY2VraS15aWxsYXJhLWFpdC10ZWRhcmlrLXN1cmVrbGlsaWdpLXRhYmxvbGFyaWRkAgMPZBYCAgEPDxYEHwIFLcOWbmNla2kgWcSxbGxhcmEgQWl0IFRpY2FyaSBLYWxpdGUgVGFibG9sYXLEsR8DBSsvb25jZWtpLXlpbGxhcmEtYWl0LXRpY2FyaS1rYWxpdGUtdGFibG9sYXJpZGQCBA9kFgQCAQ8PFgQfAgUlR8O8w6cgS2FsaXRlc2kgw5Zsw6fDvG0gSGl6bWV0IEJlZGVsaR8DBSEvZ3VjLWthbGl0ZXNpLW9sY3VtLWhpem1ldC1iZWRlbGlkZAIDDxYCHwYFDGRpc3BsYXk6bm9uZRYCAgEPFgIfAQL/////D2QCBQ9kFgQCAQ8PFgQfAgUTWWF0xLFyxLFtIFByb2plbGVyaR8DBRIveWF0aXJpbS1wcm9qZWxlcmlkZAIDDxYCHwYFDGRpc3BsYXk6bm9uZRYCAgEPFgIfAQL/////D2QCBg9kFgQCAQ8PFgQfAgUSS2VzaW50aSBUYXptaW5hdMSxHwMFEi9rZXNpbnRpLXRhem1pbmF0aWRkAgMPFgIfBgUMZGlzcGxheTpub25lFgICAQ8WAh8BAv////8PZAIHD2QWBAIBDw8WBB8CBSdZYXTEsXLEsW0gxLBsacWfa2lsZXJpIHZlIEFyYXppIEVkaW5pbWkfAwUkL3lhdGlyaW0taWxpc2tpbGVyaS12ZS1hcmF6aS1lZGluaW1pZGQCAw8WAh8GBQxkaXNwbGF5Om5vbmUWAgIBDxYCHwEC/////w9kAggPZBYEAgEPDxYEHwIFIFTDvGtldGljaSDEsGxpxZ9raWxlcmkgWcO2bmV0aW1pHwMFHS90dWtldGljaS1pbGlza2lsZXJpLXlvbmV0aW1pZGQCAw8WAh8GBQxkaXNwbGF5Om5vbmUWAgIBDxYCHwEC/////w9kAgkPZBYEAgEPDxYEHwIFGFBheWRhxZ8gS2F0xLFsxLFtIFBsYW7EsR8DBRUvcGF5ZGFzLWthdGlsaW0tcGxhbmlkZAIDDxYCHwYFDGRpc3BsYXk6bm9uZRYCAgEPFgIfAQL/////D2QCCg9kFgQCAQ8PFgQfAgUUVGVrbmlrIE9sbWF5YW4gw5Z6ZXQfAwUUL3Rla25pay1vbG1heWFuLW96ZXRkZAIDDxYCHwYFDGRpc3BsYXk6bm9uZRYCAgEPFgIfAQL/////D2QCCw9kFgQCAQ8PFgQfAgVLRW5lcmppIEJha2FubMSxxJ/EsSBUYXJhZsSxbmRhbiBEYcSfxLF0xLFtIEJlZGVsaXlsZSDEsGxnaWxpIMOWbmVtbGkgRHV5dXJ1HwMFQy9lbmVyamktYmFrYW5saWdpLXRhcmFmaW5kYW4tZGFnaXRpbS1iZWRlbGl5bGUtaWxnaWxpLW9uZW1saS1kdXl1cnVkZAIDDxYCHwYFDGRpc3BsYXk6bm9uZRYCAgEPFgIfAQL/////D2QCDA9kFgQCAQ8PFgQfAgUdU2VyYmVzdCBUw7xrZXRpY2kgxLDFn2xlbWxlcmkfAwUbL3NlcmJlc3QtdHVrZXRpY2ktaXNsZW1sZXJpZGQCAw8WAh8GBQxkaXNwbGF5Om5vbmUWAgIBDxYCHwEC/////w9kAg0PZBYEAgEPDxYEHwIFQ1XFn2FrIMSwbGkgRW5lcmppIFZlcmltbGlsacSfaSB2ZSBUYXNhcnJ1ZiBZYXLEscWfbWFzxLEgxZ5hcnRuYW1lc2kfAwU9L3VzYWstaWxpLWVuZXJqaS12ZXJpbWxpbGlnaS12ZS10YXNhcnJ1Zi15YXJpc21hc2ktc2FydG5hbWVzaWRkAgMPFgIfBgUMZGlzcGxheTpub25lFgICAQ8WAh8BAv////8PZAIOD2QWBAIBDw8WBB8CBR/EsGwgQWZldCB2ZSBSaXNrIEF6YWx0bWEgUGxhbsSxHwMFHi9pbC1hZmV0LXZlLXJpc2stYXphbHRtYS1wbGFuaWRkAgMPFgIfBgUMZGlzcGxheTpub25lFgICAQ8WAh8BAv////8PZAIPD2QWBAIBDw8WBB8CBQpLYXQgUGxhbsSxHwMFCi9rYXQtcGxhbmlkZAIDDxYCHwYFDGRpc3BsYXk6bm9uZRYCAgEPFgIfAQL/////D2QCAg9kFgICAQ8WAh8EBShzdWJzIGJpbGdpLWVkaW5tZWt1bGxhbmljaS1iYXN2dXJ1c3Utc3ViFgQCAQ8WAh8CBSRCxLBMR8SwIEVExLBOTUUvS1VMTEFOSUNJIEJBxZ5WVVJVU1VkAgMPFgIfAQIOFhxmD2QWBAIBDw8WBB8CBQ9FdnJhayBTb3JndWxhbWEfAwU8aHR0cHM6Ly9lYnlzLm9zbWFuZ2F6aWVkYXMuY29tLnRyL2VuVmlzaW9uL1F1ZXJ5X1N0YXR1cy5hc3B4ZGQCAw8WAh8GBQxkaXNwbGF5Om5vbmUWAgIBDxYCHwEC/////w9kAgEPZBYEAgEPDxYEHwIFIUdlbmVsIEF5ZMSxbmxhdG1hIEJpbGdpIFNvcmd1bGFtYR8DBSEvZ2VuZWwtYXlkaW5sYXRtYS1iaWxnaS1zb3JndWxhbWFkZAIDDxYCHwYFDGRpc3BsYXk6bm9uZRYCAgEPFgIfAQL/////D2QCAg9kFgQCAQ8PFgQfAgVAT3RvbWF0aWsgU2F5YcOnIE9rdW1hIFNpc3RlbWkgKE9TT1MpIEdpcmnFnyB2ZSDFnmlmcmUgQmHFn3Z1cnVzdR8DBTIvb3Nvcy1zYXlhYy1va3VtYS1zaXN0ZW1pLWdpcmlzLXZlLXNpZnJlLWJhc3Z1cnVzdWRkAgMPFgIfBgUMZGlzcGxheTpub25lFgICAQ8WAh8BAv////8PZAIDD2QWBAIBDw8WBB8CBRdTxLFrw6dhIFNvcnVsYW4gU29ydWxhch8DBRYvc2lrY2Etc29ydWxhbi1zb3J1bGFyZGQCAw8WAh8GBQxkaXNwbGF5Om5vbmUWAgIBDxYCHwEC/////w9kAgQPZBYEAgEPDxYEHwIFKMOccmV0aW0gVGVzaXNsZXJpIHZlIFNjYWRhIERva8O8bWFubGFyxLEfAwUmL3VyZXRpbS10ZXNpc2xlcmktdmUtc2NhZGEtZG9rdW1hbmxhcmlkZAIDDxYCHwYFDGRpc3BsYXk6bm9uZRYCAgEPFgIfAQL/////D2QCBQ9kFgQCAQ8PFgQfAgUaVMO8a2V0aWNpIEFsYWNhayBTb3JndWxhbWEfAwUaL3R1a2V0aWNpLWFsYWNhay1zb3JndWxhbWFkZAIDDxYCHwYFDGRpc3BsYXk6bm9uZRYCAgEPFgIfAQL/////D2QCBg9kFgQCAQ8PFgQfAgUUQmHFn3Z1cnUgU8O8cmXDp2xlcmkfAwUSL2Jhc3Z1cnUtc3VyZWNsZXJpZGQCAw8WAh8GBQxkaXNwbGF5Om5vbmUWAgIBDxYCHwEC/////w9kAgcPZBYEAgEPDxYEHwIFKVRpY2FyaSBLYWxpdGUgVGF6bWluYXQgw5ZkZW1lc2kgU29yZ3VsYW1hHwMFKmh0dHBzOi8vc29yZ3Uub2VkYXMuY29tLnRyL1Rhem1pbmF0c29yZ3VsYWRkAgMPFgIfBgUMZGlzcGxheTpub25lFgICAQ8WAh8BAv////8PZAIID2QWBAIBDw8WBB8CBRTDlnJuZWsgU8O2emxlxZ9tZWxlch8DBRIvb3JuZWstc296bGVzbWVsZXJkZAIDDxYCHwYFDGRpc3BsYXk6bm9uZRYCAgEPFgIfAQL/////D2QCCQ9kFgQCAQ8PFgQfAgUZSEVTIEtvZHUgTmFzxLFsIEFsxLFuxLFyPx8DBRYvaGVzLWtvZHUtbmFzaWwtYWxpbmlyZGQCAw8WAh8GBQxkaXNwbGF5Om5vbmUWAgIBDxYCHwEC/////w9kAgoPZBYEAgEPDxYEHwIFE8OHw7Z6w7xtIE1lcmtlemxlcmkfAwURL2NvenVtLW1lcmtlemxlcmlkZAIDDxYCHwYFDGRpc3BsYXk6bm9uZRYCAgEPFgIfAQL/////D2QCCw9kFgQCAQ8PFgQfAgUQxLBsZXRpxZ9pbSBGb3JtdR8DBQ8vaWxldGlzaW0tZm9ybXVkZAIDDxYCHwYFDGRpc3BsYXk6bm9uZRYCAgEPFgIfAQL/////D2QCDA9kFgQCAQ8PFgQfAgUVQWJvbmUgQm9yw6cgU29yZ3VsYW1hHwMFFS9hYm9uZS1ib3JjLXNvcmd1bGFtYWRkAgMPFgIfBgUMZGlzcGxheTpub25lFgICAQ8WAh8BAv////8PZAIND2QWBAIBDw8WBB8CBRNQcm9qZSBCYcWfdnVydWxhcsSxHwMFEi9wcm9qZS1iYXN2dXJ1bGFyaWRkAgMPFgIfBgUMZGlzcGxheTpub25lFgICAQ8WAh8BAv////8PZAIDD2QWAgIBDxYCHwQFFHN1YnMgYmFzaW4tb2Rhc2ktc3ViFgQCAQ8WAh8CBQtCQVNJTiBPREFTSWQCAw8WAh8BAgUWCmYPZBYEAgEPDxYEHwIFF8WeaXJrZXRpbWl6ZGVuIEhhYmVybGVyHwMFFy9zaXJrZXRpbWl6ZGVuLWhhYmVybGVyZGQCAw8WAh8GBQxkaXNwbGF5Om5vbmUWAgIBDxYCHwEC/////w9kAgEPZBYEAgEPDxYEHwIFEkJhc8SxbiBCw7xsdGVubGVyaR8DBREvYmFzaW4tYnVsdGVubGVyaWRkAgMPFgIfBgUMZGlzcGxheTpub25lFgICAQ8WAh8BAv////8PZAICD2QWBAIBDw8WBB8CBRFCYXPEsW4gxLBsZXRpxZ9pbR8DBQ8vYmFzaW4taWxldGlzaW1kZAIDDxYCHwYFDGRpc3BsYXk6bm9uZRYCAgEPFgIfAQL/////D2QCAw9kFgQCAQ8PFgQfAgUTS3VydW1zYWwgR8O2cnNlbGxlch8DBQcvZ2FsZXJpZGQCAw8WAh8GBQxkaXNwbGF5Om5vbmUWAgIBDxYCHwEC/////w9kAgQPZBYEAgEPDxYEHwIFCFZpZGVvbGFyHwMFCS92aWRlb2xhcmRkAgMPFgIfBgUMZGlzcGxheTpub25lFgICAQ8WAh8BAv////8PZAIFD2QWAgIBDxYCHwECBRYIZg9kFgICAQ8PFgQfAgURxLBOU0FOIEtBWU5BS0xBUkkfAwUcL2luc2FuLWtheW5ha2xhcmktcG9saXRpa2FzaWRkAgEPZBYCAgEPDxYEHwIFFVBBWURBxZ4gS0FUSUxJTSBQTEFOSR8DBRUvcGF5ZGFzLWthdGlsaW0tcGxhbmlkZAICD2QWAgIBDw8WBB8CBRhBQk9ORSBCQcSeTEFOVEkgU8OcUkVDxLAfAwUWL2Fib25lLWJhZ2xhbnRpLXN1cmVjaWRkAgMPZBYCAgEPDxYEHwIFDMSwTEVUxLDFnsSwTR8DBQkvaWxldGlzaW1kZGQbLBL0lM5GrzIaeEhsqI7qUcOIRZkttaeZzcwwidvjmQ==" />
+
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="CAB0618D" />
+<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAAIgVBStX3lx+1cErdUAGHoo2T3Morrf35ZKoPXbYBlkOsZlorOPoTkFMNq58pJlXHbjGQIUN9TmWheE1I1kUFU8" />
+            
+<header>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg justify-content-between">
+            <a class="navbar-brand" href="/">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 268.15 70.87" style="width: 110px">
+                    <defs>
+                        <style>
+                            .cls-1 {
+                                fill: #1f57a4;
+                            }
+                        </style>
+                    </defs><title>1Asset 20</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M37.83,59.12a2.84,2.84,0,0,0-3.07,3v5.73a2.75,2.75,0,0,0,3.05,3,2.85,2.85,0,0,0,3.07-3.06V62.06A2.77,2.77,0,0,0,37.83,59.12Zm1.08,8.77a1.1,1.1,0,1,1-2.18,0V62.05a1.09,1.09,0,1,1,2.18,0Z" /><path class="cls-1" d="M46.55,63.58C46,63,45.42,62.43,45.42,61.8s.31-1.07.88-1.07.92.63,1,1.52L49,62.19c-.1-2.35-1.3-3.09-2.64-3.09A2.64,2.64,0,0,0,43.62,62,4.26,4.26,0,0,0,45.14,65l1.1,1.19a2.7,2.7,0,0,1,1,1.82c0,.58-.21,1.2-.9,1.2s-1-.81-1.08-1.6l-1.82.07c.11,2,1.14,3.17,2.88,3.17a2.73,2.73,0,0,0,2.82-2.93,4.57,4.57,0,0,0-1.59-3.29Z" /><polygon class="cls-1" points="55.65 63.93 55.62 63.93 54.29 59.29 51.84 59.29 51.84 70.71 53.55 70.71 53.55 62.45 53.58 62.45 54.94 67.26 56.26 67.26 57.59 62.43 57.62 62.43 57.62 70.71 59.34 70.71 59.34 59.29 57 59.29 55.65 63.93" /><path class="cls-1" d="M64.18,59.28,62,70.71h1.8l.49-2.77h2.27L67,70.71h2L66.83,59.28Zm.37,7,.82-4.74h0l.79,4.74Z" /><polygon class="cls-1" points="76.06 65.89 76.01 65.89 73.58 59.29 71.57 59.29 71.57 70.71 73.3 70.71 73.3 63.39 73.33 63.39 76.03 70.71 77.78 70.71 77.78 59.29 76.06 59.29 76.06 65.89" /><path class="cls-1" d="M83.53,66.21h1.2v1.84a.94.94,0,0,1-1,1.07,1.05,1.05,0,0,1-1.1-1.2V62a1.07,1.07,0,0,1,1.1-1.21,1,1,0,0,1,1.1,1.06v1h1.79V61.72a2.64,2.64,0,0,0-2.93-2.6,2.79,2.79,0,0,0-3,2.86v6a2.76,2.76,0,0,0,3.07,2.9,2.61,2.61,0,0,0,2.91-2.73V64.67H83.53Z" /><path class="cls-1" d="M91.15,59.28,88.92,70.71h1.8l.49-2.77h2.27l.5,2.77h2L93.8,59.28Zm.37,7,.82-4.74h0l.79,4.74Z" /><polygon class="cls-1" points="98.34 61 101.41 61 98.28 69.38 98.28 70.71 103.5 70.71 103.5 68.98 100.5 68.98 103.56 60.76 103.56 59.29 98.34 59.29 98.34 61" /><rect class="cls-1" x="106.44" y="56.23" width="1.53" height="2.19" /><rect class="cls-1" x="106.23" y="59.29" width="1.94" height="11.41" /><polygon class="cls-1" points="116.87 65.68 119.35 65.68 119.35 63.95 116.87 63.95 116.87 61 119.98 61 119.98 59.29 114.94 59.29 114.94 70.71 120 70.71 120 68.98 116.87 68.98 116.87 65.68" /><polygon class="cls-1" points="124.69 59.29 122.77 59.29 122.77 70.71 127.82 70.71 127.82 68.98 124.69 68.98 124.69 59.29" /><polygon class="cls-1" points="132.38 65.68 134.86 65.68 134.86 63.95 132.38 63.95 132.38 61 135.49 61 135.49 59.29 130.46 59.29 130.46 70.71 135.51 70.71 135.51 68.98 132.38 68.98 132.38 65.68" /><polygon class="cls-1" points="144.41 59.29 142.49 59.29 140.22 64.48 140.22 59.29 138.28 59.29 138.28 70.71 140.22 70.71 140.22 66.91 140.97 65.44 142.36 70.71 144.44 70.71 142.41 63.73 144.41 59.29" /><polygon class="cls-1" points="146.58 61 148.66 61 148.66 70.71 150.62 70.71 150.62 61 152.68 61 152.68 59.29 146.58 59.29 146.58 61" /><path class="cls-1" d="M161.09,62.62c0-2.26-1.06-3.33-2.88-3.33h-3V70.71h1.94V66.06H158l1.21,4.65h2l-1.46-5.1C160.57,65.22,161.09,64.25,161.09,62.62Zm-3,1.94h-.88V61H158c.77,0,1.09.67,1.09,1.78S158.75,64.56,158.06,64.56Z" /><rect class="cls-1" x="164.15" y="56.23" width="1.53" height="2.19" /><rect class="cls-1" x="163.94" y="59.29" width="1.94" height="11.41" /><polygon class="cls-1" points="175 59.29 173.07 59.29 170.81 64.48 170.81 59.29 168.87 59.29 168.87 70.71 170.81 70.71 170.81 66.91 171.56 65.44 172.95 70.71 175.03 70.71 173 63.73 175 59.29" /><path class="cls-1" d="M184.42,59.29h-3V70.71h3a2.64,2.64,0,0,0,2.91-2.82V62A2.58,2.58,0,0,0,184.42,59.29Zm.91,8.49a1.08,1.08,0,0,1-1.11,1.2h-.91V61h.9a1,1,0,0,1,1.12,1.14Z" /><path class="cls-1" d="M191.86,59.28l-2.23,11.43h1.8l.49-2.77h2.27l.51,2.77h2l-2.14-11.43Zm.37,7,.82-4.74h0l.78,4.74Z" /><path class="cls-1" d="M201.87,66.21h1.21v1.84a.94.94,0,0,1-1,1.07,1.05,1.05,0,0,1-1.09-1.2V62c0-.7.35-1.21,1.09-1.21a1,1,0,0,1,1.11,1.06v1h1.79V61.72a2.64,2.64,0,0,0-2.93-2.6A2.79,2.79,0,0,0,199,62v6a2.76,2.76,0,0,0,3.06,2.9A2.61,2.61,0,0,0,205,68.14V64.67h-3.09Z" /><path class="cls-1" d="M202.11,57.37c-.68,0-.84-.46-.93-1.17H200c0,1.52.82,2.31,2.1,2.31,1.11,0,2-.71,2-2.31h-1.18C202.89,56.94,202.66,57.37,202.11,57.37Z" /><rect class="cls-1" x="207.8" y="59.29" width="1.94" height="11.41" /><polygon class="cls-1" points="212.3 61 214.38 61 214.38 70.71 216.34 70.71 216.34 61 218.4 61 218.4 59.29 212.3 59.29 212.3 61" /><rect class="cls-1" x="220.96" y="59.29" width="1.94" height="11.41" /><polygon class="cls-1" points="229.69 63.93 229.66 63.93 228.34 59.29 225.89 59.29 225.89 70.71 227.6 70.71 227.6 62.45 227.63 62.45 228.98 67.26 230.31 67.26 231.63 62.43 231.66 62.43 231.66 70.71 233.39 70.71 233.39 59.29 231.05 59.29 229.69 63.93" /><path class="cls-1" d="M53.77,33.75V8.42h0A8.34,8.34,0,0,0,45.59,0H8.18A8.34,8.34,0,0,0,0,8.42H0V33.75H0a8.35,8.35,0,0,0,8.17,8.41H45.59a8.35,8.35,0,0,0,8.17-8.41Zm-37.4-.12H8.91V8.53h36v25.1H16.37Z" /><path class="cls-1" d="M102.11,17.24H68.88V8.53H97.37A8.36,8.36,0,0,0,105.56,0H68.16A8.36,8.36,0,0,0,60,8.41h0V33.74h0a8.36,8.36,0,0,0,8.18,8.42h37.4a8.36,8.36,0,0,0-8.19-8.53H68.88V25.77h33.23a3.88,3.88,0,0,0,3.79-3.95v-.63A3.88,3.88,0,0,0,102.11,17.24Z" /><path class="cls-1" d="M160.17,27.91V14.13C160.17,3.1,154.26,0,143.9,0h-32V42h32C154.26,42,160.17,38.93,160.17,27.91Zm-38.91,5.55V8.5h22c5.45,0,7.36.63,7.36,6v12.9c0,5.4-1.91,6-7.36,6Z" /><path class="cls-1" d="M253.1,16.91H234.18c-5.66,0-6.56.07-6.68-3.89.12-4,1.19-4.47,6.85-4.47h25c4,0,7.23-4.13,7.23-8.53H233.76c-10.38,0-15,4-15,13h0c0,9,4.65,12.42,15,12.43h19.38c5.66,0,6.11-.07,6.23,3.89-.12,4-1.19,3.33-6.85,3.33H228.26a8.36,8.36,0,0,0-8.18,8.53H239V44a8.37,8.37,0,0,0,8.53,8.19v-11h5.63c10.38,0,15-2.88,15-11.86h0C268.14,20.36,263.49,16.92,253.1,16.91Z" /><path class="cls-1" d="M218.73,13v0h0Z" /><path class="cls-1" d="M268.15,29.34h0v0Z" /><path class="cls-1" d="M218.73,13v0h0Z" /><path class="cls-1" d="M268.15,29.37v0h0Z" /><path class="cls-1" d="M204.79,41.63h8.74V13.15C213.53,4.06,208.89,0,198.47,0H181.68C172,0,166,2.35,166,14.08v28h9.08v-16h29.71Zm-.11-24.41H175V8.5h29.67Z" /></g>
+                    </g></svg>
+            </a>
+            <button class="navbar-toggler" type="button" id="navbar-toggler">
+            </button>
+            <div class="navbar-collapse collapse justify-content-end" id="navBarMenu">
+                <ul class="navbar-nav">
+                    
+                    
+                            <li class="nav-item">
+                                <a id="ctl00_menu_RptMainenu_ctl00_HplMenu" class="nav-link" href="/hakkimizda">KURUMSAL</a>
+                            </li>
+                        
+                            <li class="nav-item">
+                                <a id="ctl00_menu_RptMainenu_ctl01_HplMenu" class="nav-link" href="/planli-kesinti-duyurulari">DUYURULAR</a>
+                            </li>
+                        
+                            <li class="nav-item">
+                                <a id="ctl00_menu_RptMainenu_ctl02_HplMenu" class="nav-link" href="/iletisim-formu">BİLGİ EDİNME/KULLANICI BAŞVURUSU</a>
+                            </li>
+                        
+                            <li class="nav-item">
+                                <a id="ctl00_menu_RptMainenu_ctl03_HplMenu" class="nav-link" href="https://sorgu.oedas.com.tr/Tazminatsorgula">TAZMİNAT SORGULAMA</a>
+                            </li>
+                        
+                            <li class="nav-item">
+                                <a id="ctl00_menu_RptMainenu_ctl04_HplMenu" class="nav-link" href="/ticari-kalite-tablolari">ELEKTRİK KALİTE GÖSTERGELERİ</a>
+                            </li>
+                        
+                            <li class="nav-item">
+                                <a id="ctl00_menu_RptMainenu_ctl05_HplMenu" class="nav-link" href="/sirketimizden-haberler">BASIN ODASI</a>
+                            </li>
+                        
+                </ul>
+
+            </div>
+            <ul class="navbar-nav btnPhone">
+                <li class="nav-item">
+                    <a class="nav-link iconn" href="tel:186"><span class="fontM icon-alo-186"></span></a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+
+</header>
+<div class="mobileMenuWrap d-block  d-md-none">
+    <div class="mainMenu mainMenuActive">
+        <ul class="mainMenuList mMenuSubers">
+            
+            
+                    <li>
+                        <a id="ctl00_menu_RptMobileMainMenu_ctl00_HplMobileMainMenu" data-openner="kurumsal-sub" href="javascript:void(0);">KURUMSAL</a>
+                    </li>
+                
+                    <li>
+                        <a id="ctl00_menu_RptMobileMainMenu_ctl01_HplMobileMainMenu" data-openner="duyurular-sub" href="javascript:void(0);">DUYURULAR</a>
+                    </li>
+                
+                    <li>
+                        <a id="ctl00_menu_RptMobileMainMenu_ctl02_HplMobileMainMenu" data-openner="bilgi-edinmekullanici-basvurusu-sub" href="javascript:void(0);">BİLGİ EDİNME/KULLANICI BAŞVURUSU</a>
+                    </li>
+                
+                    <li>
+                        <a id="ctl00_menu_RptMobileMainMenu_ctl03_HplMobileMainMenu" href="https://sorgu.oedas.com.tr/Tazminatsorgula">TAZMİNAT SORGULAMA</a>
+                    </li>
+                
+                    <li>
+                        <a id="ctl00_menu_RptMobileMainMenu_ctl04_HplMobileMainMenu" href="/ticari-kalite-tablolari">ELEKTRİK KALİTE GÖSTERGELERİ</a>
+                    </li>
+                
+                    <li>
+                        <a id="ctl00_menu_RptMobileMainMenu_ctl05_HplMobileMainMenu" data-openner="basin-odasi-sub" href="javascript:void(0);">BASIN ODASI</a>
+                    </li>
+                
+        </ul>
+        <div class="social">
+            <ul class="socialList">
+                <li><a href="#"><span class="iconn icon-social-twitter"></span></a></li>
+                <li><a href="#"><span class="iconn icon-social-facebook"></span></a></li>
+                <li>
+                    <a href="https://www.instagram.com/oedaskurumsal/" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="instagram" fill="#fff">
+                            <path d="M13.55,1H6.46C3.45,1,1,3.44,1,6.44v7.12c0,3,2.45,5.44,5.46,5.44h7.08c3.02,0,5.46-2.44,5.46-5.44V6.44 C19.01,3.44,16.56,1,13.55,1z M17.5,14c0,1.93-1.57,3.5-3.5,3.5H6c-1.93,0-3.5-1.57-3.5-3.5V6c0-1.93,1.57-3.5,3.5-3.5h8 c1.93,0,3.5,1.57,3.5,3.5V14z"></path><circle cx="14.87" cy="5.26" r="1.09"></circle><path d="M10.03,5.45c-2.55,0-4.63,2.06-4.63,4.6c0,2.55,2.07,4.61,4.63,4.61c2.56,0,4.63-2.061,4.63-4.61 C14.65,7.51,12.58,5.45,10.03,5.45L10.03,5.45L10.03,5.45z M10.08,13c-1.66,0-3-1.34-3-2.99c0-1.65,1.34-2.99,3-2.99s3,1.34,3,2.99 C13.08,11.66,11.74,13,10.08,13L10.08,13L10.08,13z"></path></svg>
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+    
+            <div id="ctl00_menu_RptMobileSubMenu_ctl00_submenuDV" class="subs kurumsal-sub">
+                <div class="top">
+                    <a href="javascript:void(0);" class="btnSubBack">
+                        KURUMSAL
+                    </a>
+                </div>
+                <div class="inner">
+                    <ul class="subList mMenuSubers">
+                        
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl00_HplSubMenuItem" href="javascript:void(0);">Politikalarımız</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl00_SSubMenuItems" class="dropdownList">
+                                        
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl00_RptSSubMenuItems_ctl00_HplSSubMenuItem" href="/bilgi-guvenligi-yonetim-sistemi-bgys-politikasi">BGYS Politikası</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl00_RptSSubMenuItems_ctl01_HplSSubMenuItem" href="/is-sagligi-ve-guvenligi-politikasi">İSG Politikası</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl00_RptSSubMenuItems_ctl02_HplSSubMenuItem" href="/cevre-politikasi">Çevre Politikası</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl00_RptSSubMenuItems_ctl03_HplSSubMenuItem" href="/musteri-memnuniyeti-politikasi">Müşteri Memnuniyeti Politikası</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl00_RptSSubMenuItems_ctl04_HplSSubMenuItem" href="/kalite-politikasi">Kalite Politikası</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl00_RptSSubMenuItems_ctl05_HplSSubMenuItem" href="/kisisel-verilerin-korunmasi-politikamiz">Kişisel Verilerin Korunması Politikası</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl00_RptSSubMenuItems_ctl06_HplSSubMenuItem" href="/guvenlik-politikasi">Güvenlik Politikası</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl00_RptSSubMenuItems_ctl07_HplSSubMenuItem" href="/oedas-yapay-zek-yonetim-sistemi-politikasi">OEDAŞ Yapay Zekâ Yönetim Sistemi Politikası</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl00_RptSSubMenuItems_ctl08_HplSSubMenuItem" href="/cevresel-ve-sosyal-risk-yonetimi-politikasi">Çevresel Ve Sosyal Risk Yönetimi Politikası</a>
+                                                </li>
+                                            
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl01_HplSubMenuItem" href="/kurumsal-kimlik-bilgileri">Kurumsal Kimlik Bilgileri</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl01_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl02_HplSubMenuItem" href="javascript:void(0);">İnsan Kaynakları</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl02_SSubMenuItems" class="dropdownList">
+                                        
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl02_RptSSubMenuItems_ctl00_HplSSubMenuItem" href="/insan-kaynaklari-politikasi">İnsan Kaynakları Politikası</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl02_RptSSubMenuItems_ctl01_HplSSubMenuItem" href="/insan-kaynaklari-uygulamalari">İnsan Kaynakları Uygulamaları</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl02_RptSSubMenuItems_ctl02_HplSSubMenuItem" href="/calisanlarin-yonetime-katilimi">Çalışanların Yönetime Katılımı</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl02_RptSSubMenuItems_ctl03_HplSSubMenuItem" href="/calisan-haklari-ve-is-etigi">Çalışan Hakları ve İş Etiği</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl02_RptSSubMenuItems_ctl04_HplSSubMenuItem" href="/paydaslarimiz">Paydaşlarımız</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl02_RptSSubMenuItems_ctl05_HplSSubMenuItem" href="/ayin-ekibi">Ayın Ekibi</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl02_RptSSubMenuItems_ctl06_HplSSubMenuItem" href="/cinsel-taciz-ve-cinsiyete-dayali-siddetin-onlenmesi-politikasi">Cinsel Taciz Ve Cinsiyete Dayalı Şiddetin Önlenmesi Politikası</a>
+                                                </li>
+                                            
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl03_HplSubMenuItem" href="/hakkimizda">Hakkımızda</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl03_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl04_HplSubMenuItem" href="/misyon-ve-vizyonumuz">Misyon ve Vizyonumuz</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl04_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl05_HplSubMenuItem" href="/surdurulebilirlik-komitesi">Sürdürülebilirlik Komitesi</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl05_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl06_HplSubMenuItem" href="/surdurulebilirlik-raporu">Sürdürülebilirlik Raporu</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl00_RptSubMenuItems_ctl06_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                    </ul>
+                </div>
+            </div>
+        
+            <div id="ctl00_menu_RptMobileSubMenu_ctl01_submenuDV" class="subs duyurular-sub">
+                <div class="top">
+                    <a href="javascript:void(0);" class="btnSubBack">
+                        DUYURULAR
+                    </a>
+                </div>
+                <div class="inner">
+                    <ul class="subList mMenuSubers">
+                        
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl00_HplSubMenuItem" href="/planli-kesinti-duyurulari">Planlı Kesinti Duyuruları</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl00_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl01_HplSubMenuItem" href="javascript:void(0);">İhaleler</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl01_SSubMenuItems" class="dropdownList">
+                                        
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl01_RptSSubMenuItems_ctl00_HplSSubMenuItem" href="/ihale-duyurulari">İhale Duyuruları</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl01_RptSSubMenuItems_ctl01_HplSSubMenuItem" href="/sonuclanan-ihaleler">Sonuçlanan İhaleler</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl01_RptSSubMenuItems_ctl02_HplSSubMenuItem" href="/satin-alma-satma-ve-ihale-proseduru">Satın alma - Satma ve İhale Prosedürü</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl01_RptSSubMenuItems_ctl03_HplSSubMenuItem" href="/kisa-liste">Kısa Liste</a>
+                                                </li>
+                                            
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl02_HplSubMenuItem" href="/aydinlatma-komisyon-duyurulari">Aydınlatma Komisyon Kararları</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl02_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl03_HplSubMenuItem" href="javascript:void(0);">Elektrik Kalite Göstergeleri</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl03_SSubMenuItems" class="dropdownList">
+                                        
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl03_RptSSubMenuItems_ctl00_HplSSubMenuItem" href="/tedarik-surekliligi">Tedarik Sürekliliği</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl03_RptSSubMenuItems_ctl01_HplSSubMenuItem" href="/ticari-kalite-tablolari">Ticari Kalite Tabloları</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl03_RptSSubMenuItems_ctl02_HplSSubMenuItem" href="/onceki-yillara-ait-tedarik-surekliligi-tablolari">Önceki Yıllara Ait Tedarik Sürekliliği Tabloları</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl03_RptSSubMenuItems_ctl03_HplSSubMenuItem" href="/onceki-yillara-ait-ticari-kalite-tablolari">Önceki Yıllara Ait Ticari Kalite Tabloları</a>
+                                                </li>
+                                            
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl04_HplSubMenuItem" href="/guc-kalitesi-olcum-hizmet-bedeli">Güç Kalitesi Ölçüm Hizmet Bedeli</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl04_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl05_HplSubMenuItem" href="/yatirim-projeleri">Yatırım Projeleri</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl05_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl06_HplSubMenuItem" href="/kesinti-tazminati">Kesinti Tazminatı</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl06_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl07_HplSubMenuItem" href="/yatirim-iliskileri-ve-arazi-edinimi">Yatırım İlişkileri ve Arazi Edinimi</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl07_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl08_HplSubMenuItem" href="/tuketici-iliskileri-yonetimi">Tüketici İlişkileri Yönetimi</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl08_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl09_HplSubMenuItem" href="/paydas-katilim-plani">Paydaş Katılım Planı</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl09_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl10_HplSubMenuItem" href="/teknik-olmayan-ozet">Teknik Olmayan Özet</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl10_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl11_HplSubMenuItem" href="/enerji-bakanligi-tarafindan-dagitim-bedeliyle-ilgili-onemli-duyuru">Enerji Bakanlığı Tarafından Dağıtım Bedeliyle İlgili Önemli Duyuru</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl11_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl12_HplSubMenuItem" href="/serbest-tuketici-islemleri">Serbest Tüketici İşlemleri</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl12_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl13_HplSubMenuItem" href="/usak-ili-enerji-verimliligi-ve-tasarruf-yarismasi-sartnamesi">Uşak İli Enerji Verimliliği ve Tasarruf Yarışması Şartnamesi</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl13_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl14_HplSubMenuItem" href="/il-afet-ve-risk-azaltma-plani">İl Afet ve Risk Azaltma Planı</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl14_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl15_HplSubMenuItem" href="/kat-plani">Kat Planı</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl01_RptSubMenuItems_ctl15_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                    </ul>
+                </div>
+            </div>
+        
+            <div id="ctl00_menu_RptMobileSubMenu_ctl02_submenuDV" class="subs bilgi-edinmekullanici-basvurusu-sub">
+                <div class="top">
+                    <a href="javascript:void(0);" class="btnSubBack">
+                        BİLGİ EDİNME/KULLANICI BAŞVURUSU
+                    </a>
+                </div>
+                <div class="inner">
+                    <ul class="subList mMenuSubers">
+                        
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl00_HplSubMenuItem" href="https://ebys.osmangaziedas.com.tr/enVision/Query_Status.aspx">Evrak Sorgulama</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl00_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl01_HplSubMenuItem" href="/genel-aydinlatma-bilgi-sorgulama">Genel Aydınlatma Bilgi Sorgulama</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl01_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl02_HplSubMenuItem" href="/osos-sayac-okuma-sistemi-giris-ve-sifre-basvurusu">Otomatik Sayaç Okuma Sistemi (OSOS) Giriş ve Şifre Başvurusu</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl02_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl03_HplSubMenuItem" href="/sikca-sorulan-sorular">Sıkça Sorulan Sorular</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl03_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl04_HplSubMenuItem" href="/uretim-tesisleri-ve-scada-dokumanlari">Üretim Tesisleri ve Scada Dokümanları</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl04_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl05_HplSubMenuItem" href="/tuketici-alacak-sorgulama">Tüketici Alacak Sorgulama</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl05_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl06_HplSubMenuItem" href="/basvuru-surecleri">Başvuru Süreçleri</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl06_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl07_HplSubMenuItem" href="https://sorgu.oedas.com.tr/Tazminatsorgula">Ticari Kalite Tazminat Ödemesi Sorgulama</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl07_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl08_HplSubMenuItem" href="/ornek-sozlesmeler">Örnek Sözleşmeler</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl08_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl09_HplSubMenuItem" href="/hes-kodu-nasil-alinir">HES Kodu Nasıl Alınır?</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl09_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl10_HplSubMenuItem" href="/cozum-merkezleri">Çözüm Merkezleri</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl10_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl11_HplSubMenuItem" href="/iletisim-formu">İletişim Formu</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl11_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl12_HplSubMenuItem" href="/abone-borc-sorgulama">Abone Borç Sorgulama</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl12_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl13_HplSubMenuItem" href="/proje-basvurulari">Proje Başvuruları</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl02_RptSubMenuItems_ctl13_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                    </ul>
+                </div>
+            </div>
+        
+            <div id="ctl00_menu_RptMobileSubMenu_ctl03_submenuDV" class="subs basin-odasi-sub">
+                <div class="top">
+                    <a href="javascript:void(0);" class="btnSubBack">
+                        BASIN ODASI
+                    </a>
+                </div>
+                <div class="inner">
+                    <ul class="subList mMenuSubers">
+                        
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl03_RptSubMenuItems_ctl00_HplSubMenuItem" href="/sirketimizden-haberler">Şirketimizden Haberler</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl03_RptSubMenuItems_ctl00_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl03_RptSubMenuItems_ctl01_HplSubMenuItem" href="/basin-bultenleri">Basın Bültenleri</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl03_RptSubMenuItems_ctl01_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl03_RptSubMenuItems_ctl02_HplSubMenuItem" href="/basin-iletisim">Basın İletişim</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl03_RptSubMenuItems_ctl02_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl03_RptSubMenuItems_ctl03_HplSubMenuItem" href="/galeri">Kurumsal Görseller</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl03_RptSubMenuItems_ctl03_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                                <li>
+                                    <a id="ctl00_menu_RptMobileSubMenu_ctl03_RptSubMenuItems_ctl04_HplSubMenuItem" href="/videolar">Videolar</a>
+                                    <ul id="ctl00_menu_RptMobileSubMenu_ctl03_RptSubMenuItems_ctl04_SSubMenuItems" class="dropdownList" style="display:none">
+                                        
+                                    </ul>
+                                </li>
+                            
+                    </ul>
+                </div>
+            </div>
+        
+
+    
+</div>
+
+
+            
+    <div class="container ">
+        <div class="errorWrap">
+            <h1><img src="/Content/Images/404.png" /></h1>
+            <h2>Üzgünüz, aradığınız sayfa bulunamadı.</h2>
+            <a href="/" class="btn btnn btn-success">Anasayfaya Dön</a>
+        </div>
+    </div>
+
+            
+<footer>
+    <div class="col footerUp">
+        <div class="container">
+            <div class="inner align-items-start">
+                <ul class="infoList left">
+                    
+                    <li><a href="#">Bilgi Toplum Hizmetleri</a></li>
+                </ul>
+                <div>
+                    <span class="d-block text-center mb-4">Bizi Takip Edin</span>
+                    <ul class="socialList center">
+                        <li><a href="https://twitter.com/oedaskurumsal" target="_blank"><span class="iconn icon-social-twitter"></span></a></li>
+                        <li><a href=" https://www.facebook.com/osmangazielektrikdagitim/" target="_blank"><span class="iconn icon-social-facebook"></span></a></li>
+                        <li>
+                            <a href="https://www.instagram.com/oedaskurumsal/" target="_blank">
+                                <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="instagram" fill="#fff"><path d="M13.55,1H6.46C3.45,1,1,3.44,1,6.44v7.12c0,3,2.45,5.44,5.46,5.44h7.08c3.02,0,5.46-2.44,5.46-5.44V6.44 C19.01,3.44,16.56,1,13.55,1z M17.5,14c0,1.93-1.57,3.5-3.5,3.5H6c-1.93,0-3.5-1.57-3.5-3.5V6c0-1.93,1.57-3.5,3.5-3.5h8 c1.93,0,3.5,1.57,3.5,3.5V14z"></path><circle cx="14.87" cy="5.26" r="1.09"></circle><path d="M10.03,5.45c-2.55,0-4.63,2.06-4.63,4.6c0,2.55,2.07,4.61,4.63,4.61c2.56,0,4.63-2.061,4.63-4.61 C14.65,7.51,12.58,5.45,10.03,5.45L10.03,5.45L10.03,5.45z M10.08,13c-1.66,0-3-1.34-3-2.99c0-1.65,1.34-2.99,3-2.99s3,1.34,3,2.99 C13.08,11.66,11.74,13,10.08,13L10.08,13L10.08,13z"></path></svg>
+                            </a>
+                        </li>
+                        <li><a href="https://www.linkedin.com/company/osmangazi-elektrik-da%C4%9F%C4%B1t%C4%B1m/" target="_blank"><span class="iconn icon-social-linkedin"></span></a></li>
+                    </ul>
+                </div>
+                <ul class="infoList right">
+
+                      
+                            <li>
+                                <a id="ctl00_footer_RptFooterMenu_ctl00_HplFooterMenu" href="/insan-kaynaklari-politikasi">İNSAN KAYNAKLARI</a>
+                            </li>
+                          
+                            <li>
+                                <a id="ctl00_footer_RptFooterMenu_ctl01_HplFooterMenu" href="/paydas-katilim-plani">PAYDAŞ KATILIM PLANI</a>
+                            </li>
+                          
+                            <li>
+                                <a id="ctl00_footer_RptFooterMenu_ctl02_HplFooterMenu" href="/abone-baglanti-sureci">ABONE BAĞLANTI SÜRECİ</a>
+                            </li>
+                          
+                            <li>
+                                <a id="ctl00_footer_RptFooterMenu_ctl03_HplFooterMenu" href="/iletisim">İLETİŞİM</a>
+                            </li>
+                          
+                            <li>
+                                <a id="ctl00_footer_RptFooterMenu_ctl04_HplFooterMenu"></a>
+                            </li>
+                        
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col footerDown">
+        <div class="container">
+            <div class="inner">
+                <div class="copy">BU WEB SİTESİ OSMANGAZİ ELEKTRİK DAĞITIM ANONİM ŞİRKETİNE AİTTİR.</div>
+                <style>
+
+                @media(max-width: 768px){
+
+                    footer .footerDown .inner{
+                        flex-direction: column;
+                        align-items: center;
+                    }
+
+
+                    footer .footerDown .inner .copy{
+                        margin-bottom: 7px;
+                    }
+
+                    footer .footerDown .inner .btnClckwrk{
+                        margin-top: 11px;
+                    }
+                }
+
+                </style>
+                <div>
+                    <a href="/kvkk">Aydınlatma Metni</a>
+                    |
+                    <a href="/cerez-politikasi">Çerez Politikası</a>
+                </div>
+
+                <a href="http://clockwork.com.tr/" target="_blank" class="btnClckwrk"><span class="iconn icon-clockwork-logo"></span></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+            
+<script src="/Content/Lib/PluginBundle.js"></script>
+<script src="/Content/Lib/Clckwrk.js"></script>
+<script src="/Content/Js/CWLib.js"></script>
+<script src="/Content/Js/CWValidation.js"></script>
+
+<script type="text/javascript" src="/Content/Js/select2.min.js"></script>
+   
+
+            
+
+            
+<!-- Modal -->
+<div class="modal fade warningModal basicModal" id="warningModal" tabindex="-1" role="dialog" aria-labelledby="warningModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">ÖNEMLİ UYARI</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="iconn icon-icn-x"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="warningList">
+                    <li>İlgili mevzuat gereği ihalelerimize katılım gösterecek firmaların <b>Kamu İhale Kurumu tarafından yasaklı olmaması</b> gerekmektedir.</li>
+                    <li>Lütfen aşağıdaki linkten yasaklılık durumunuzu kontrol ediniz. <a href="https://ekap.kik.gov.tr/EKAP/Yasaklilik/YasakliSorgu.aspx" target="_blank">https://ekap.kik.gov.tr/EKAP/Yasaklilik/YasakliSorgu.aspx</a> </li>
+                    <li>İlgili mevzuat gereği teklif verecek firmaların <b>Kayıtlı Elektronik Posta (KEP) adresleri</b> olması gerekmektedir.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <input name="ctl00$checkwidget" type="hidden" id="ctl00_checkwidget" value="true" />
+        </form>
+    </div>
+
+
+
+
+</body>
+</html>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-43143909-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-43143909-1');
+
+</script>
+
+<script>
+    !(function () {
+        var t = document.createElement('script');
+        t.setAttribute('id', 'webChatPlugin');
+        t.setAttribute('src', 'https://va.tr2.knovvu.com/webchat-plugin/chat.min.js');
+        t.setAttribute('async', '');
+        t.setAttribute('data-integrationId', '70985434-163d-7b42-24e7-3a1eb525ad8a');
+        t.setAttribute('data-integrationSettingsUrl', 'https://va.tr2.knovvu.com/webchat/');
+        document.head.appendChild(t);
+    })();
+</script>
+
+<!--
+<script type="text/javascript"
+    src="//zoren.alo-tech.com/chatwidget/alochat.js?widget_key=ddcfe043f377497dee037003d5fde39cd8fab9f61d68ed071a2958e7302ea3daecdca207f1715c14242afc7b76cef3b1b612a36dd83bd02a576bb800b5c0be9fb71a7a3fcd5f152fe2d70096aed7b14716c9ef64095cbb0ddb7a77b2">
+</script>
+-->
+<script type="text/javascript">
+    startWidget();
+</script>
+
+

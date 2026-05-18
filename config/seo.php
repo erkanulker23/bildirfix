@@ -8,7 +8,7 @@ declare(strict_types=1);
 return [
     'default_meta_description' => env(
         'SEO_DEFAULT_DESCRIPTION',
-        'Şehir şikâyetlerini listeleyin, destek olun ve süreci görünür kılın. Vatandaşların yerel sorun bildirimleri ve kurumsal süreçler için bildir platformu.',
+        'Şehir şikâyetlerini listeleyin, destek olun ve süreci görünür kılın. Vatandaşların yerel sorun bildirimleri ve kurumsal süreçler için simdibildir.com platformu.',
     ),
 
     /** Open Graph görsel mutlak URI (HTTPS). Boş ise og:image çıktısı verilmez. */

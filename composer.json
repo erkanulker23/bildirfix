@@ -1,9 +1,9 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "erkanulker23/bildirfix",
+    "name": "erkanulker23/simdibildir",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "simdibildir.com — Kent şikâyetleri, moderasyon ve kampanyalar platformu.",
+    "keywords": ["laravel", "kent", "sikayet", "simdibildir"],
     "license": "MIT",
     "require": {
         "php": "^8.3",
@@ -57,6 +57,9 @@
             "@php artisan route:cache",
             "@php artisan view:cache",
             "@php artisan optimize"
+        ],
+        "forge-deploy": [
+            "bash scripts/forge-deploy.sh"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

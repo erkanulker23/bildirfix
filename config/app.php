@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'simdibildir.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -64,7 +64,9 @@ return [
     |
     */
 
-    'force_https' => (bool) env('FORCE_HTTPS', false),
+    'force_https' => env('FORCE_HTTPS') !== null
+        ? filter_var(env('FORCE_HTTPS'), FILTER_VALIDATE_BOOL)
+        : str_starts_with((string) env('APP_URL', ''), 'https://'),
 
     /*
     |--------------------------------------------------------------------------
@@ -134,16 +136,5 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Force HTTPS URLs
-    |--------------------------------------------------------------------------
-    |
-    | Cloudflare/Herd/ssl arkasında doğru bağlantılar ve karışık içerikten kaçınmak için
-    | APP_URL ile birlikte kullanın veya doğrudan true yapın.
-    |
-    */
-    'force_https' => env('FORCE_HTTPS') !== null ? filter_var(env('FORCE_HTTPS'), FILTER_VALIDATE_BOOL) : false,
 
 ];

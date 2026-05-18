@@ -76,6 +76,8 @@ Route::redirect('/login/yonetici', '/superlogin', 302);
 Route::redirect('/admin-giris', '/superlogin', 302);
 Route::redirect('/giris/yonetici', '/superlogin', 302);
 
+Route::view('nasil-calisir', 'pages.nasil-calisir')->name('how-it-works');
+
 Route::get('iletisim', [ContactPageController::class, 'show'])->name('contact');
 Route::post('iletisim', [ContactPageController::class, 'store'])
     ->middleware(['turnstile', 'throttle:8,1'])

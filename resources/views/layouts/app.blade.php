@@ -87,7 +87,7 @@
                             <path d="M5 13 9 17 19 7" />
                         </svg>
                     </span>
-                    <span class="font-heading truncate text-[1.05rem] font-extrabold uppercase leading-none tracking-tight sm:text-[1.125rem]">{{ config('app.name') }}</span>
+                    <span class="font-heading truncate text-[1.05rem] font-extrabold leading-none tracking-tight sm:text-[1.125rem]">{{ config('app.name') }}</span>
                 </a>
 
                 <nav
@@ -221,6 +221,7 @@
             <div>
                 <p class="text-[11px] font-bold uppercase tracking-wider text-gray-400">{{ __('İletişim ve yasal') }}</p>
                 <ul class="mt-3 space-y-2">
+                    <li><a href="{{ route('how-it-works') }}" class="font-medium underline-offset-4 hover:text-primary hover:underline">{{ __('Nasıl çalışır?') }}</a></li>
                     <li><a href="{{ route('contact') }}" class="font-medium underline-offset-4 hover:text-primary hover:underline">{{ __('İletişim') }}</a></li>
                     <li><a href="{{ route('legal.privacy') }}" class="font-medium underline-offset-4 hover:text-primary hover:underline">{{ __('Gizlilik') }}</a></li>
                     <li><a href="{{ route('legal.kvkk') }}" class="font-medium underline-offset-4 hover:text-primary hover:underline">{{ __('KVKK') }}</a></li>

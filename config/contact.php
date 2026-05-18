@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 return [
-    'intro_highlight' => 'Resmî bildirimlerde yetkili kurum kanallarını kullanın; bu sayfa BildirFIX iletişim ve destek süreçlerini özetler.',
+    'intro_highlight' => 'Resmî bildirimlerde yetkili kurum kanallarını kullanın; bu sayfa simdibildir.com iletişim ve destek süreçlerini özetler.',
 
     /*
     | Genel SLA metinleri (yasal zorunluluk değil; beklenti yönetimi).
@@ -30,10 +30,10 @@ return [
     ],
 
     'channels' => [
-        ['icon' => 'mail', 'label' => 'E-posta (genel)', 'value' => 'destek@bildirfix.local', 'note' => 'Kampanya, şikâyet doğruluğu ve teknik içerikli talepler için formu kullanmanızı öneririz.'],
-        ['icon' => 'community', 'label' => 'Topluluk & kampanyalar', 'value' => 'kampanya@bildirfix.local', 'note' => 'Kampanya açılış süreçleri ve moderasyon hakkında.'],
-        ['icon' => 'partnership', 'label' => 'Kurum iş birliği', 'value' => 'kurumsal@bildirfix.local', 'note' => 'Belediye veya düzenlenmiş kurumlardan veri-paylaşım protokolü talepleri.'],
-        ['icon' => 'legal', 'label' => 'Hukuki & KVKK', 'value' => 'kvkk@bildirfix.local', 'note' => 'Veri sübjesi başvuru ve hukuki bildirimler (noter veya yazılı iletişim yönergelerimize tabi olabilir).'],
+        ['icon' => 'mail', 'label' => 'E-posta (genel)', 'value' => 'destek@simdibildir.com', 'note' => 'Kampanya, şikâyet doğruluğu ve teknik içerikli talepler için formu kullanmanızı öneririz.'],
+        ['icon' => 'community', 'label' => 'Topluluk & kampanyalar', 'value' => 'kampanya@simdibildir.com', 'note' => 'Kampanya açılış süreçleri ve moderasyon hakkında.'],
+        ['icon' => 'partnership', 'label' => 'Kurum iş birliği', 'value' => 'kurumsal@simdibildir.com', 'note' => 'Belediye veya düzenlenmiş kurumlardan veri-paylaşım protokolü talepleri.'],
+        ['icon' => 'legal', 'label' => 'Hukuki & KVKK', 'value' => 'kvkk@simdibildir.com', 'note' => 'Veri sübjesi başvuru ve hukuki bildirimler (noter veya yazılı iletişim yönergelerimize tabi olabilir).'],
     ],
 
     'departments' => [
@@ -61,7 +61,7 @@ return [
         ],
         [
             'q' => 'Kent sorununuzun çözümü için burayı mı kullanmalıyım?',
-            'a' => 'Çözüm resmî olarak ilgili kuruma kalır; BildirFIX kamusal görünürlük ve süreç takibi için bir araç sunar.',
+            'a' => 'Çözüm resmî olarak ilgili kuruma kalır; simdibildir.com kamusal görünürlük ve süreç takibi için bir araç sunar.',
         ],
         [
             'q' => 'Kampanyam reddedilirse?',

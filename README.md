@@ -1,6 +1,6 @@
-# BildirFIX
+# simdibildir.com
 
-Kent şikâyetleri, moderasyon ve kampanyalar için Laravel tabanlı uygulama. Kaynak kod: [github.com/erkanulker23/bildirfix](https://github.com/erkanulker23/bildirfix).
+Kent şikâyetleri, moderasyon ve kampanyalar için Laravel tabanlı uygulama. Canlı site: [simdibildir.com](https://simdibildir.com).
 
 ## Yerel kurulum
 
@@ -11,54 +11,28 @@ php artisan db:seed   # örnek veri (üretimde çalıştırmayın)
 php artisan serve
 ```
 
-Geliştirmede kuyruk/Reverb için bakınız: `.env.example` içindeki `QUEUE_CONNECTION`, `REVERB_*` değişkenleri ve `composer dev` script’i.
+Yerel geliştirmede `.env` içinde `APP_URL=http://simdibildir.test` ve Sanctum domain’lerini kendi local alan adınıza göre ayarlayın (Laravel Herd/Valet).
 
 ## Üretim — Laravel Forge
 
-1. **Forge**’da yeni site oluşturun, depoyu bağlayın (`erkanulker23/bildirfix`) ve PHP 8.3+ seçin.
-2. **Web dizini** Laravel için `public` olarak kalsın.
-3. **Çevre**: `.env.example` dosyasını kopyalayıp Forge “Environment” üzerinden doldurun. Mutlaka ayarlayın: `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL=https://alanadiniz...`, `FORCE_HTTPS=true` (CDN/proxy arkasındaysanız), güçlü `APP_KEY`, veritabanı, `QUEUE_CONNECTION` (genelde `redis` veya iş yoksa `sync`), `CACHE_STORE` (`redis` önerilir).
-4. **Deploy script** örneği (Forge “Deploy Script” alanına uygun; proje kökü genelde `releases/...` içinde olur — Forge değişkeni `$FORGE_SITE_PATH` kullanın):
+Ayrıntılı kontrol listesi: **[DEPLOY.md](DEPLOY.md)**
+
+1. Forge’da site oluşturun (`simdibildir.com`, web root: `public`, PHP 8.3+).
+2. Environment’ı `.env.example` üretim notlarına göre doldurun.
+3. **Deploy Script:**
 
 ```bash
 cd $FORGE_SITE_PATH
 git pull origin $FORGE_SITE_BRANCH
-
-$FORGE_COMPOSER install --no-dev --prefer-dist --no-interaction --optimize-autoloader
-
-npm ci --omit=dev
-npm run build
-
-php artisan migrate --force
-php artisan storage:link
-
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-
-php artisan optimize
-
-php artisan queue:restart
+bash scripts/forge-deploy.sh
 ```
 
-Tek komut olarak da `./scripts/forge-deploy.sh` kullanılabilir (içeriği Forge betiğiyle uyumludur; sunucuda yürütülmeden önce `chmod +x scripts/forge-deploy.sh` gerekebilir).
+4. İlk kurulumda SSH ile **bir kez:** `bash scripts/forge-bootstrap.sh`
+5. Scheduler: `* * * * * cd $FORGE_SITE_PATH && php artisan schedule:run`
+6. Queue (redis): `php artisan queue:work redis --sleep=3 --tries=3`
 
-5. **Zamanlanmış işler**: Forge Scheduler’da `$FORGE_SITE_PATH` için `php artisan schedule:run` her dakika.
-6. **Kuyruk**: Redis kullanıyorsanız Forge “Daemons” ile `php artisan queue:work redis --sleep=3 --tries=3`.
-7. **Reverb/WebSocket**: Canlı bildirim kullanılacaksa Forge’da ayrı daemon ve uygun TLS/proxy gerekebilir; kullanılmıyorsa `.env`’de devre dışı bırakılabilir veya istemci bu özelliği kullanmaz.
-
-`bootstrap/app.php` içinde proxilere güven ayarı (Cloudflare vb.) yapılmıştır.
-
-## Güvenlik ve örnek veri
-
-Üretimde **`php artisan db:seed` kullanmayın**; örnek hesapların şifreleri yalnızca geliştirme içindir. Süper admin ve diğer demo kullanıcılar `database/seeders/DatabaseSeeder.php` içindedir — canlı ortamdan önce kaldırın veya sıfırlayın.
-
-## Test
-
-```bash
-composer test
-```
+Sağlık kontrolü: `GET /up`
 
 ## Lisans
 
-Laravel bileşenleri MIT ile dağıtılır.
+MIT
