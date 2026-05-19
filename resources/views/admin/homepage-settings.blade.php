@@ -24,7 +24,7 @@
                             value="{{ old('homepage_seo_title', $settings->homepage_seo_title) }}"
                             placeholder="{{ $defaults['title'] }}"
                             class="psc-input mt-2">
-                        <p class="mt-1 text-xs text-slate-500">{{ __('Varsayılan:') }} {{ $defaults['title'] }}</p>
+                        <p class="mt-1 text-xs text-[var(--psc-text-muted)]">{{ __('Varsayılan:') }} {{ $defaults['title'] }}</p>
                     </div>
                     <div>
                         <label class="psc-field__label">{{ __('Meta açıklama (description)') }}</label>
@@ -36,47 +36,39 @@
             </div>
 
             <div class="psc-card">
-                <div class="psc-card__body space-y-4">
+                <div class="psc-card__body space-y-5">
                     <h2 class="psc-card__title">{{ __('Logo ve favicon') }}</h2>
-                    <div class="flex flex-wrap items-center gap-4 rounded-lg border border-slate-100 bg-slate-50 p-4">
-                        @if ($branding->hasCustomLogo())
-                            <img src="{{ $branding->logoUrl() }}" alt="" class="h-12 max-w-[180px] object-contain">
-                        @else
-                            <p class="text-sm text-slate-600">{{ __('Özel logo yok — varsayılan ikon + site adı gösterilir.') }}</p>
-                        @endif
-                    </div>
-                    <div>
-                        <label class="psc-field__label">{{ __('Site logosu (PNG, JPG, WebP)') }}</label>
-                        <input name="site_logo" type="file" accept="image/png,image/jpeg,image/webp" class="mt-2 w-full text-sm">
-                        @if ($settings->site_logo_path)
-                            <label class="mt-2 flex items-center gap-2 text-sm">
-                                <input type="checkbox" name="remove_site_logo" value="1"> {{ __('Logoyu kaldır') }}
-                            </label>
-                        @endif
-                    </div>
-                    <div class="flex flex-wrap items-center gap-4">
-                        <img src="{{ $branding->faviconUrl() }}" alt="" width="32" height="32" class="h-8 w-8 rounded border object-contain">
-                        <div class="flex-1">
-                            <label class="psc-field__label">{{ __('Favicon (ICO, PNG, SVG, WebP)') }}</label>
-                            <input name="favicon" type="file" accept=".ico,image/png,image/svg+xml,image/webp" class="mt-2 w-full text-sm">
-                            @if ($settings->favicon_path)
-                                <label class="mt-2 flex items-center gap-2 text-sm">
-                                    <input type="checkbox" name="remove_favicon" value="1"> {{ __('Favicon’u kaldır (varsayılan SVG kullanılır)') }}
-                                </label>
-                            @endif
-                        </div>
-                    </div>
-                    <div>
-                        <label class="psc-field__label">{{ __('Anasayfa paylaşım görseli (Open Graph, isteğe bağlı)') }}</label>
-                        <input name="homepage_og_image" type="file" accept="image/png,image/jpeg,image/webp" class="mt-2 w-full text-sm">
-                        @if ($branding->homepageOgImageUrl())
-                            <img src="{{ $branding->homepageOgImageUrl() }}" alt="" class="mt-3 max-h-32 rounded-lg border object-cover">
-                        @endif
-                        @if ($settings->homepage_og_image_path)
-                            <label class="mt-2 flex items-center gap-2 text-sm">
-                                <input type="checkbox" name="remove_homepage_og_image" value="1"> {{ __('OG görselini kaldır') }}
-                            </label>
-                        @endif
+
+                    @include('partials.admin.upload-preview', [
+                        'label' => __('Site logosu'),
+                        'previewUrl' => $settings->site_logo_path ? $branding->logoUrl() : null,
+                        'removeName' => 'remove_site_logo',
+                        'removeLabel' => __('Logoyu kaldır'),
+                        'inputName' => 'site_logo',
+                        'accept' => 'image/png,image/jpeg,image/webp',
+                        'hint' => __('PNG, JPG veya WebP — önerilen yükseklik ~48px'),
+                    ])
+
+                    @include('partials.admin.upload-preview', [
+                        'label' => __('Favicon'),
+                        'previewUrl' => $settings->favicon_path ? $branding->faviconUrl() : null,
+                        'previewClass' => 'h-10 w-10 object-contain',
+                        'removeName' => 'remove_favicon',
+                        'removeLabel' => __('Favicon’u kaldır (varsayılan SVG)'),
+                        'inputName' => 'favicon',
+                        'accept' => '.ico,image/png,image/svg+xml,image/webp',
+                    ])
+
+                    <div class="border-t border-[var(--psc-border-light)] pt-4">
+                        @include('partials.admin.upload-preview', [
+                            'label' => __('Anasayfa paylaşım görseli (Open Graph)'),
+                            'previewUrl' => $settings->homepage_og_image_path ? $branding->homepageOgImageUrl() : null,
+                            'previewClass' => 'max-h-32 rounded-lg object-cover',
+                            'removeName' => 'remove_homepage_og_image',
+                            'removeLabel' => __('OG görselini kaldır'),
+                            'inputName' => 'homepage_og_image',
+                            'accept' => 'image/png,image/jpeg,image/webp',
+                        ])
                     </div>
                 </div>
             </div>

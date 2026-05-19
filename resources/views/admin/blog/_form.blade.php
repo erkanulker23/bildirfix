@@ -4,6 +4,8 @@
     $categories = $categories ?? collect();
 @endphp
 
+@include('partials.admin.quill-assets')
+
 <div class="grid gap-6 lg:grid-cols-3">
     <div class="lg:col-span-2 space-y-5">
         <div>
@@ -45,17 +47,14 @@
             @enderror
         </div>
 
-        <div>
-            <label class="psc-field__label">{{ __('İçerik') }}</label>
-            <div class="psc-editor-wrap mt-2">
-                <div id="blog-body-editor"></div>
-            </div>
-            <textarea name="body" id="blog-body-input" class="hidden" required>{{ old('body', $post->body) }}</textarea>
-            <p class="mt-1 text-xs text-slate-500">{{ __('Zengin metin editörü — başlık, liste, bağlantı ve görsel ekleyebilirsiniz.') }}</p>
-            @error('body')
-                <p class="mt-1 text-sm text-rose-600">{{ $message }}</p>
-            @enderror
-        </div>
+        @include('partials.admin.quill-field', [
+            'name' => 'body',
+            'label' => __('İçerik'),
+            'value' => old('body', $post->body),
+            'editorId' => 'blog-body-editor',
+            'required' => true,
+            'hint' => __('Zengin metin editörü — başlık, liste, bağlantı ekleyebilirsiniz.'),
+        ])
     </div>
 
     <div class="space-y-5">
@@ -102,35 +101,3 @@
         </div>
     </div>
 </div>
-
-@push('head')
-    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
-@endpush
-
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const hidden = document.getElementById('blog-body-input');
-            const editor = new Quill('#blog-body-editor', {
-                theme: 'snow',
-                modules: {
-                    toolbar: [
-                        [{ header: [2, 3, false] }],
-                        ['bold', 'italic', 'underline', 'link'],
-                        [{ list: 'ordered' }, { list: 'bullet' }],
-                        ['blockquote', 'code-block'],
-                        ['clean'],
-                    ],
-                },
-            });
-            if (hidden?.value?.trim()) {
-                editor.clipboard.dangerouslyPasteHTML(hidden.value);
-            }
-            const form = hidden?.closest('form');
-            form?.addEventListener('submit', function () {
-                hidden.value = editor.root.innerHTML;
-            });
-        });
-    </script>
-@endpush
