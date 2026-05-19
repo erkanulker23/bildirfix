@@ -564,6 +564,29 @@
         transform: translateY(-2px);
     }
 
+    /** Mobil hızlı bildir — sağ alt, yuvarlak FAB (alt menü yok) */
+    .fab-share--mobile {
+        bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+        right: calc(1rem + env(safe-area-inset-right, 0px));
+        z-index: 45;
+        width: 4rem;
+        height: 4rem;
+        box-shadow:
+            0 12px 36px rgb(255 90 31 / 0.55),
+            0 0 0 4px rgb(255 255 255 / 0.95);
+    }
+
+    .fab-share--mobile:hover {
+        transform: translateY(-3px) scale(1.06);
+        box-shadow:
+            0 16px 44px rgb(255 90 31 / 0.6),
+            0 0 0 4px rgb(255 255 255 / 1);
+    }
+
+    .fab-share--mobile:active {
+        transform: translateY(0) scale(0.96);
+    }
+
     /* ——— Kart (post) ——— */
     .card-post {
         overflow: hidden;
