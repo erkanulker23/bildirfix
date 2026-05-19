@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Support\ContentViewRecorder;
+use App\Support\PageHero;
 use App\Support\Seo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -18,8 +20,10 @@ class PostShowController extends Controller
             abort(404);
         }
 
+        ContentViewRecorder::record($post, 'viewed_post');
+
         $post->load([
-            'user:id,name,verification_status',
+            'user:id,name,avatar_path,verification_status',
             'category:id,name',
             'city:id,name,slug',
             'district:id,name',
@@ -94,6 +98,12 @@ class PostShowController extends Controller
                 ->values();
         }
 
+        $hero = PageHero::fromTitle(
+            $post->title,
+            $post->category?->name ?? __('Bildirim'),
+            Seo::plainExcerpt($post->description ?: $post->title),
+        );
+
         return view('posts.show', [
             'post' => $post,
             'comments' => $comments,
@@ -101,6 +111,7 @@ class PostShowController extends Controller
             'structuredData' => $structuredData,
             'supportUsers' => $supportUsers,
             'followUsers' => $followUsers,
+            'pageHero' => $hero,
         ]);
     }
 }

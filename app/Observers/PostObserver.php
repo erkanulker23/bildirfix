@@ -6,6 +6,7 @@ use App\Enums\PostModerationStatus;
 use App\Enums\PostStatus;
 use App\Models\Post;
 use App\Models\PostStatusLog;
+use App\Support\IndexNowSubmitter;
 
 class PostObserver
 {
@@ -20,6 +21,7 @@ class PostObserver
 
         if ($post->moderation_status === PostModerationStatus::Approved) {
             event(new \App\Events\PostPublished($post));
+            app(IndexNowSubmitter::class)->submitUrl(route('posts.show', $post, absolute: true));
         }
     }
 
@@ -27,6 +29,7 @@ class PostObserver
     {
         if ($post->wasChanged('moderation_status') && $post->moderation_status === PostModerationStatus::Approved) {
             event(new \App\Events\PostPublished($post));
+            app(IndexNowSubmitter::class)->submitUrl(route('posts.show', $post, absolute: true));
         }
 
         if ($post->wasChanged('status')) {

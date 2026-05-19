@@ -17,7 +17,7 @@
         <form method="POST" action="{{ route('admin.blog.update', $post) }}" class="space-y-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
             @csrf
             @method('PATCH')
-            @include('admin.blog._form', ['post' => $post])
+            @include('admin.blog._form', ['post' => $post, 'categories' => $categories])
             <div class="flex flex-wrap gap-3">
                 <button type="submit"
                     class="rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-sm hover:bg-blue-700">{{ __('Güncelle') }}</button>

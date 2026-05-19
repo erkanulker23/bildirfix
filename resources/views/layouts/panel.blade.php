@@ -53,13 +53,25 @@
                         @include('partials.psc.icons', ['name' => 'dashboard'])
                         {{ __('Dashboard') }}
                     </a>
-                    <a href="{{ route('campaigns.index') }}" class="psc-nav-link {{ $navActive('campaigns.index') }}">
+                    <a href="{{ route('panel.posts.index') }}" class="psc-nav-link {{ $navActive('panel.posts.*') }}">
+                        @include('partials.psc.icons', ['name' => 'complaint'])
+                        {{ __('Bildirimlerim') }}
+                    </a>
+                    <a href="{{ route('posts.create') }}" class="psc-nav-link {{ request()->routeIs('posts.create') ? 'psc-nav-link--active' : '' }}">
+                        @include('partials.psc.icons', ['name' => 'plus'])
+                        {{ __('Yeni bildir') }}
+                    </a>
+                    <a href="{{ route('panel.campaigns.index') }}" class="psc-nav-link {{ $navActive('panel.campaigns.*') }}">
                         @include('partials.psc.icons', ['name' => 'campaign'])
                         {{ __('Kampanyalarım') }}
                     </a>
                     <a href="{{ route('campaigns.create') }}" class="psc-nav-link {{ $navActive('campaigns.create') }}">
                         @include('partials.psc.icons', ['name' => 'plus'])
                         {{ __('Kampanya başlat') }}
+                    </a>
+                    <a href="{{ route('panel.profile.edit') }}" class="psc-nav-link {{ $navActive('panel.profile.*') }}">
+                        @include('partials.psc.icons', ['name' => 'users'])
+                        {{ __('Profil') }}
                     </a>
                 @endif
                 @yield('panel_nav_extra')

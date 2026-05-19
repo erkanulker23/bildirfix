@@ -34,15 +34,13 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <link rel="canonical" href="{{ $seoCanonical }}">
     <meta name="theme-color" content="#FF5A1F">
-    @if (filled(config('seo.google_site_verification')))
-        <meta name="google-site-verification" content="{{ config('seo.google_site_verification') }}">
-    @endif
-    @if (filled(config('seo.yandex_verification')))
-        <meta name="yandex-verification" content="{{ config('seo.yandex_verification') }}">
-    @endif
-    @if (filled(config('seo.bing_site_verification')))
-        <meta name="msvalidate.01" content="{{ config('seo.bing_site_verification') }}">
-    @endif
+    @php
+        $siteBranding = $siteBranding ?? \App\Support\SiteBranding::fromPlatform();
+        $faviconUrl = $siteBranding->faviconUrl();
+    @endphp
+    <link rel="icon" href="{{ $faviconUrl }}" type="{{ str_ends_with($faviconUrl, '.svg') ? 'image/svg+xml' : 'image/png' }}">
+    <link rel="apple-touch-icon" href="{{ $faviconUrl }}">
+    @include('partials.site-integrations-head')
 
     <meta property="og:site_name" content="{{ config('app.name') }}">
     <meta property="og:title" content="{{ \Illuminate\Support\Str::limit(strip_tags($ogTitle), 70) }}">
@@ -95,15 +93,20 @@
             <div class="flex min-h-14 items-center gap-2 py-1 sm:gap-3">
                 <a href="{{ route('home') }}"
                     class="flex min-w-0 shrink-0 items-center gap-2 tracking-tight text-neutral-900">
-                    <span
-                        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-sm ring-2 ring-white"
-                        aria-hidden="true">
-                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 13 9 17 19 7" />
-                        </svg>
-                    </span>
-                    <span class="font-heading truncate text-[1.05rem] font-extrabold leading-none tracking-tight sm:text-[1.125rem]">{{ config('app.name') }}</span>
+                    @if ($siteBranding->hasCustomLogo())
+                        <img src="{{ $siteBranding->logoUrl() }}" alt="{{ config('app.name') }}"
+                            class="h-9 w-auto max-w-[140px] shrink-0 object-contain object-left" width="140" height="36">
+                    @else
+                        <span
+                            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-sm ring-2 ring-white"
+                            aria-hidden="true">
+                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 13 9 17 19 7" />
+                            </svg>
+                        </span>
+                        <span class="font-heading truncate text-[1.05rem] font-extrabold leading-none tracking-tight sm:text-[1.125rem]">{{ config('app.name') }}</span>
+                    @endif
                 </a>
 
                 <nav
@@ -194,6 +197,17 @@
     </header>
     @endif
 
+    @if (empty($minimalChrome ?? false) && ! empty($pageHero) && empty($hidePageHero ?? false))
+        <div class="relative left-1/2 z-0 w-screen max-w-[100vw] -translate-x-1/2">
+            <x-page-hero
+                :overline="$pageHero['overline'] ?? null"
+                :title="$pageHero['title'] ?? ''"
+                :title-accent="$pageHero['titleAccent'] ?? null"
+                :description="$pageHero['description'] ?? null"
+            />
+        </div>
+    @endif
+
     <div class="min-h-screen overflow-x-hidden">
     <main id="icerik"
         @class([
@@ -253,6 +267,12 @@
     @endif
     </div>
 
+    @php
+        $siteBodyIntegrations = $siteIntegrations ?? \App\Support\SiteIntegrations::fromPlatform();
+    @endphp
+    @if (filled($siteBodyIntegrations->customBodyHtml))
+        {!! $siteBodyIntegrations->customBodyHtml !!}
+    @endif
     @stack('scripts')
 </body>
 

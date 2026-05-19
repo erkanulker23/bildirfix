@@ -36,6 +36,8 @@ class Post extends Model
         'comments_count',
         'reports_count',
         'share_count',
+        'follow_count',
+        'view_count',
     ];
 
     protected function casts(): array

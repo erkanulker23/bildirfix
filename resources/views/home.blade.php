@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
-@section('title', config('app.name').' • '.__('Kent sorun bildir'))
+@php
+    $homeBranding = \App\Support\SiteBranding::fromPlatform();
+@endphp
+@section('title', $homeBranding->homepageTitle())
 
 @section('content')
     @isset($platformStats)

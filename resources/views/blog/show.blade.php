@@ -41,7 +41,7 @@
         </header>
 
         <div class="blog-prose pt-8 text-[17px] leading-[1.75] text-neutral-800" itemprop="articleBody">
-            {!! \Illuminate\Support\Str::markdown($post->body) !!}
+            {!! $post->renderedBody() !!}
         </div>
     </article>
 @endsection

@@ -17,6 +17,9 @@ use App\Observers\StoryObserver;
 use App\Observers\SupportObserver;
 use App\Support\AuthLookup;
 use App\Support\Phone;
+use App\Support\PageHero;
+use App\Support\SiteBranding;
+use App\Support\SiteIntegrations;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -82,6 +85,15 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('layouts.admin', function ($view): void {
             $view->with('viewerIsSuperAdmin', request()->user()?->isSuperAdmin() ?? false);
+        });
+
+        View::composer('layouts.app', function ($view): void {
+            $view->with('siteIntegrations', SiteIntegrations::fromPlatform());
+            $view->with('siteBranding', SiteBranding::fromPlatform());
+
+            if (! $view->offsetExists('pageHero')) {
+                $view->with('pageHero', PageHero::forRoute(request()->route()?->getName()));
+            }
         });
 
         try {

@@ -10,18 +10,9 @@
                 <h1 class="text-xl font-extrabold text-slate-900 sm:text-2xl">{{ __('Kampanya moderasyonu') }}</h1>
                 <p class="mt-2 text-sm text-slate-500">{{ __('Liste ve CSR alanında yalnızca onaylı kampanyalar herkese açıktır. Yayında olanları buradan yayından kaldırabilirsiniz.') }}</p>
             </div>
-            <form method="get" action="{{ route('admin.campaign-moderation.index') }}" class="flex flex-wrap items-center gap-2">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500">{{ __('Liste') }}</label>
-                <select name="durum" onchange="this.form.submit()"
-                    class="min-w-[12rem] rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-slate-900 shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20">
-                    <option value="pending" @selected($statusFilter === 'pending')>{{ __('Onay bekleyen') }}</option>
-                    <option value="approved" @selected($statusFilter === 'approved')>{{ __('Yayındaki') }}</option>
-                    <option value="rejected" @selected($statusFilter === 'rejected')>{{ __('Reddedilen') }}</option>
-                    <option value="unpublished" @selected($statusFilter === 'unpublished')>{{ __('Yayından kaldırılan') }}</option>
-                    <option value="all" @selected($statusFilter === 'all')>{{ __('Tüm durumlar') }}</option>
-                </select>
-            </form>
         </div>
+
+        @include('partials.admin.moderation-filters', ['statusFilter' => $statusFilter, 'routeName' => 'admin.campaign-moderation.index'])
 
         @if ($campaigns->isEmpty())
             <section class="rounded-xl border border-slate-200 bg-white p-10 text-center text-sm text-slate-500 shadow-sm">

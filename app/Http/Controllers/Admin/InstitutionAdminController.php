@@ -7,10 +7,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Institution;
+use App\Support\Phone;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password as PasswordRule;
 use Illuminate\View\View;
 
 class InstitutionAdminController extends Controller
@@ -45,11 +48,14 @@ class InstitutionAdminController extends Controller
 
     public function edit(Institution $institution): View
     {
+        $institution->load('accountUser:id,name,email,phone');
+
         $cities = City::query()->orderBy('name')->get(['id', 'name', 'plate']);
         $types = config('institutions.types', []);
 
         return view('admin.institutions.edit', [
             'institution' => $institution,
+            'accountUser' => $institution->accountUser,
             'cities' => $cities,
             'types' => $types,
         ]);
@@ -58,6 +64,8 @@ class InstitutionAdminController extends Controller
     public function update(Request $request, Institution $institution): RedirectResponse
     {
         $typeKeys = array_keys(config('institutions.types', []));
+
+        $accountUser = $institution->accountUser;
 
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -70,6 +78,25 @@ class InstitutionAdminController extends Controller
             'public_email' => ['nullable', 'string', 'email', 'max:255'],
             'phone' => ['nullable', 'string', 'max:64'],
             'address' => ['nullable', 'string', 'max:500'],
+            'account_name' => ['nullable', 'string', 'max:255'],
+            'account_email' => [
+                'nullable',
+                'string',
+                'email',
+                'max:255',
+                $accountUser !== null
+                    ? Rule::unique('users', 'email')->ignore($accountUser->id)
+                    : Rule::unique('users', 'email'),
+            ],
+            'account_phone' => [
+                'nullable',
+                'string',
+                'max:64',
+                $accountUser !== null
+                    ? Rule::unique('users', 'phone')->ignore($accountUser->id)
+                    : Rule::unique('users', 'phone'),
+            ],
+            'account_password' => ['nullable', 'confirmed', PasswordRule::defaults()],
         ]);
 
         $data['verified'] = ((int) $data['verified']) === 1;
@@ -94,8 +121,44 @@ class InstitutionAdminController extends Controller
 
         $institution->update($data);
 
+        if ($accountUser !== null) {
+            $userFill = [];
+            if (! empty($data['account_name'])) {
+                $userFill['name'] = $data['account_name'];
+            }
+            if (! empty($data['account_email'])) {
+                $userFill['email'] = strtolower(trim((string) $data['account_email']));
+            }
+            if (array_key_exists('account_phone', $data)) {
+                $phone = trim((string) ($data['account_phone'] ?? ''));
+                $userFill['phone'] = $phone !== '' ? Phone::normalize($phone) : null;
+            }
+            if (! empty($data['account_password'])) {
+                $userFill['password'] = Hash::make((string) $data['account_password']);
+            }
+            if ($userFill !== []) {
+                $accountUser->forceFill($userFill)->save();
+            }
+        }
+
         return redirect()
             ->route('admin.institutions.edit', $institution)
-            ->with('status', __('Kurum bilgileri güncellendi.'));
+            ->with('status', __('Kurum ve hesap bilgileri güncellendi.'));
+    }
+
+    public function sendAccountPasswordReset(Institution $institution): RedirectResponse
+    {
+        $accountUser = $institution->accountUser;
+        if ($accountUser === null || trim((string) $accountUser->email) === '') {
+            return back()->withErrors([
+                'account_password_reset' => __('Bağlı kurum hesabı veya e-posta bulunamadı.'),
+            ]);
+        }
+
+        $status = \Illuminate\Support\Facades\Password::sendResetLink(['email' => $accountUser->email]);
+
+        return $status === \Illuminate\Support\Facades\Password::RESET_LINK_SENT
+            ? back()->with('status', __('Şifre sıfırlama bağlantısı kurum hesabına gönderildi.'))
+            : back()->withErrors(['account_password_reset' => __($status)]);
     }
 }

@@ -20,6 +20,22 @@ class PlatformSetting extends Model
         'mail_encryption',
         'mail_username',
         'mail_password',
+        'google_site_verification',
+        'google_analytics_measurement_id',
+        'yandex_verification',
+        'bing_site_verification',
+        'indexnow_key',
+        'custom_head_css',
+        'custom_head_html',
+        'custom_body_html',
+        'homepage_seo_title',
+        'homepage_seo_description',
+        'site_logo_path',
+        'favicon_path',
+        'homepage_og_image_path',
+        'legal_privacy_html',
+        'legal_kvkk_html',
+        'legal_terms_html',
     ];
 
     /**

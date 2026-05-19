@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Campaign;
+use App\Support\ContentViewRecorder;
 use App\Support\Seo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,9 @@ class CampaignShowController extends Controller
             abort(404);
         }
 
-        $campaign->load(['user:id,name', 'city:id,name', 'topic:id,name,slug', 'moderatedBy:id,name']);
+        ContentViewRecorder::record($campaign, 'viewed_campaign');
+
+        $campaign->load(['user:id,name,avatar_path', 'city:id,name', 'topic:id,name,slug', 'moderatedBy:id,name']);
 
         $campaignSupporters = $campaign->supporters()
             ->with('user:id,name')
@@ -76,6 +79,7 @@ class CampaignShowController extends Controller
             'campaignComments' => $campaignComments,
             'seo' => $seo,
             'structuredData' => $structuredData,
+            'hidePageHero' => true,
         ]);
     }
 }

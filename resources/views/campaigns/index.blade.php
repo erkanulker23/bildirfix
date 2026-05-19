@@ -3,18 +3,13 @@
 @section('title', __('Sosyal sorumluluk kampanyaları'))
 
 @section('content')
-    <div class="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-neutral-200 pb-4">
-        <div>
-            <p class="text-[11px] font-black uppercase tracking-[0.2em] text-indigo-700">{{ __('Toplumsal dayanışma') }}</p>
-            <h1 class="mt-2 text-[clamp(1.5rem,3vw,2.1rem)] font-black tracking-tight text-neutral-950">{{ __('Kampanyalar') }}</h1>
-            <p class="mt-2 max-w-xl text-[14px] font-medium text-neutral-600">{{ __('Kullanıcılar kampanya başlatır; süper yönetici yayına uygun bulduğu projeler herkese açılır. Destek tek tıkla kayıtlı kullanıcılarla bağlanır.') }}</p>
-        </div>
+    <div class="mb-8 flex flex-wrap justify-end gap-3">
         @auth
             <a href="{{ route('campaigns.create') }}"
-                class="inline-flex items-center rounded-full bg-indigo-600 px-6 py-3 text-[13px] font-black uppercase tracking-wide text-white shadow-lg shadow-indigo-600/30 hover:bg-indigo-700">{{ __('Kampanya başlat') }}</a>
+                class="btn-primary inline-flex items-center rounded-full px-6 py-3 text-[13px] font-black uppercase tracking-wide shadow-lg">{{ __('Kampanya başlat') }}</a>
         @else
             <a href="{{ route('register') }}"
-                class="inline-flex items-center rounded-full border-2 border-indigo-200 bg-white px-6 py-3 text-[13px] font-black text-indigo-900 hover:bg-indigo-50">{{ __('Katıl • kampanya aç') }}</a>
+                class="inline-flex items-center rounded-full border-2 border-orange-200 bg-white px-6 py-3 text-[13px] font-black text-orange-900 hover:bg-orange-50">{{ __('Katıl • kampanya aç') }}</a>
         @endauth
     </div>
 
@@ -55,18 +50,18 @@
     </form>
 
     @if ($campaigns->isEmpty())
-        <div class="rounded-2xl border-2 border-dashed border-indigo-200 bg-indigo-50/50 py-24 text-center">
-            <p class="text-[17px] font-bold text-indigo-950">{{ __('Bu filtre ile kampanya görünmüyor.') }}</p>
-            <p class="mt-2 text-sm font-medium text-indigo-800/85">{{ __('Yeni kampanyalar onay sürecinden geçtikçe burada görünecek.') }}</p>
+        <div class="rounded-2xl border-2 border-dashed border-orange-200 bg-orange-50/50 py-24 text-center">
+            <p class="text-[17px] font-bold text-orange-950">{{ __('Bu filtre ile kampanya görünmüyor.') }}</p>
+            <p class="mt-2 text-sm font-medium text-orange-800/85">{{ __('Yeni kampanyalar onay sürecinden geçtikçe burada görünecek.') }}</p>
             @guest
-                <a href="{{ route('register') }}" class="mt-6 inline-flex rounded-full bg-indigo-600 px-6 py-3 text-[13px] font-bold text-white">{{ __('Aramıza katıl') }}</a>
+                <a href="{{ route('register') }}" class="btn-primary mt-6 inline-flex rounded-full px-6 py-3 text-[13px] font-bold">{{ __('Aramıza katıl') }}</a>
             @endguest
         </div>
     @else
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             @foreach ($campaigns as $campaign)
                 <article
-                    class="flex flex-col overflow-hidden rounded-2xl bg-white shadow-[0_2px_10px_-4px_rgba(76,61,207,0.35)] ring-2 ring-indigo-100 transition hover:-translate-y-0.5 hover:shadow-lg">
+                    class="flex flex-col overflow-hidden rounded-2xl bg-white shadow-[0_2px_10px_-4px_rgba(234,88,12,0.2)] ring-2 ring-orange-100 transition hover:-translate-y-0.5 hover:shadow-lg">
                     @if ($campaign->hero_image_url)
                         <a href="{{ route('campaigns.show', $campaign) }}" class="-mx-px -mt-px block">
                             <img src="{{ $campaign->hero_image_url }}" alt="" class="aspect-[2.2/1] w-full object-cover" loading="lazy">
@@ -76,14 +71,15 @@
                         @if ($campaign->topic)
                             <p class="text-[11px] font-black uppercase tracking-wider text-sky-800">{{ $campaign->topic->name }}</p>
                         @else
-                            <p class="text-[11px] font-black uppercase tracking-wider text-indigo-700">{{ __('SSR kampanyası') }}</p>
+                            <p class="text-[11px] font-black uppercase tracking-wider text-[#ea580c]">{{ __('SSR kampanyası') }}</p>
                         @endif
                         <h2 class="mt-1 text-[1.125rem] font-black leading-snug tracking-tight text-neutral-950">
-                            <a href="{{ route('campaigns.show', $campaign) }}" class="hover:text-indigo-800">{{ $campaign->title }}</a></h2>
+                            <a href="{{ route('campaigns.show', $campaign) }}" class="hover:text-[#ea580c]">{{ $campaign->title }}</a></h2>
                         <p class="mt-2 line-clamp-3 flex-1 text-[13px] font-medium leading-relaxed text-neutral-700">
                             {{ \Illuminate\Support\Str::limit(strip_tags((string) ($campaign->excerpt ?? $campaign->description)), 220) }}</p>
                         <div class="mt-4 flex flex-wrap items-center gap-3 text-[12px] font-bold uppercase tracking-wide text-neutral-800">
                             <span>❤ {{ number_format(max(0, (int) $campaign->supporter_count)) }} {{ __('destek') }}</span>
+                            <span class="text-neutral-500">👁 {{ number_format(max(0, (int) $campaign->view_count)) }}</span>
                             @if ($campaign->goal_supporters)
                                 <span>/ {{ __('hedef :n', ['n' => number_format((int) $campaign->goal_supporters)]) }}</span>
                             @endif

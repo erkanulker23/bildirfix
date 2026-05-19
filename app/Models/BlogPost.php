@@ -22,6 +22,7 @@ class BlogPost extends Model
     /** @var list<string> */
     protected $fillable = [
         'author_user_id',
+        'blog_category_id',
         'title',
         'slug',
         'excerpt',
@@ -107,10 +108,34 @@ class BlogPost extends Model
         return $slug;
     }
 
+    /** @return BelongsTo<BlogCategory, $this> */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(BlogCategory::class, 'blog_category_id');
+    }
+
     /** @return BelongsTo<User, $this> */
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_user_id');
+    }
+
+    public function renderedBody(): string
+    {
+        $body = trim((string) $this->body);
+        if ($body === '') {
+            return '';
+        }
+
+        if (preg_match('/<[a-z][\s\S]*>/i', $body) === 1) {
+            return strip_tags($body, [
+                'p', 'br', 'strong', 'b', 'em', 'i', 'u', 'ul', 'ol', 'li',
+                'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'img', 'blockquote',
+                'code', 'pre', 'span', 'div', 'figure', 'figcaption',
+            ]);
+        }
+
+        return Str::markdown($body);
     }
 
     /** @return BelongsTo<User, $this> */

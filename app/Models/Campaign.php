@@ -24,6 +24,7 @@ class Campaign extends Model
         'campaign_topic_id',
         'goal_supporters',
         'supporter_count',
+        'view_count',
         'moderation_status',
         'moderated_at',
         'moderated_by_user_id',

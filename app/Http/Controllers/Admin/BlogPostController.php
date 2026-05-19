@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\PostModerationStatus;
 use App\Http\Controllers\Controller;
+use App\Models\BlogCategory;
 use App\Models\BlogPost;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -19,7 +20,7 @@ class BlogPostController extends Controller
     public function index(): View
     {
         $posts = BlogPost::query()
-            ->with('author:id,name')
+            ->with(['author:id,name', 'category:id,name'])
             ->orderByDesc('updated_at')
             ->paginate(20);
 
@@ -28,7 +29,18 @@ class BlogPostController extends Controller
 
     public function create(): View
     {
-        return view('admin.blog.create', ['post' => new BlogPost]);
+        return view('admin.blog.create', [
+            'post' => new BlogPost,
+            'categories' => $this->blogCategories(),
+        ]);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection<int, BlogCategory>
+     */
+    private function blogCategories()
+    {
+        return BlogCategory::query()->orderBy('sort_order')->orderBy('name')->get();
     }
 
     public function store(Request $request): RedirectResponse
@@ -55,7 +67,10 @@ class BlogPostController extends Controller
 
     public function edit(BlogPost $blog): View
     {
-        return view('admin.blog.edit', ['post' => $blog]);
+        return view('admin.blog.edit', [
+            'post' => $blog,
+            'categories' => $this->blogCategories(),
+        ]);
     }
 
     public function update(Request $request, BlogPost $blog): RedirectResponse
@@ -99,10 +114,11 @@ class BlogPostController extends Controller
         }
 
         $validated = $request->validate([
+            'blog_category_id' => ['nullable', 'integer', 'exists:blog_categories,id'],
             'title' => ['required', 'string', 'max:255'],
             'slug' => ['nullable', 'string', 'max:255', 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $slugRule],
             'excerpt' => ['nullable', 'string', 'max:500'],
-            'body' => ['required', 'string', 'max:100000'],
+            'body' => ['required', 'string', 'max:200000'],
             'hero_image_url' => ['nullable', 'string', 'max:2048'],
             'meta_title' => ['nullable', 'string', 'max:255'],
             'meta_description' => ['nullable', 'string', 'max:500'],
@@ -153,6 +169,10 @@ class BlogPostController extends Controller
         }
         if (($validated['meta_description'] ?? '') === '') {
             $validated['meta_description'] = null;
+        }
+
+        if (empty($validated['blog_category_id'])) {
+            $validated['blog_category_id'] = null;
         }
 
         return $validated;

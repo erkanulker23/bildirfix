@@ -21,7 +21,7 @@ class CampaignCommentStoreController extends Controller
         if (! $campaign->isPubliclyApproved()) {
             return redirect()
                 ->route('campaigns.show', $campaign)
-                ->fragment('yorumlar')
+                ->withFragment('yorumlar')
                 ->withErrors(['content' => __('Bu kampanyaya yorum yazılamıyor.')]);
         }
 
@@ -37,7 +37,7 @@ class CampaignCommentStoreController extends Controller
 
         return redirect()
             ->route('campaigns.show', $campaign)
-            ->fragment('yorumlar')
+            ->withFragment('yorumlar')
             ->with('status', __('Yorumun yayında — teşekkürler!'));
     }
 }

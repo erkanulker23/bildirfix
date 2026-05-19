@@ -16,6 +16,7 @@ use App\Models\User;
 use App\Support\PublicPostFeed;
 use App\Support\PublicStoryFeed;
 use App\Support\Seo;
+use App\Support\SiteBranding;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
@@ -148,6 +149,8 @@ class HomeController extends Controller
             ->shuffle()
             ->values();
 
+        $branding = SiteBranding::fromPlatform();
+
         return view('home', [
             'stories' => $stories,
             'featuredCampaigns' => $featuredCampaigns,
@@ -165,10 +168,11 @@ class HomeController extends Controller
             'geoActive' => $lat !== null && $lng !== null,
             'relaxNearby' => $relaxNearby,
             'seo' => [
-                'description' => (string) config('seo.default_meta_description'),
+                'description' => $branding->homepageDescription(),
                 'canonical' => request()->fullUrl(),
-                'og_title' => config('app.name').' • '.__('Son şikâyetler'),
+                'og_title' => $branding->homepageTitle(),
                 'og_type' => 'website',
+                'og_image' => $branding->homepageOgImageUrl(),
             ],
             'structuredData' => [
                 Seo::webSiteStructuredData(),

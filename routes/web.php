@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\Admin\BlogModerationController;
 use App\Http\Controllers\Admin\BlogPostController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\CampaignModerationController;
 use App\Http\Controllers\Admin\AdPlacementAdminController;
 use App\Http\Controllers\Admin\CampaignAdminController;
@@ -30,12 +31,20 @@ use App\Http\Controllers\ContactPageController;
 use App\Http\Controllers\CreatePostWizardController;
 use App\Http\Controllers\FeedIndexController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\LegalPagesController;
 use App\Http\Controllers\Institution\DashboardController as InstitutionDashboardController;
+use App\Http\Controllers\LegalPageController;
 use App\Http\Controllers\InstitutionPublicController;
 use App\Http\Controllers\NotificationsPageController;
 use App\Http\Controllers\Panel\DashboardController as PanelDashboardController;
+use App\Http\Controllers\Panel\MyCampaignsController as PanelMyCampaignsController;
+use App\Http\Controllers\Panel\MyPostsController as PanelMyPostsController;
+use App\Http\Controllers\Panel\ProfileController as PanelProfileController;
 use App\Http\Controllers\PostShowController;
 use App\Http\Controllers\ProfilePageController;
+use App\Http\Controllers\Admin\HomepageSettingsController;
+use App\Http\Controllers\Admin\SiteIntegrationController;
+use App\Http\Controllers\IndexNowKeyController;
 use App\Http\Controllers\SeoController;
 use App\Http\Controllers\Web\CampaignCommentStoreController;
 use App\Http\Controllers\Web\CampaignSupportWebController;
@@ -86,9 +95,9 @@ Route::post('iletisim', [ContactPageController::class, 'store'])
     ->middleware(['turnstile', 'throttle:8,1'])
     ->name('contact.store');
 
-Route::view('yasal/gizlilik', 'legal.privacy')->name('legal.privacy');
-Route::view('yasal/kvkk', 'legal.kvkk')->name('legal.kvkk');
-Route::view('yasal/kullanim-kosullari', 'legal.terms')->name('legal.terms');
+Route::get('yasal/gizlilik', [LegalPageController::class, 'privacy'])->name('legal.privacy');
+Route::get('yasal/kvkk', [LegalPageController::class, 'kvkk'])->name('legal.kvkk');
+Route::get('yasal/kullanim-kosullari', [LegalPageController::class, 'terms'])->name('legal.terms');
 
 Route::middleware('guest')->group(function (): void {
     Route::get('auth/google', [GoogleOAuthController::class, 'redirect'])->name('auth.google.redirect')->middleware('throttle:login');
@@ -101,6 +110,11 @@ Route::middleware('guest')->group(function (): void {
     Route::post('superlogin', [StaffAuthenticatedSessionController::class, 'store'])->middleware(['throttle:login', 'turnstile'])->name('login.super.store');
     Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
     Route::post('register', [RegisteredUserController::class, 'store'])->middleware(['throttle:otp-send', 'turnstile']);
+
+    Route::get('sifremi-unuttum', [PasswordResetLinkController::class, 'create'])->name('password.request');
+    Route::post('sifremi-unuttum', [PasswordResetLinkController::class, 'store'])->middleware('throttle:6,1')->name('password.email');
+    Route::get('sifre-sifirla/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+    Route::post('sifre-sifirla', [NewPasswordController::class, 'store'])->middleware('throttle:6,1')->name('password.update');
 });
 
 Route::get('verify-phone', [VerifyPhoneController::class, 'create'])->name('verify.phone.form');
@@ -152,6 +166,14 @@ Route::middleware(['auth', 'verified.phone'])
     ->name('panel.')
     ->group(function (): void {
         Route::get('dashboard', PanelDashboardController::class)->name('dashboard');
+        Route::get('bildirimlerim', [PanelMyPostsController::class, 'index'])->name('posts.index');
+        Route::get('bildirimlerim/{post}/duzenle', [PanelMyPostsController::class, 'edit'])->name('posts.edit');
+        Route::patch('bildirimlerim/{post}', [PanelMyPostsController::class, 'update'])->name('posts.update');
+        Route::get('kampanyalarim', [PanelMyCampaignsController::class, 'index'])->name('campaigns.index');
+        Route::get('kampanyalarim/{campaign:id}/duzenle', [PanelMyCampaignsController::class, 'edit'])->name('campaigns.edit');
+        Route::patch('kampanyalarim/{campaign:id}', [PanelMyCampaignsController::class, 'update'])->name('campaigns.update');
+        Route::get('profil', [PanelProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('profil', [PanelProfileController::class, 'update'])->name('profile.update');
     });
 
 Route::middleware(['auth', 'verified.phone', 'role:admin,super_admin'])
@@ -165,10 +187,6 @@ Route::middleware(['auth', 'verified.phone', 'role:admin,super_admin'])
             Route::post('moderasyon/{post}/onayla', [PostModerationController::class, 'approve'])->name('moderation.approve');
             Route::post('moderasyon/{post}/reddet', [PostModerationController::class, 'reject'])->name('moderation.reject');
             Route::post('moderasyon/{post}/yayindan-kaldir', [PostModerationController::class, 'unpublish'])->name('moderation.unpublish');
-
-            Route::get('blog-moderasyon', [BlogModerationController::class, 'index'])->name('blog-moderation.index');
-            Route::post('blog-moderasyon/{blog}/onayla', [BlogModerationController::class, 'approve'])->name('blog-moderation.approve');
-            Route::post('blog-moderasyon/{blog}/reddet', [BlogModerationController::class, 'reject'])->name('blog-moderation.reject');
 
             Route::get('kampanya-moderasyon', [CampaignModerationController::class, 'index'])->name('campaign-moderation.index');
             Route::post('kampanya-moderasyon/{campaign:id}/onayla', [CampaignModerationController::class, 'approve'])->name('campaign-moderation.approve');
@@ -189,15 +207,27 @@ Route::middleware(['auth', 'verified.phone', 'role:admin,super_admin'])
             Route::get('kullanicilar', UserAdminController::class)->name('users.index');
             Route::get('kullanicilar/{user}/duzenle', [UserAdminEditController::class, 'edit'])->name('users.edit');
             Route::patch('kullanicilar/{user}', [UserAdminEditController::class, 'update'])->name('users.update');
+            Route::post('kullanicilar/{user}/sifre-sifirla', [UserAdminEditController::class, 'sendPasswordReset'])->name('users.send-password-reset');
             Route::get('kurumlar', [InstitutionAdminController::class, 'index'])->name('institutions.index');
             Route::get('kurumlar/{institution}/duzenle', [InstitutionAdminController::class, 'edit'])->name('institutions.edit');
             Route::patch('kurumlar/{institution}', [InstitutionAdminController::class, 'update'])->name('institutions.update');
+            Route::post('kurumlar/{institution}/sifre-sifirla', [InstitutionAdminController::class, 'sendAccountPasswordReset'])->name('institutions.send-password-reset');
 
             Route::get('eposta', [MailSettingsController::class, 'edit'])->name('mail-settings.edit');
             Route::patch('eposta', [MailSettingsController::class, 'update'])->name('mail-settings.update');
 
             Route::get('platform', [PlatformSettingController::class, 'edit'])->name('platform-settings.edit');
             Route::patch('platform', [PlatformSettingController::class, 'update'])->name('platform-settings.update');
+
+            Route::get('site-entegrasyonlari', [SiteIntegrationController::class, 'edit'])->name('site-integrations.edit');
+            Route::patch('site-entegrasyonlari', [SiteIntegrationController::class, 'update'])->name('site-integrations.update');
+            Route::post('site-entegrasyonlari/indexnow-yenile', [SiteIntegrationController::class, 'regenerateIndexNowKey'])->name('site-integrations.regenerate-indexnow');
+
+            Route::get('anasayfa', [HomepageSettingsController::class, 'edit'])->name('homepage-settings.edit');
+            Route::patch('anasayfa', [HomepageSettingsController::class, 'update'])->name('homepage-settings.update');
+
+            Route::get('yasal-sayfalar', [LegalPagesController::class, 'edit'])->name('legal-pages.edit');
+            Route::patch('yasal-sayfalar', [LegalPagesController::class, 'update'])->name('legal-pages.update');
         });
 
         Route::prefix('blog-yonetim')->name('blog.')->group(function (): void {
@@ -216,3 +246,7 @@ Route::middleware(['auth', 'verified.phone', 'role:institution'])
     ->group(function (): void {
         Route::get('dashboard', InstitutionDashboardController::class)->name('dashboard');
     });
+
+Route::get('{indexnowKey}.txt', IndexNowKeyController::class)
+    ->where('indexnowKey', '[a-f0-9]{32}')
+    ->name('indexnow.key');

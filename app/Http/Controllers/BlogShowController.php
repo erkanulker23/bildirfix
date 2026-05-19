@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
+use App\Support\PageHero;
 use App\Support\Seo;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -47,6 +48,11 @@ final class BlogShowController extends Controller
 
         return view('blog.show', [
             'post' => $post,
+            'pageHero' => PageHero::fromTitle(
+                $post->title,
+                __('Blog'),
+                $description,
+            ),
             'seo' => $seo,
             'structuredData' => $structuredData,
         ]);

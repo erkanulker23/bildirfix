@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Institution;
 use App\Models\Post;
+use App\Support\PageHero;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -35,6 +36,12 @@ final class InstitutionPublicController extends Controller
 
         return view('institutions.show', [
             'institution' => $institution->load('city:id,name,slug'),
+            'pageHero' => PageHero::make(
+                __('Kurum profili'),
+                $institution->name,
+                null,
+                __('Bu kuruma yönlendirilen onaylı bildirimler.'),
+            ),
             'posts' => $posts,
             'seo' => [
                 'description' => Str::limit(

@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use App\Models\Post;
+use App\Support\PageHero;
 use App\Support\PublicStoryFeed;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -44,6 +45,12 @@ final class CityPublicController extends Controller
 
         return view('cities.show', [
             'city' => $city,
+            'pageHero' => PageHero::make(
+                __('Şehir sayfası'),
+                $city->name,
+                null,
+                __(':city ili için onaylı ve yayında olan bildirimler.', ['city' => $city->name]),
+            ),
             'posts' => $posts,
             'cityStories' => $cityStories,
             'storiesViewerPayload' => $storiesViewerPayload,

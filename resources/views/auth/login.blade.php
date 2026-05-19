@@ -34,7 +34,10 @@
                     placeholder="ornek@gmail.com · +90 53…">
             </div>
             <div>
-                <label class="text-xs font-bold uppercase tracking-wide text-teal-900/70">{{ __('Şifre') }}</label>
+                <div class="flex items-center justify-between gap-2">
+                    <label class="text-xs font-bold uppercase tracking-wide text-teal-900/70">{{ __('Şifre') }}</label>
+                    <a href="{{ route('password.request') }}" class="text-xs font-semibold text-teal-700 hover:underline">{{ __('Şifremi unuttum') }}</a>
+                </div>
                 <input name="password" type="password" autocomplete="current-password" required
                     class="mt-2 w-full rounded-2xl border border-slate-100 bg-white px-4 py-3 text-sm focus:border-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-400/30">
             </div>

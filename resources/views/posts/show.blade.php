@@ -54,7 +54,7 @@
                             @if ($post->category)
                                 <span class="text-[11px] font-black uppercase tracking-[0.2em] text-teal-900">{{ $post->category->name }}</span>
                             @endif
-                            <h1 class="mt-2 text-3xl font-black leading-tight text-slate-950 sm:text-4xl">{{ $post->title }}</h1>
+                            <p class="sr-only">{{ $post->title }}</p>
                         </div>
                         <span class="rounded-full px-4 py-1.5 text-xs font-black uppercase tracking-wide ring-1 {{ $badge }}">{{ $status->label() }}</span>
                     </div>
@@ -208,6 +208,10 @@
                         <div class="rounded-2xl bg-sky-50/80 px-4 py-3 ring-1 ring-sky-100">
                             <dt class="font-black text-sky-950">{{ __('Yorum') }}</dt>
                             <dd class="mt-2 text-xl font-black text-sky-950">{{ number_format(max(0, (int) $post->comments_count)) }}</dd>
+                        </div>
+                        <div class="rounded-2xl bg-orange-50/80 px-4 py-3 ring-1 ring-orange-100">
+                            <dt class="font-black text-orange-900">{{ __('Görüntülenme') }}</dt>
+                            <dd class="mt-2 text-xl font-black text-orange-900">{{ number_format(max(0, (int) $post->view_count)) }}</dd>
                         </div>
                         @if (! $__coords && $post->latitude && $post->longitude)
                             <div class="rounded-2xl bg-white px-4 py-3 ring-1 ring-slate-200">

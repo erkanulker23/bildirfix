@@ -11,7 +11,10 @@ use App\Models\User;
 use App\Support\SuperAdmin;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password as PasswordRule;
 use Illuminate\View\View;
 
 class UserAdminEditController extends Controller
@@ -41,6 +44,7 @@ class UserAdminEditController extends Controller
             'verification_status' => ['required', Rule::enum(VerificationStatus::class)],
             'email_verified' => ['required', 'boolean'],
             'phone_verified' => ['required', 'boolean'],
+            'password' => ['nullable', 'confirmed', PasswordRule::defaults()],
         ]);
 
         $newRole = $data['role'] instanceof UserRole
@@ -81,7 +85,7 @@ class UserAdminEditController extends Controller
             ? ($user->phone_verified_at ?? now())
             : null;
 
-        $user->forceFill([
+        $fill = [
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'] !== '' && $data['phone'] !== null ? $data['phone'] : null,
@@ -89,10 +93,31 @@ class UserAdminEditController extends Controller
             'verification_status' => $verificationStatus,
             'email_verified_at' => $emailVerifiedAt,
             'phone_verified_at' => $phoneVerifiedAt,
-        ])->save();
+        ];
+
+        if (! empty($data['password'])) {
+            $fill['password'] = Hash::make((string) $data['password']);
+        }
+
+        $user->forceFill($fill)->save();
 
         return redirect()
             ->route('admin.users.edit', $user)
             ->with('status', __('Kullanıcı güncellendi.'));
+    }
+
+    public function sendPasswordReset(User $user): RedirectResponse
+    {
+        if ($user->email === null || trim((string) $user->email) === '') {
+            return back()->withErrors([
+                'password_reset' => __('Bu kullanıcının e-posta adresi yok; sıfırlama gönderilemez.'),
+            ]);
+        }
+
+        $status = Password::sendResetLink(['email' => $user->email]);
+
+        return $status === Password::RESET_LINK_SENT
+            ? back()->with('status', __('Şifre sıfırlama bağlantısı :email adresine gönderildi.', ['email' => $user->email]))
+            : back()->withErrors(['password_reset' => __($status)]);
     }
 }

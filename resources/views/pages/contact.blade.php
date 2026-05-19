@@ -7,23 +7,14 @@
 @endphp
 
 @section('content')
-    <div class="mx-auto max-w-[720px] px-4 pb-16 pt-6 sm:px-5 lg:pt-10">
-        <header class="mb-10">
-            <p class="inline-flex rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-black uppercase tracking-widest text-emerald-800 ring-1 ring-emerald-200/80">{{ __('İletişim') }}</p>
-            <h1 class="mt-4 text-balance text-3xl font-black tracking-tight text-neutral-950 sm:text-4xl">
-                {{ __('Bize yazın') }}
-            </h1>
-            <p class="mt-4 text-[15px] leading-relaxed text-neutral-800">
-                {{ __('Sorularınız ve geri bildirimleriniz için formu kullanabilirsiniz. Yasal ve resmî başvurular için ilgili kurum kanalları geçerlidir.') }}
+    <div class="mx-auto max-w-[720px] px-4 pb-16 pt-2 sm:px-5">
+        @if ($primaryChannel)
+            <p class="mb-8 text-sm text-neutral-700">
+                <span class="font-bold text-neutral-900">{{ __(data_get($primaryChannel, 'label')) }}</span>
+                <span class="mx-1.5 text-neutral-400" aria-hidden="true">·</span>
+                <a href="mailto:{{ data_get($primaryChannel, 'value') }}" class="font-semibold text-primary underline-offset-4 hover:underline">{{ data_get($primaryChannel, 'value') }}</a>
             </p>
-            @if ($primaryChannel)
-                <p class="mt-5 text-sm text-neutral-700">
-                    <span class="font-bold text-neutral-900">{{ __(data_get($primaryChannel, 'label')) }}</span>
-                    <span class="mx-1.5 text-neutral-400" aria-hidden="true">·</span>
-                    <a href="mailto:{{ data_get($primaryChannel, 'value') }}" class="font-semibold text-[#6C5CE7] underline-offset-4 hover:underline">{{ data_get($primaryChannel, 'value') }}</a>
-                </p>
-            @endif
-        </header>
+        @endif
 
         <article class="rounded-3xl border border-teal-100/80 bg-white p-6 shadow-xl shadow-teal-500/[0.07] ring-1 ring-teal-50 sm:p-8">
             <h2 class="text-lg font-black tracking-tight text-teal-950">{{ __('Mesaj bırakın') }}</h2>

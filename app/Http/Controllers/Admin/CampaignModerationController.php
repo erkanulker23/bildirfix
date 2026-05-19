@@ -15,14 +15,14 @@ class CampaignModerationController extends Controller
 {
     public function index(Request $request): View
     {
-        $filter = $request->query('durum', 'pending');
+        $filter = $request->query('durum', 'all');
         if (! is_string($filter)) {
-            $filter = 'pending';
+            $filter = 'all';
         }
 
         $allowed = ['pending', 'approved', 'rejected', 'unpublished', 'all'];
         if (! in_array($filter, $allowed, true)) {
-            $filter = 'pending';
+            $filter = 'all';
         }
 
         $q = Campaign::query()
@@ -114,13 +114,13 @@ class CampaignModerationController extends Controller
 
     private function moderationListFilter(Request $request): string
     {
-        $durum = $request->input('durum', $request->query('durum', 'pending'));
+        $durum = $request->input('durum', $request->query('durum', 'all'));
         if (! is_string($durum)) {
-            return 'pending';
+            return 'all';
         }
 
         $allowed = ['pending', 'approved', 'rejected', 'unpublished', 'all'];
 
-        return in_array($durum, $allowed, true) ? $durum : 'pending';
+        return in_array($durum, $allowed, true) ? $durum : 'all';
     }
 }

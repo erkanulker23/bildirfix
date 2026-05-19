@@ -17,6 +17,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 #[Fillable([
     'name',
+    'avatar_path',
     'email',
     'phone',
     'google_id',
@@ -128,6 +129,13 @@ class User extends Authenticatable
 
         return $this->phone_verified_at !== null
             && $this->verification_status === VerificationStatus::Verified;
+    }
+
+    public function avatarUrl(): ?string
+    {
+        $path = trim((string) ($this->avatar_path ?? ''));
+
+        return $path !== '' ? asset('storage/'.$path) : null;
     }
 
     public function avatarInitials(): string

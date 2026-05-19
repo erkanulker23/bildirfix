@@ -58,10 +58,28 @@ final class SeoController extends Controller
                 'priority' => '0.75',
                 'lastmod' => now()->startOfMinute()->toAtomString(),
             ],
+            [
+                'loc' => $base.'/akis',
+                'changefreq' => 'hourly',
+                'priority' => '0.88',
+                'lastmod' => now()->startOfMinute()->toAtomString(),
+            ],
+            [
+                'loc' => $base.'/kampanyalar',
+                'changefreq' => 'daily',
+                'priority' => '0.85',
+                'lastmod' => now()->startOfMinute()->toAtomString(),
+            ],
+            [
+                'loc' => $base.'/iletisim',
+                'changefreq' => 'monthly',
+                'priority' => '0.6',
+                'lastmod' => now()->startOfMinute()->toAtomString(),
+            ],
         ];
 
         $blogPosts = BlogPost::query()
-            ->published()
+            ->visibleOnPublicSite()
             ->orderByDesc('updated_at')
             ->limit(self::POST_SITEMAP_LIMIT)
             ->get(['slug', 'updated_at', 'created_at', 'published_at']);

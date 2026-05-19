@@ -91,11 +91,23 @@
                     <p class="psc-nav-group__label">{{ __('Sistem') }}</p>
                     <a href="{{ route('admin.platform-settings.edit') }}" class="psc-nav-link {{ $navActive('admin.platform-settings.*') }}">
                         @include('partials.psc.icons', ['name' => 'settings'])
-                        {{ __('Platform / Google') }}
+                        {{ __('Platform / Google OAuth') }}
+                    </a>
+                    <a href="{{ route('admin.homepage-settings.edit') }}" class="psc-nav-link {{ $navActive('admin.homepage-settings.*') }}">
+                        @include('partials.psc.icons', ['name' => 'dashboard'])
+                        {{ __('Anasayfa ve marka') }}
+                    </a>
+                    <a href="{{ route('admin.site-integrations.edit') }}" class="psc-nav-link {{ $navActive('admin.site-integrations.*') }}">
+                        @include('partials.psc.icons', ['name' => 'ads'])
+                        {{ __('SEO ve analitik') }}
                     </a>
                     <a href="{{ route('admin.mail-settings.edit') }}" class="psc-nav-link {{ $navActive('admin.mail-settings.*') }}">
                         @include('partials.psc.icons', ['name' => 'mail'])
                         {{ __('E-posta (SMTP)') }}
+                    </a>
+                    <a href="{{ route('admin.legal-pages.edit') }}" class="psc-nav-link {{ $navActive('admin.legal-pages.*') }}">
+                        @include('partials.psc.icons', ['name' => 'complaint'])
+                        {{ __('Yasal sayfalar') }}
                     </a>
                 </div>
             @endif

@@ -98,7 +98,10 @@ Alpine.data('dsStoryViewer', () => ({
 }));
 
 Alpine.data('dsQuickComplaint', (initial = {}) => ({
-    wizardStep: Number(initial.wizardStep) >= 1 && Number(initial.wizardStep) <= 3 ? Number(initial.wizardStep) : 1,
+    wizardStep:
+        Number(initial.wizardStep) >= 1 && Number(initial.wizardStep) <= 3
+            ? Number(initial.wizardStep)
+            : 0,
     categoryId:
         initial.categoryId !== undefined && initial.categoryId !== null && String(initial.categoryId) !== ''
             ? String(initial.categoryId)
@@ -509,9 +512,13 @@ Alpine.data('dsQuickComplaint', (initial = {}) => ({
     },
 
     prevStep() {
-        if (this.wizardStep > 1) {
+        if (this.wizardStep > 0) {
             this.wizardStep -= 1;
         }
+    },
+
+    startComplaintWizard() {
+        this.wizardStep = 1;
     },
 
     onNeighborhoodPick(e) {
