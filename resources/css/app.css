@@ -82,14 +82,11 @@
     }
 
     /**
-     * Tam genişlik şerit: `#icerik` içindeki max-width sınırlamasından çıkar
-     * (slider / marquee / vitrin şeritleri için).
+     * Tam genişlik şerit: `#icerik` içindeki max-width sınırlamasından çıkar.
+     * max-width: 100% KULLANMA — ebeveyn genişliğine sıkışır ve sola kayar.
      */
     .home-fluid {
-        width: 100vw;
-        max-width: 100%;
-        margin-left: calc(50% - 50vw);
-        margin-right: calc(50% - 50vw);
+        @apply relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2;
     }
 
     /** Beyaz kutu yerine hafif tonlu panel — diğer modüllerle görsel ayrım */

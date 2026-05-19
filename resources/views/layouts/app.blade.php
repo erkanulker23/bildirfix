@@ -106,7 +106,7 @@
         @class([
             'animate-page-in',
             'mx-auto max-w-[1200px] px-4 py-4 sm:py-5' => empty($minimalChrome ?? false) && ! request()->routeIs('home'),
-            'mx-auto max-w-[1200px] px-4 py-0 sm:py-0' => empty($minimalChrome ?? false) && request()->routeIs('home'),
+            'mx-auto w-full max-w-none px-0 py-0' => empty($minimalChrome ?? false) && request()->routeIs('home'),
             'mx-auto w-full max-w-none px-0 py-4 sm:py-5' => ! empty($minimalChrome ?? false),
         ])
     >

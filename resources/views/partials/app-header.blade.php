@@ -8,17 +8,18 @@
                     class="flex min-w-0 shrink-0 items-center gap-2 tracking-tight text-neutral-900 md:order-1">
                     @if ($siteBranding->hasCustomLogo())
                         <img src="{{ $siteBranding->logoUrl() }}" alt="{{ config('app.name') }}"
-                            class="h-9 w-auto max-w-[140px] shrink-0 object-contain object-left" width="140" height="36">
+                            class="h-10 w-auto max-w-[min(100%,11rem)] shrink-0 object-contain object-left sm:h-11 sm:max-w-[12.5rem]"
+                            width="200" height="44">
                     @else
                         <span
-                            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-sm ring-2 ring-white"
+                            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-sm ring-2 ring-white sm:h-11 sm:w-11"
                             aria-hidden="true">
-                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                            <svg class="h-5 w-5 sm:h-6 sm:w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
                                 stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M5 13 9 17 19 7" />
                             </svg>
                         </span>
-                        <span class="font-heading truncate text-[1.05rem] font-extrabold leading-none tracking-tight sm:text-[1.125rem]">{{ config('app.name') }}</span>
+                        <span class="font-heading truncate text-[1.28rem] font-extrabold leading-none tracking-tight sm:text-[1.4rem] md:text-[1.5rem]">{{ config('app.name') }}</span>
                     @endif
                 </a>
 

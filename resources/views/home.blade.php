@@ -7,7 +7,7 @@
 
 @section('content')
     @isset($platformStats)
-        <div class="home-fluid relative z-0 border-b border-neutral-800 bg-neutral-900 text-white">
+        <div class="relative z-0 w-full border-b border-neutral-800 bg-neutral-900 text-white">
             @php
                 $showResolvedStat = (int) ($platformStats['resolved'] ?? 0) > 0;
                 $showLiveCampaigns = (int) ($platformStats['campaigns_live'] ?? 0) > 0;
@@ -145,7 +145,7 @@
         @endphp
         <section class="mb-12 scroll-mt-8 sm:mb-14" aria-labelledby="gundem-sikayet-baslik">
             <div
-                class="home-fluid border-y border-neutral-200/70 bg-[linear-gradient(102deg,#fafafa_0%,#f4f4f5_35%,#ede9fe_100%)]">
+                class="w-full border-y border-neutral-200/70 bg-[linear-gradient(102deg,#fafafa_0%,#f4f4f5_35%,#ede9fe_100%)]">
                 <div class="px-4 pt-6 pb-3 sm:px-6 sm:pt-8 sm:pb-4">
                     <header class="flex flex-col gap-3 rounded-2xl bg-white/80 px-5 py-4 shadow-sm ring-1 ring-neutral-200/60 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-6 sm:py-5">
                         <div class="min-w-0">
@@ -204,7 +204,7 @@
     @endif
 
     @isset($platformStats)
-        <section class="home-fluid relative mb-14 scroll-mt-8 bg-gradient-to-b from-neutral-900 via-neutral-900 to-neutral-950 py-10 text-white sm:mb-16 sm:py-12"
+        <section class="relative mb-14 w-full scroll-mt-8 bg-gradient-to-b from-neutral-900 via-neutral-900 to-neutral-950 py-10 text-white sm:mb-16 sm:py-12"
             aria-labelledby="sayilar-baslik">
             <div class="pointer-events-none absolute inset-0 opacity-40 bg-[radial-gradient(ellipse_at_80%_0%,rgba(167,139,250,0.35),transparent_55%),radial-gradient(ellipse_at_10%_80%,rgba(52,211,153,0.2),transparent_50%)]"
                 aria-hidden="true"></div>
@@ -297,7 +297,7 @@
     @endisset
 
     <section
-        class="home-fluid relative mb-12 scroll-mt-10 overflow-hidden border-y border-neutral-200/80 bg-gradient-to-b from-neutral-50 via-white to-[#f0f4fa] py-10 text-neutral-900 sm:mb-14 sm:py-12"
+        class="relative mb-12 w-full scroll-mt-10 overflow-hidden border-y border-neutral-200/80 bg-gradient-to-b from-neutral-50 via-white to-[#f0f4fa] py-10 text-neutral-900 sm:mb-14 sm:py-12"
         aria-labelledby="lider-sikayet-baslik">
         <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(125deg,rgba(16,185,129,0.08)_0%,transparent_42%),linear-gradient(225deg,rgba(139,92,246,0.07)_0%,transparent_45%)]"
             aria-hidden="true"></div>
@@ -563,7 +563,7 @@
         </section>
     @endif
 
-    <section class="home-fluid relative mb-6 overflow-hidden rounded-none border-y border-violet-200/50 bg-gradient-to-r from-violet-600 via-indigo-600 to-emerald-500 px-5 py-10 text-white sm:px-8 sm:py-12"
+    <section class="relative mb-6 w-full overflow-hidden rounded-none border-y border-violet-200/50 bg-gradient-to-r from-violet-600 via-indigo-600 to-emerald-500 px-5 py-10 text-white sm:px-8 sm:py-12"
         aria-labelledby="akis-cta-baslik">
         <div class="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'40\' height=\'40\' viewBox=\'0 0 40 40\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23fff\' fill-opacity=\'0.06\'%3E%3Cpath d=\'M20 0L40 20 20 40 0 20z\'/%3E%3C/g%3E%3C/svg%3E')] opacity-90"
             aria-hidden="true"></div>

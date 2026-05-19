@@ -7,7 +7,7 @@
         ['label' => __('Aydınlatma'), 'q' => 'aydınlatma'],
     ];
 @endphp
-<section class="home-hero home-fluid relative z-0 mb-10 overflow-hidden bg-gradient-to-br from-[#0a0f1a] via-[#1a1040] to-[#0d3d32] text-white"
+<section class="home-hero relative z-0 mb-10 w-full overflow-hidden bg-gradient-to-br from-[#0a0f1a] via-[#1a1040] to-[#0d3d32] text-white"
     aria-labelledby="hero-baslik">
     <div class="home-hero__mesh pointer-events-none absolute inset-0" aria-hidden="true">
         <div class="home-hero__blob home-hero__blob--emerald"></div>
@@ -128,7 +128,7 @@
         </div>
 
         @isset($platformStats)
-            <dl class="home-hero__stats mt-10 grid gap-3 sm:mt-12 {{ (int) ($platformStats['resolved'] ?? 0) > 0 ? 'sm:grid-cols-3' : 'sm:grid-cols-2' }}">
+            <dl class="home-hero__stats mt-10 grid gap-3 pb-2 sm:mt-12 {{ (int) ($platformStats['resolved'] ?? 0) > 0 ? 'sm:grid-cols-3' : 'sm:grid-cols-2' }}">
                 @if ((int) ($platformStats['resolved'] ?? 0) > 0)
                     <div class="home-hero__stat">
                         <dt>{{ __('Çözülen şikâyet') }}</dt>
