@@ -119,6 +119,7 @@ php artisan queue:work redis --sleep=3 --tries=3 --max-time=3600
 | Kurum araması boş | `php artisan institutions:seed-turkey --no-logos` |
 | Seeder “Command cancelled” (production) | `--force` ekleyin: `php artisan db:seed --class=CampaignTopicSeeder --force` veya `bash scripts/forge-seed-reference-data.sh` |
 | Kampanya konuları / reklam alanları boş | Deploy sonrası otomatik seed edilir; manuel: `bash scripts/forge-seed-reference-data.sh` |
+| Blog yazıları yok | `php artisan db:seed --class=ProjectBlogSeeder --force` (18 makale; güvenli tekrar çalıştırılabilir) |
 | Karışık içerik (http) | `APP_URL=https://...`, `FORCE_HTTPS=true` |
 | Oturum sorunu | `SESSION_DRIVER=database`, `sessions` tablosu migrate edildi mi |
 

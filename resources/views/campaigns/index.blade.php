@@ -3,13 +3,19 @@
 @section('title', __('Sosyal sorumluluk kampanyaları'))
 
 @section('content')
-    <div class="mb-8 flex flex-wrap justify-end gap-3">
+    <div class="mb-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
         @auth
             <a href="{{ route('campaigns.create') }}"
-                class="btn-primary inline-flex items-center rounded-full px-6 py-3 text-[13px] font-black uppercase tracking-wide shadow-lg">{{ __('Kampanya başlat') }}</a>
+                class="btn-primary inline-flex w-full items-center justify-center rounded-2xl px-8 py-4 text-[15px] font-black uppercase tracking-wide shadow-lg sm:w-auto sm:min-w-[14rem]">{{ __('Kampanya başlat') }}</a>
         @else
             <a href="{{ route('register') }}"
-                class="inline-flex items-center rounded-full border-2 border-orange-200 bg-white px-6 py-3 text-[13px] font-black text-orange-900 hover:bg-orange-50">{{ __('Katıl • kampanya aç') }}</a>
+                class="inline-flex w-full items-center justify-center rounded-2xl border-2 border-orange-500 bg-orange-500 px-8 py-4 text-[15px] font-black uppercase tracking-wide text-white shadow-lg shadow-orange-500/30 transition hover:bg-orange-600 sm:w-auto sm:min-w-[12rem]">
+                {{ __('Katıl') }}
+            </a>
+            <a href="{{ route('campaigns.create') }}"
+                class="inline-flex w-full items-center justify-center rounded-2xl border-2 border-neutral-900 bg-neutral-950 px-8 py-4 text-[15px] font-black uppercase tracking-wide text-white shadow-lg transition hover:bg-neutral-800 sm:w-auto sm:min-w-[12rem]">
+                {{ __('Kampanya aç') }}
+            </a>
         @endauth
     </div>
 

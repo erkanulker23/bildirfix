@@ -40,13 +40,23 @@ class CreatePostWizardController extends Controller
             ? collect()
             : Institution::query()->whereIn('id', $selectedInstitutionIds)->orderBy('name')->get(['id', 'name']);
 
+        $suggestedInstitutions = Institution::query()
+            ->when($cityId, fn ($q) => $q->where(function ($sq) use ($cityId): void {
+                $sq->where('city_id', $cityId)->orWhereNull('city_id');
+            }))
+            ->orderBy('name')
+            ->limit(12)
+            ->get(['id', 'name']);
+
         return view('pages.create-post', [
             'categories' => $categories,
             'selectedInstitutions' => $selectedInstitutions,
+            'suggestedInstitutions' => $suggestedInstitutions,
             'cityId' => $cityId,
             'cities' => $cities,
             'complaintDraft' => $draft,
             'minimalChrome' => false,
+            'hidePageHero' => true,
         ]);
     }
 }

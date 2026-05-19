@@ -8,17 +8,31 @@
 @section('content')
     @isset($platformStats)
         <div class="relative left-1/2 z-0 w-screen max-w-[100vw] -translate-x-1/2 border-b border-neutral-800 bg-neutral-900 text-white">
-            <div class="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-2.5 sm:px-5">
+            @php
+                $showResolvedStat = (int) ($platformStats['resolved'] ?? 0) > 0;
+                $showLiveCampaigns = (int) ($platformStats['campaigns_live'] ?? 0) > 0;
+            @endphp
+            <div @class([
+                'mx-auto flex max-w-[1200px] flex-wrap items-center gap-x-4 gap-y-2 px-4 py-2.5 sm:px-5',
+                'justify-between' => $showResolvedStat || $showLiveCampaigns,
+                'justify-end' => ! $showResolvedStat && ! $showLiveCampaigns,
+            ])>
+                @if ($showResolvedStat || $showLiveCampaigns)
                 <p class="text-[12px] font-medium text-neutral-300">
-                    {{ __('Çözülen kayıt') }}
-                    <span class="font-black tabular-nums text-emerald-400">{{ number_format((int) $platformStats['resolved'], 0, ',', '.') }}</span>
-                    @if (($platformStats['campaigns_live'] ?? 0) > 0)
+                    @if ($showResolvedStat)
+                        {{ __('Çözülen kayıt') }}
+                        <span class="font-black tabular-nums text-emerald-400">{{ number_format((int) $platformStats['resolved'], 0, ',', '.') }}</span>
+                    @endif
+                    @if ($showResolvedStat && $showLiveCampaigns)
                         <span class="mx-2 hidden text-neutral-600 sm:inline" aria-hidden="true">|</span>
+                    @endif
+                    @if ($showLiveCampaigns)
                         <a href="{{ route('campaigns.index') }}"
                             class="mt-1 inline-flex rounded-md bg-white/10 px-2 py-0.5 text-[11px] font-bold text-violet-200 ring-1 ring-white/15 hover:bg-white/15 sm:mt-0">
                             {{ __(':n kampanya', ['n' => number_format((int) $platformStats['campaigns_live'])]) }}</a>
                     @endif
                 </p>
+                @endif
                 <div class="flex flex-wrap items-center gap-3">
                     <span class="hidden text-[12px] text-neutral-400 sm:inline">{{ __('Akış ve süreçleri tek ekranda izle.') }}</span>
                     <a href="{{ route('feed.index') }}"
@@ -154,11 +168,13 @@
 
         @isset($platformStats)
             <div class="relative z-[1] border-t border-neutral-200/60 bg-white/70 backdrop-blur-md">
-                <dl class="mx-auto grid max-w-[1250px] grid-cols-3 gap-3 px-5 py-4 sm:gap-5 sm:px-8">
+                <dl class="mx-auto grid max-w-[1250px] gap-3 px-5 py-4 sm:gap-5 sm:px-8 {{ (int) ($platformStats['resolved'] ?? 0) > 0 ? 'grid-cols-3' : 'grid-cols-2' }}">
+                    @if ((int) ($platformStats['resolved'] ?? 0) > 0)
                     <div class="rounded-2xl bg-white px-2 py-3 text-center shadow-sm ring-1 ring-neutral-200/50 sm:rounded-3xl sm:py-4">
                         <dt class="text-[10px] font-bold uppercase tracking-wide text-neutral-500">{{ __('Çözülen şikâyet') }}</dt>
                         <dd class="mt-1 text-lg font-black tabular-nums text-neutral-900 sm:text-xl">{{ number_format((int) $platformStats['resolved'], 0, ',', '.') }}</dd>
                     </div>
+                    @endif
                     <div class="rounded-2xl bg-white px-2 py-3 text-center shadow-sm ring-1 ring-neutral-200/50 sm:rounded-3xl sm:py-4">
                         <dt class="text-[10px] font-bold uppercase tracking-wide text-neutral-500">{{ __('Son 30 günde kayıt') }}</dt>
                         <dd class="mt-1 text-lg font-black tabular-nums text-neutral-900 sm:text-xl">{{ number_format((int) $platformStats['last30'], 0, ',', '.') }}</dd>
@@ -369,6 +385,7 @@
                     <p class="mt-1 text-xl font-black tabular-nums tracking-tight text-white sm:text-2xl">
                         %{{ number_format((int) $platformStats['evidence_pct'], 0, ',', '.') }}</p>
                 </article>
+                @if ((int) ($platformStats['resolved'] ?? 0) > 0)
                 <article
                     class="flex flex-col items-center rounded-3xl border border-white/10 bg-white/[0.07] px-3 py-6 text-center shadow-lg shadow-black/20 backdrop-blur-sm transition hover:border-emerald-400/40 hover:bg-white/[0.1] sm:py-7">
                     <span class="mb-3 text-teal-300" aria-hidden="true">
@@ -381,6 +398,7 @@
                     <p class="mt-1 text-xl font-black tabular-nums tracking-tight text-white sm:text-2xl">
                         {{ number_format((int) $platformStats['resolved'], 0, ',', '.') }}</p>
                 </article>
+                @endif
                 <article
                     class="flex flex-col items-center rounded-3xl border border-white/10 bg-white/[0.07] px-3 py-6 text-center shadow-lg shadow-black/20 backdrop-blur-sm transition hover:border-emerald-400/40 hover:bg-white/[0.1] sm:py-7">
                     <span class="mb-3 text-fuchsia-300" aria-hidden="true">

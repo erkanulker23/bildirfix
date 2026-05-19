@@ -9,6 +9,46 @@
         cities: {{ \Illuminate\Support\Js::from($citiesJson) }},
         regionOrder: {{ \Illuminate\Support\Js::from($regionOrder) }},
         regionLabels: {{ \Illuminate\Support\Js::from($regionLabels) }},
+        nearestCities: [],
+        geoLoading: false,
+        geoDenied: false,
+        initExploreGeo() {
+            if (!('geolocation' in navigator)) {
+                return;
+            }
+            this.geoLoading = true;
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const lat = pos.coords.latitude;
+                    const lng = pos.coords.longitude;
+                    const ranked = this.cities
+                        .filter((c) => c.lat != null && c.lng != null)
+                        .map((c) => ({
+                            ...c,
+                            dist: this.geoDistanceKm(lat, lng, c.lat, c.lng),
+                        }))
+                        .sort((a, b) => a.dist - b.dist);
+                    this.nearestCities = ranked.slice(0, 6);
+                    this.geoLoading = false;
+                },
+                () => {
+                    this.geoDenied = true;
+                    this.geoLoading = false;
+                },
+                { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 },
+            );
+        },
+        geoDistanceKm(lat1, lon1, lat2, lon2) {
+            const r = 6371;
+            const dLat = ((lat2 - lat1) * Math.PI) / 180;
+            const dLon = ((lon2 - lon1) * Math.PI) / 180;
+            const a =
+                Math.sin(dLat / 2) ** 2 +
+                Math.cos((lat1 * Math.PI) / 180) *
+                    Math.cos((lat2 * Math.PI) / 180) *
+                    Math.sin(dLon / 2) ** 2;
+            return r * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        },
         trFold(v) {
             return (v || '').toLocaleLowerCase('tr-TR').normalize('NFC');
         },
@@ -50,7 +90,27 @@
                     cities: buckets[letter].sort((a, b) => a.name.localeCompare(b.name, 'tr')),
                 }));
         },
-    }">
+    }" x-init="initExploreGeo()">
+        <section class="md:hidden" x-show="nearestCities.length > 0 || geoLoading" x-cloak>
+            <h2 class="mb-3 text-sm font-black uppercase tracking-wide text-primary">{{ __('Konumunuza yakın') }}</h2>
+            <p class="mb-3 text-[13px] font-medium text-neutral-600" x-show="geoLoading">{{ __('Konum alınıyor…') }}</p>
+            <ul class="grid gap-2" x-show="nearestCities.length > 0">
+                <template x-for="c in nearestCities" :key="'near-' + c.id">
+                    <li>
+                        <a :href="c.url"
+                            class="flex items-center justify-between gap-3 rounded-2xl border border-primary/25 bg-primary-light/40 p-4 shadow-sm ring-1 ring-primary/10">
+                            <span class="min-w-0">
+                                <span class="block truncate text-sm font-extrabold text-neutral-900" x-text="c.name"></span>
+                                <span class="mt-0.5 text-[11px] font-semibold text-primary" x-text="c.dist < 1 ? '{{ __('Çok yakın') }}' : (Math.round(c.dist) + ' km')"></span>
+                            </span>
+                            <span class="shrink-0 rounded-full bg-white px-2.5 py-1 text-[11px] font-black tabular-nums text-neutral-800"
+                                x-text="c.count"></span>
+                        </a>
+                    </li>
+                </template>
+            </ul>
+        </section>
+
         <header class="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm ring-1 ring-black/[0.03] sm:p-8">
             <p class="text-[11px] font-black uppercase tracking-[0.2em] text-primary">{{ __('Keşfet') }}</p>
             <h1 class="mt-2 text-[clamp(1.5rem,3vw,2.25rem)] font-black tracking-tight text-neutral-950">{{ __('Şehrini keşfet') }}</h1>

@@ -125,12 +125,17 @@ Alpine.data('dsQuickComplaint', (initial = {}) => ({
     institutionHits: [],
     institutionSearchLoading: false,
     selectedInstitutions: Array.isArray(initial.selectedInstitutions) ? [...initial.selectedInstitutions] : [],
+    suggestedInstitutions: Array.isArray(initial.suggestedInstitutions) ? [...initial.suggestedInstitutions] : [],
+    speechSupported: false,
+    speechListening: false,
+    speechRecognition: null,
     imagePreviewItems: [],
     videoPreviewItems: [],
     imagesDropActive: false,
     videosDropActive: false,
 
     async initQuick() {
+        this.initSpeechInput();
         await this.loadDistricts();
         if (this.districtId) {
             await this.loadNeighborhoods();
@@ -138,6 +143,61 @@ Alpine.data('dsQuickComplaint', (initial = {}) => ({
         this.syncPreviewImg();
         this.syncImagesToInput();
         this.syncVideosToInput();
+    },
+
+    initSpeechInput() {
+        const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SR) {
+            this.speechSupported = false;
+            return;
+        }
+        this.speechSupported = true;
+        const rec = new SR();
+        rec.lang = 'tr-TR';
+        rec.continuous = true;
+        rec.interimResults = true;
+        rec.onresult = (event) => {
+            let chunk = '';
+            for (let i = event.resultIndex; i < event.results.length; i += 1) {
+                chunk += event.results[i][0].transcript;
+            }
+            const el = document.getElementById('quick-description');
+            if (!el || !chunk) {
+                return;
+            }
+            const sep = el.value && !el.value.endsWith(' ') ? ' ' : '';
+            if (event.results[event.results.length - 1].isFinal) {
+                el.value = `${el.value}${sep}${chunk}`.trim();
+            }
+            el.dispatchEvent(new Event('input', { bubbles: true }));
+        };
+        rec.onerror = () => {
+            this.speechListening = false;
+            window.dsToast?.('Ses tanıma başarısız oldu.', 'error');
+        };
+        rec.onend = () => {
+            this.speechListening = false;
+        };
+        this.speechRecognition = rec;
+    },
+
+    toggleSpeechInput() {
+        if (!this.speechSupported || !this.speechRecognition) {
+            window.dsToast?.('Sesli yazma bu tarayıcıda desteklenmiyor.', 'info');
+            return;
+        }
+        if (this.speechListening) {
+            this.speechRecognition.stop();
+            this.speechListening = false;
+            return;
+        }
+        try {
+            this.speechRecognition.start();
+            this.speechListening = true;
+            window.dsToast?.('Mikrofon açık — konuşabilirsiniz.', 'success');
+        } catch {
+            window.dsToast?.('Mikrofon izni gerekli.', 'error');
+        }
     },
 
     flushPicker(id) {
@@ -487,10 +547,6 @@ Alpine.data('dsQuickComplaint', (initial = {}) => ({
                 window.dsToast?.('Lütfen sorunu yazın.', 'error');
                 return;
             }
-            if (!this.categoryId || String(this.categoryId).trim() === '') {
-                window.dsToast?.('Lütfen bir kategori seçin.', 'error');
-                return;
-            }
             this.wizardStep = 2;
             return;
         }
@@ -551,11 +607,6 @@ Alpine.data('dsQuickComplaint', (initial = {}) => ({
         if (!title) {
             event.preventDefault();
             window.dsToast?.('Lütfen kısa başlık yazın.', 'error');
-            return;
-        }
-        if (!this.categoryId || String(this.categoryId).trim() === '') {
-            event.preventDefault();
-            window.dsToast?.('Lütfen bir kategori seçin.', 'error');
             return;
         }
         if (!this.districtId || String(this.districtId).trim() === '') {

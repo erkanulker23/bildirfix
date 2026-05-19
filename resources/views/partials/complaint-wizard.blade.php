@@ -24,7 +24,7 @@
     }
 @endphp
 
-<div class="mx-auto max-w-xl px-3 pb-16 pt-6 sm:px-0"
+<div class="complaint-wizard mx-auto w-full min-w-0 max-w-xl px-3 pb-28 pt-6 sm:px-0"
     x-data="dsQuickComplaint({
         wizardStep: @js($wizardStep),
         categoryId: @js(old('category_id', $d['category_id'] ?? '')),
@@ -35,6 +35,7 @@
         latitude: @js(old('latitude', $d['latitude'] ?? '')),
         longitude: @js(old('longitude', $d['longitude'] ?? '')),
         selectedInstitutions: @js($selectedInstitutions->map(fn ($i) => ['id' => (int) $i->id, 'name' => $i->name])->values()->all()),
+        suggestedInstitutions: @js(($suggestedInstitutions ?? collect())->map(fn ($i) => ['id' => (int) $i->id, 'name' => $i->name])->values()->all()),
         urls: {
             districts: @js(route('geo.districts')),
             neighborhoods: @js(route('geo.neighborhoods')),
@@ -96,21 +97,36 @@
                 {{ __('Ne oldu? Sorunu anlatın') }}
             </h2>
             <p class="mt-3 text-center text-sm font-medium text-neutral-600">
-                {{ __('Kategori seçin; fotoğraf, video veya bağlantı ekleyebilirsiniz.') }}
+                {{ __('İsterseniz kategori seçin; fotoğraf, video veya sesli anlatım ekleyebilirsiniz.') }}
             </p>
             <div>
                 <label class="mb-1.5 block text-sm font-bold text-neutral-900"
                     for="quick-description">{{ __('Ne oldu?') }} <span class="text-red-600">*</span></label>
+                <div class="relative">
                     <textarea id="quick-description" name="description" rows="7" maxlength="8000" required
-                        class="input-ds min-h-[10rem] w-full resize-y rounded-xl border-neutral-200 text-[15px] leading-relaxed"
+                        class="input-ds min-h-[10rem] w-full resize-y rounded-xl border-neutral-200 pr-14 text-[15px] leading-relaxed"
                         placeholder="{{ __('Ne yaşandı, nerede, ne zaman; beklentiniz…') }}">{{ old('description', $d['description'] ?? '') }}</textarea>
+                    <button type="button"
+                        class="absolute bottom-3 right-3 flex h-11 w-11 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-700 shadow-sm transition hover:border-primary/40 hover:bg-primary-light hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
+                        :class="speechListening ? 'border-primary bg-primary-light text-primary ring-2 ring-primary/25' : ''"
+                        :disabled="!speechSupported"
+                        @click="toggleSpeechInput()"
+                        :title="speechSupported ? (speechListening ? '{{ __('Dinlemeyi durdur') }}' : '{{ __('Sesle yaz') }}') : '{{ __('Sesli yazma bu tarayıcıda desteklenmiyor') }}'"
+                        aria-label="{{ __('Mikrofon ile sesli yaz') }}">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Zm0 0v3m-4 3h8" />
+                        </svg>
+                    </button>
+                </div>
+                <p class="mt-1.5 text-[12px] font-medium text-neutral-500" x-show="speechListening" x-cloak>{{ __('Dinleniyor… Konuşmayı bitirince tekrar dokunun.') }}</p>
                     @error('description')
                         <p class="mt-2 text-sm font-medium text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div>
-                    <p class="mb-2 text-xs font-bold uppercase tracking-wide text-neutral-500">{{ __('Kategori') }} <span class="text-red-600">*</span></p>
+                    <p class="mb-2 text-xs font-bold uppercase tracking-wide text-neutral-500">{{ __('Kategori') }}
+                        <span class="font-normal normal-case text-neutral-400">({{ __('isteğe bağlı') }})</span></p>
                     <div class="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
                         @foreach ($categories as $cat)
                             <button type="button"
@@ -244,6 +260,14 @@
                         @input.debounce.320ms="runInstitutionSearch()"
                         @keydown.escape.prevent="institutionHits = []">
                     <p class="mb-2 text-[12px] text-neutral-500">{{ __('İsterseniz 2. adımda ili seçtikten sonra aramayı daraltabilirsiniz; ilk adımda tüm kurumlar aranır.') }}</p>
+                    <div class="mb-3 flex flex-wrap gap-2" x-show="suggestedInstitutions.length > 0 && institutionSearch.length < 2">
+                        <template x-for="row in suggestedInstitutions" :key="'sug-' + row.id">
+                            <button type="button"
+                                class="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-[12px] font-bold text-neutral-800 hover:border-primary/35 hover:bg-primary-light/50"
+                                x-text="row.name"
+                                @click="addInstitution(row)"></button>
+                        </template>
+                    </div>
                     <div class="relative">
                         <ul x-show="institutionHits.length > 0" x-transition
                             class="absolute z-20 mt-1 max-h-52 w-full overflow-auto rounded-xl border border-neutral-200 bg-white py-1 shadow-lg ring-1 ring-black/5">

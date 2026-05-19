@@ -577,4 +577,20 @@
     .blog-prose :where(strong) {
         @apply font-extrabold text-gray-900;
     }
+
+    .complaint-wizard,
+    .complaint-wizard form {
+        max-width: 100%;
+    }
+
+    .complaint-wizard .input-ds,
+    .complaint-wizard select,
+    .complaint-wizard textarea {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .complaint-wizard fieldset {
+        min-width: 0;
+    }
 }

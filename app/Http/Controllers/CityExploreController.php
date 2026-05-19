@@ -16,7 +16,7 @@ final class CityExploreController extends Controller
     {
         $cities = City::query()
             ->orderBy('name')
-            ->get(['id', 'name', 'slug', 'plate']);
+            ->get(['id', 'name', 'slug', 'plate', 'latitude', 'longitude']);
 
         $counts = Post::query()
             ->publicApproved()
@@ -36,6 +36,8 @@ final class CityExploreController extends Controller
                 'region' => $region,
                 'count' => (int) ($counts[$city->id] ?? 0),
                 'url' => route('cities.show', $city),
+                'lat' => $city->latitude !== null ? (float) $city->latitude : null,
+                'lng' => $city->longitude !== null ? (float) $city->longitude : null,
             ];
         })->values()->all();
 

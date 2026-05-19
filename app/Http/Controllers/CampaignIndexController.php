@@ -34,7 +34,10 @@ class CampaignIndexController extends Controller
         $campaigns = $q->paginate(15)->withQueryString();
 
         $cities = \App\Models\City::query()->orderBy('name')->get(['id', 'name', 'plate']);
-        $topics = CampaignTopic::query()->orderBy('sort_order')->get(['id', 'name', 'slug', 'group_key']);
+        $topics = CampaignTopic::query()
+            ->whereHas('campaigns', fn ($q) => $q->publicApproved())
+            ->orderBy('sort_order')
+            ->get(['id', 'name', 'slug', 'group_key']);
 
         return view('campaigns.index', [
             'campaigns' => $campaigns,
