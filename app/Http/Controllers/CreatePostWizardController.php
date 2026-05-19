@@ -38,15 +38,16 @@ class CreatePostWizardController extends Controller
 
         $selectedInstitutions = $selectedInstitutionIds->isEmpty()
             ? collect()
-            : Institution::query()->whereIn('id', $selectedInstitutionIds)->orderBy('name')->get(['id', 'name']);
+            : Institution::query()->whereIn('id', $selectedInstitutionIds)->orderBy('name')->get(['id', 'name', 'logo_url']);
 
         $suggestedInstitutions = Institution::query()
             ->when($cityId, fn ($q) => $q->where(function ($sq) use ($cityId): void {
                 $sq->where('city_id', $cityId)->orWhereNull('city_id');
             }))
+            ->where('type', 'municipality')
             ->orderBy('name')
-            ->limit(12)
-            ->get(['id', 'name']);
+            ->limit(16)
+            ->get(['id', 'name', 'logo_url']);
 
         return view('pages.create-post', [
             'categories' => $categories,

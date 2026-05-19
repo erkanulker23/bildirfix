@@ -32,7 +32,16 @@ final class GeoInstitutionsController extends Controller
                 });
             }
 
-            $rows = $query->limit(50)->get(['id', 'name']);
+            $rows = $query
+                ->limit(80)
+                ->get(['id', 'name', 'logo_url', 'type'])
+                ->map(static fn (Institution $i): array => [
+                    'id' => $i->id,
+                    'name' => $i->name,
+                    'logo_url' => $i->displayLogoUrl(),
+                    'type' => $i->type,
+                ])
+                ->values();
 
             return response()->json(['data' => $rows]);
         }
@@ -46,7 +55,15 @@ final class GeoInstitutionsController extends Controller
                 $sq->where('city_id', $cityId)->orWhereNull('city_id');
             })
             ->orderBy('name')
-            ->get(['id', 'name']);
+            ->limit(200)
+            ->get(['id', 'name', 'logo_url', 'type'])
+            ->map(static fn (Institution $i): array => [
+                'id' => $i->id,
+                'name' => $i->name,
+                'logo_url' => $i->displayLogoUrl(),
+                'type' => $i->type,
+            ])
+            ->values();
 
         return response()->json(['data' => $rows]);
     }

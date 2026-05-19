@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\City;
+use App\Models\District;
 use App\Models\Institution;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -58,6 +60,9 @@ class InstitutionsTurkeySeeder extends Seeder
             ], $citiesByPlate, $downloadLogos, $logoDir);
         }
 
+        $districtCount = $this->seedDistrictMunicipalities($buyuksehir, $citiesByPlate, $downloadLogos, $logoDir);
+        $this->command?->info("İlçe belediyeleri: {$districtCount} kayıt işlendi.");
+
         $groups = [
             'electricity' => 'electricity',
             'natural_gas' => 'natural_gas',
@@ -79,7 +84,83 @@ class InstitutionsTurkeySeeder extends Seeder
     }
 
     /**
-     * @param  \Illuminate\Support\Collection<int, int>  $citiesByPlate
+     * İlçe belediyeleri (973+ ilçe); logo için tahmini {ilce}.bel.tr alan adı kullanılır.
+     *
+     * @param  array<int, int>  $buyuksehir
+     * @param  Collection<int, int>  $citiesByPlate
+     */
+    private function seedDistrictMunicipalities(
+        array $buyuksehir,
+        $citiesByPlate,
+        bool $downloadLogos,
+        string $logoDir,
+    ): int {
+        $processed = 0;
+        $seen = [];
+
+        $districts = District::query()
+            ->whereNotNull('turkiye_id')
+            ->with('city:id,name,plate,slug')
+            ->orderBy('city_id')
+            ->orderBy('name')
+            ->get(['id', 'city_id', 'name', 'slug', 'turkiye_id']);
+
+        foreach ($districts as $district) {
+            $city = $district->city;
+            if ($city === null || $city->plate === null) {
+                continue;
+            }
+
+            $plate = (int) $city->plate;
+            $districtName = trim((string) $district->name);
+            if ($districtName === '') {
+                continue;
+            }
+
+            $districtKey = mb_strtolower($districtName, 'UTF-8');
+            $dedupeKey = $plate.'|'.$districtKey;
+            if (isset($seen[$dedupeKey])) {
+                continue;
+            }
+            $seen[$dedupeKey] = true;
+
+            $isBuyuksehir = isset($buyuksehir[$plate]);
+            $cityNameLower = mb_strtolower(trim((string) $city->name), 'UTF-8');
+
+            if (! $isBuyuksehir && $districtKey === 'merkez') {
+                continue;
+            }
+
+            if (! $isBuyuksehir && $districtKey === $cityNameLower) {
+                continue;
+            }
+
+            $institutionName = $districtName.' Belediyesi';
+            $slug = 'belediye-ilce-'.Str::slug($district->slug ?: ($districtName.'-'.$plate.'-'.$district->turkiye_id));
+            $domainSlug = Str::slug($districtName, '');
+            if ($domainSlug === '') {
+                continue;
+            }
+
+            $domain = $domainSlug.'.bel.tr';
+
+            $this->upsertInstitution([
+                'name' => $institutionName,
+                'slug' => $slug,
+                'type' => 'municipality',
+                'plate' => $plate,
+                'domain' => $domain,
+                'website' => 'https://www.'.$domain,
+            ], $citiesByPlate, $downloadLogos, $logoDir);
+
+            $processed++;
+        }
+
+        return $processed;
+    }
+
+    /**
+     * @param  Collection<int, int>  $citiesByPlate
      * @param  array{name: string, slug: string, type: string, plate?: int|null, domain?: string, website?: string}  $row
      */
     private function upsertInstitution(
@@ -166,6 +247,8 @@ class InstitutionsTurkeySeeder extends Seeder
             } catch (\Throwable) {
                 continue;
             }
+
+            usleep(80_000);
         }
 
         return null;

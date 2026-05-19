@@ -500,6 +500,7 @@ Alpine.data('dsQuickComplaint', (initial = {}) => ({
         this.selectedInstitutions.push({
             id,
             name: String(row.name || ''),
+            logo_url: row.logo_url || null,
         });
         this.institutionSearch = '';
         this.institutionHits = [];

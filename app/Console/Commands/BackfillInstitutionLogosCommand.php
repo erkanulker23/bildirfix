@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Models\City;
+use App\Models\District;
 use App\Models\Institution;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
@@ -44,23 +45,52 @@ class BackfillInstitutionLogosCommand extends Command
         }
 
         foreach ($rows as $row) {
-            $path = $logoDir.DIRECTORY_SEPARATOR.$row['slug'].'.png';
-            if (! File::exists($path) || File::size($path) <= 200) {
+            $updated += $this->applyLogoFile($row['name'], $row['slug'], $logoDir);
+        }
+
+        $buyuksehir = array_flip($data['buyuksehir_plates'] ?? []);
+        $seen = [];
+
+        foreach (District::query()->whereNotNull('turkiye_id')->with('city:id,name,plate')->get(['name', 'slug', 'turkiye_id', 'city_id']) as $district) {
+            $city = $district->city;
+            if ($city === null || $city->plate === null) {
                 continue;
             }
 
-            $publicPath = '/images/institutions/'.$row['slug'].'.png';
-            $count = Institution::query()
-                ->where('name', $row['name'])
-                ->update(['logo_url' => $publicPath]);
-
-            if ($count > 0) {
-                $updated += $count;
+            $plate = (int) $city->plate;
+            $districtName = trim((string) $district->name);
+            $districtKey = mb_strtolower($districtName, 'UTF-8');
+            $dedupeKey = $plate.'|'.$districtKey;
+            if ($districtName === '' || isset($seen[$dedupeKey])) {
+                continue;
             }
+            $seen[$dedupeKey] = true;
+
+            $isBuyuksehir = isset($buyuksehir[$plate]);
+            if (! $isBuyuksehir && ($districtKey === 'merkez' || $districtKey === mb_strtolower(trim((string) $city->name), 'UTF-8'))) {
+                continue;
+            }
+
+            $slug = 'belediye-ilce-'.Str::slug($district->slug ?: ($districtName.'-'.$plate.'-'.$district->turkiye_id));
+            $updated += $this->applyLogoFile($districtName.' Belediyesi', $slug, $logoDir);
         }
 
         $this->info("Güncellenen kurum kaydı: {$updated}");
 
         return self::SUCCESS;
+    }
+
+    private function applyLogoFile(string $institutionName, string $slug, string $logoDir): int
+    {
+        $path = $logoDir.DIRECTORY_SEPARATOR.$slug.'.png';
+        if (! File::exists($path) || File::size($path) <= 200) {
+            return 0;
+        }
+
+        $publicPath = '/images/institutions/'.$slug.'.png';
+
+        return Institution::query()
+            ->where('name', $institutionName)
+            ->update(['logo_url' => $publicPath]);
     }
 }

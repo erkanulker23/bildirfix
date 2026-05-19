@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Support;
 
-use Illuminate\Support\Str;
-
 final class PageHero
 {
     /**
@@ -42,12 +40,7 @@ final class PageHero
                 __('Keşfet'),
                 __('İl ve ilçe bazında bildirimleri inceleyin; kendi şehrinizde neler konuşulduğunu görün.'),
             ),
-            'blog.index' => self::make(
-                __('Blog'),
-                __('Haber ve'),
-                __('Rehberler'),
-                __('Kent yaşamı, süreçler ve platform kullanımına dair yazılar.'),
-            ),
+            'blog.index' => null,
             'contact' => self::make(
                 __('İletişim'),
                 __('Bize'),

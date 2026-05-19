@@ -34,8 +34,8 @@
         neighborhoodName: @js(old('neighborhood_name', $d['neighborhood_name'] ?? '')),
         latitude: @js(old('latitude', $d['latitude'] ?? '')),
         longitude: @js(old('longitude', $d['longitude'] ?? '')),
-        selectedInstitutions: @js($selectedInstitutions->map(fn ($i) => ['id' => (int) $i->id, 'name' => $i->name])->values()->all()),
-        suggestedInstitutions: @js(($suggestedInstitutions ?? collect())->map(fn ($i) => ['id' => (int) $i->id, 'name' => $i->name])->values()->all()),
+        selectedInstitutions: @js($selectedInstitutions->map(fn ($i) => ['id' => (int) $i->id, 'name' => $i->name, 'logo_url' => $i->displayLogoUrl()])->values()->all()),
+        suggestedInstitutions: @js(($suggestedInstitutions ?? collect())->map(fn ($i) => ['id' => (int) $i->id, 'name' => $i->name, 'logo_url' => $i->displayLogoUrl()])->values()->all()),
         urls: {
             districts: @js(route('geo.districts')),
             neighborhoods: @js(route('geo.neighborhoods')),
@@ -277,9 +277,11 @@
                             <template x-for="hit in institutionHits" :key="hit.id">
                                 <li>
                                     <button type="button"
-                                        class="flex w-full px-3 py-2.5 text-left text-[14px] font-medium text-neutral-900 hover:bg-primary-light/60"
-                                        x-text="hit.name"
-                                        @click="addInstitution(hit)"></button>
+                                        class="flex w-full items-center gap-2.5 px-3 py-2.5 text-left text-[14px] font-medium text-neutral-900 hover:bg-primary-light/60"
+                                        @click="addInstitution(hit)">
+                                        <img :src="hit.logo_url" alt="" class="h-8 w-8 shrink-0 rounded-lg bg-white object-contain ring-1 ring-neutral-100" loading="lazy">
+                                        <span class="min-w-0 flex-1 leading-snug" x-text="hit.name"></span>
+                                    </button>
                                 </li>
                             </template>
                         </ul>
@@ -288,7 +290,8 @@
                     <div class="mt-3 flex flex-wrap gap-2" x-show="selectedInstitutions.length > 0">
                         <template x-for="row in selectedInstitutions" :key="'chip-' + row.id">
                             <span
-                                class="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary-light/80 px-3 py-1.5 text-[13px] font-bold text-primary">
+                                class="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary-light/80 py-1 pl-1 pr-3 text-[13px] font-bold text-primary">
+                                <img :src="row.logo_url" alt="" class="h-7 w-7 shrink-0 rounded-full bg-white object-contain ring-1 ring-white/80" loading="lazy">
                                 <span x-text="row.name" class="max-w-[14rem] truncate"></span>
                                 <button type="button" class="rounded-full p-0.5 hover:bg-white/80"
                                     @click="removeInstitution(row.id)" aria-label="{{ __('Kaldır') }}">&times;</button>
