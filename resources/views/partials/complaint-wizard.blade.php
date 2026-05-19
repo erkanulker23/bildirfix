@@ -40,6 +40,7 @@
             districts: @js(route('geo.districts')),
             neighborhoods: @js(route('geo.neighborhoods')),
             institutions: @js(route('geo.institutions')),
+            reverse: @js(route('geo.reverse')),
         },
     })"
     x-init="initQuick()"
@@ -107,18 +108,20 @@
                         class="input-ds min-h-[10rem] w-full resize-y rounded-xl border-neutral-200 pr-14 text-[15px] leading-relaxed"
                         placeholder="{{ __('Ne yaşandı, nerede, ne zaman; beklentiniz…') }}">{{ old('description', $d['description'] ?? '') }}</textarea>
                     <button type="button"
-                        class="absolute bottom-3 right-3 flex h-11 w-11 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-700 shadow-sm transition hover:border-primary/40 hover:bg-primary-light hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
-                        :class="speechListening ? 'border-primary bg-primary-light text-primary ring-2 ring-primary/25' : ''"
+                        class="absolute bottom-3 right-3 flex h-10 w-10 items-center justify-center rounded-full text-white shadow-md transition disabled:cursor-not-allowed disabled:opacity-40"
+                        :class="speechListening
+                            ? 'bg-red-500 ring-2 ring-red-300/60 animate-pulse'
+                            : 'bg-primary hover:bg-primary-hover'"
                         :disabled="!speechSupported"
                         @click="toggleSpeechInput()"
                         :title="speechSupported ? (speechListening ? '{{ __('Dinlemeyi durdur') }}' : '{{ __('Sesle yaz') }}') : '{{ __('Sesli yazma bu tarayıcıda desteklenmiyor') }}'"
                         aria-label="{{ __('Mikrofon ile sesli yaz') }}">
-                        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Zm0 0v3m-4 3h8" />
+                        <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v5a3 3 0 0 0 3 3Zm-7-3a7 7 0 0 0 14 0h2a9 9 0 0 1-8 8.94V22h-2v-2.06A9 9 0 0 1 3 11h2Z" />
                         </svg>
                     </button>
                 </div>
-                <p class="mt-1.5 text-[12px] font-medium text-neutral-500" x-show="speechListening" x-cloak>{{ __('Dinleniyor… Konuşmayı bitirince tekrar dokunun.') }}</p>
+                <p class="mt-1.5 text-[12px] font-medium text-primary" x-show="speechListening" x-cloak>{{ __('Dinleniyor… Konuştuğunuz metin anında yazılır.') }}</p>
                     @error('description')
                         <p class="mt-2 text-sm font-medium text-red-600">{{ $message }}</p>
                     @enderror
@@ -367,7 +370,11 @@
                     <div class="mt-3 flex flex-wrap gap-2">
                         <button type="button"
                             class="inline-flex min-h-[44px] items-center justify-center rounded-full border border-teal-600 bg-teal-600 px-5 text-[14px] font-bold text-white shadow-sm transition hover:bg-teal-700"
-                            @click="pullLocation()">{{ __('Konum çek') }}</button>
+                            @click="pullLocation()"
+                            :disabled="locationResolving">
+                            <span x-show="!locationResolving">{{ __('Konum çek') }}</span>
+                            <span x-show="locationResolving" x-cloak>{{ __('Adres bulunuyor…') }}</span>
+                        </button>
                         <button type="button"
                             class="inline-flex min-h-[44px] items-center justify-center rounded-full border border-teal-200 bg-white px-5 text-[14px] font-bold text-teal-900 hover:bg-teal-50"
                             x-show="latitude !== '' && longitude !== ''"

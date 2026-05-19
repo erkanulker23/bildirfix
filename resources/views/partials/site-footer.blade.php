@@ -1,4 +1,4 @@
-<footer class="safe-bottom mt-14 border-t border-neutral-200 bg-gradient-to-b from-white to-neutral-50 py-12 text-[15px] text-neutral-600">
+<footer class="safe-bottom mt-14 border-t border-neutral-200/90 bg-gradient-to-b from-[#faf9f7] to-[#f0eeeb] py-12 text-[15px] text-neutral-600">
     <div class="mx-auto grid max-w-[1200px] gap-10 px-5 sm:grid-cols-2 sm:gap-12 lg:grid-cols-4">
         <div class="sm:col-span-2 lg:col-span-1">
             <p class="font-heading text-xl font-extrabold text-neutral-950">{{ config('app.name') }}</p>

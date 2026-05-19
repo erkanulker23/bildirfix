@@ -129,6 +129,8 @@ Alpine.data('dsQuickComplaint', (initial = {}) => ({
     speechSupported: false,
     speechListening: false,
     speechRecognition: null,
+    speechBaseText: '',
+    locationResolving: false,
     imagePreviewItems: [],
     videoPreviewItems: [],
     imagesDropActive: false,
@@ -157,18 +159,23 @@ Alpine.data('dsQuickComplaint', (initial = {}) => ({
         rec.continuous = true;
         rec.interimResults = true;
         rec.onresult = (event) => {
-            let chunk = '';
-            for (let i = event.resultIndex; i < event.results.length; i += 1) {
-                chunk += event.results[i][0].transcript;
-            }
             const el = document.getElementById('quick-description');
-            if (!el || !chunk) {
+            if (!el) {
                 return;
             }
-            const sep = el.value && !el.value.endsWith(' ') ? ' ' : '';
-            if (event.results[event.results.length - 1].isFinal) {
-                el.value = `${el.value}${sep}${chunk}`.trim();
+            let finalPart = '';
+            let interimPart = '';
+            for (let i = 0; i < event.results.length; i += 1) {
+                const piece = event.results[i][0]?.transcript ?? '';
+                if (event.results[i].isFinal) {
+                    finalPart += piece;
+                } else {
+                    interimPart += piece;
+                }
             }
+            const base = this.speechBaseText || '';
+            const combined = `${base}${finalPart}${interimPart}`.replace(/\s+/g, ' ').trim();
+            el.value = combined;
             el.dispatchEvent(new Event('input', { bubbles: true }));
         };
         rec.onerror = () => {
@@ -177,6 +184,10 @@ Alpine.data('dsQuickComplaint', (initial = {}) => ({
         };
         rec.onend = () => {
             this.speechListening = false;
+            const el = document.getElementById('quick-description');
+            if (el?.value?.trim()) {
+                this.speechBaseText = `${el.value.trim()} `;
+            }
         };
         this.speechRecognition = rec;
     },
@@ -189,9 +200,16 @@ Alpine.data('dsQuickComplaint', (initial = {}) => ({
         if (this.speechListening) {
             this.speechRecognition.stop();
             this.speechListening = false;
+            const el = document.getElementById('quick-description');
+            if (el) {
+                this.speechBaseText = el.value?.trim() ? `${el.value.trim()} ` : '';
+            }
             return;
         }
         try {
+            const el = document.getElementById('quick-description');
+            const current = el?.value?.trim() || '';
+            this.speechBaseText = current ? `${current} ` : '';
             this.speechRecognition.start();
             this.speechListening = true;
             window.dsToast?.('Mikrofon açık — konuşabilirsiniz.', 'success');
@@ -492,24 +510,68 @@ Alpine.data('dsQuickComplaint', (initial = {}) => ({
         this.selectedInstitutions = this.selectedInstitutions.filter((x) => Number(x.id) !== n);
     },
 
-    pullLocation() {
+    async pullLocation() {
         if (!('geolocation' in navigator)) {
             window.dsToast?.('Tarayıcı konum desteklemiyor.', 'error');
             return;
         }
+        if (this.locationResolving) {
+            return;
+        }
+        this.locationResolving = true;
         navigator.geolocation.getCurrentPosition(
-            (pos) => {
+            async (pos) => {
                 const lat = Math.round(pos.coords.latitude * 1e7) / 1e7;
                 const lng = Math.round(pos.coords.longitude * 1e7) / 1e7;
                 this.latitude = String(lat);
                 this.longitude = String(lng);
-                window.dsToast?.('Konum alındı.', 'success');
+                await this.resolveAddressFromCoords(lat, lng);
+                this.locationResolving = false;
             },
             () => {
+                this.locationResolving = false;
                 window.dsToast?.('Konum izni reddedildi veya alınamadı.', 'error');
             },
             { enableHighAccuracy: true, timeout: 14000, maximumAge: 0 },
         );
+    },
+
+    async resolveAddressFromCoords(lat, lng) {
+        if (!this.urls.reverse) {
+            window.dsToast?.('Konum alındı.', 'success');
+            return;
+        }
+        try {
+            const r = await fetch(
+                `${this.urls.reverse}?lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lng)}`,
+                { headers: { Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' } },
+            );
+            if (!r.ok) {
+                throw new Error('reverse failed');
+            }
+            const j = await r.json();
+            const data = j.data || {};
+            if (data.city_id) {
+                this.cityId = String(data.city_id);
+                await this.loadDistricts();
+            }
+            if (data.district_id) {
+                this.districtId = String(data.district_id);
+                await this.loadNeighborhoods();
+            }
+            if (data.neighborhood_turkiye_id) {
+                this.neighborhoodTurkiyeId = String(data.neighborhood_turkiye_id);
+                this.neighborhoodName = String(data.neighborhood_name || '');
+            }
+            const parts = [data.city_name, data.district_name, data.neighborhood_name].filter(Boolean);
+            if (parts.length > 0) {
+                window.dsToast?.(`Adres: ${parts.join(' · ')}`, 'success');
+            } else {
+                window.dsToast?.('Konum alındı; il/ilçe eşleşmedi — listeden seçin.', 'info');
+            }
+        } catch {
+            window.dsToast?.('Konum alındı; adres otomatik doldurulamadı.', 'info');
+        }
     },
 
     clearLocation() {
