@@ -30,6 +30,8 @@ class PostModerationController extends Controller
                 'district:id,name',
                 'category:id,name',
                 'moderatedBy:id,name',
+                'institution:id,name',
+                'institutions:id,name',
             ])
             ->latest();
 

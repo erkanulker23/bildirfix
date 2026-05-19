@@ -28,6 +28,15 @@
 @endphp
 
 <body class="psc-body">
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('psc-theme') === 'dark') {
+                    document.documentElement.setAttribute('data-psc-theme', 'dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
     <input type="checkbox" id="psc-sidebar-toggle" autocomplete="off">
 
     <label for="psc-sidebar-toggle" class="psc-overlay" aria-hidden="true"></label>
@@ -103,6 +112,7 @@
             </div>
 
             <div class="psc-topbar__actions">
+                @include('partials.admin.theme-toggle')
                 @if ($panelUser !== null)
                     <div class="psc-topbar-user">
                         <div class="psc-avatar">{{ $panelInitials }}</div>
@@ -140,6 +150,22 @@
         </main>
     </div>
     @stack('scripts')
+    <script>
+        document.querySelectorAll('[data-psc-theme-toggle]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                const root = document.documentElement;
+                const next = root.getAttribute('data-psc-theme') === 'dark' ? 'light' : 'dark';
+                if (next === 'dark') {
+                    root.setAttribute('data-psc-theme', 'dark');
+                } else {
+                    root.removeAttribute('data-psc-theme');
+                }
+                try {
+                    localStorage.setItem('psc-theme', next);
+                } catch (e) {}
+            });
+        });
+    </script>
 </body>
 
 </html>

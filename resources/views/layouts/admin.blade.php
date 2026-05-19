@@ -33,6 +33,15 @@
 @endphp
 
 <body class="psc-body">
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('psc-theme') === 'dark') {
+                    document.documentElement.setAttribute('data-psc-theme', 'dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
     <input type="checkbox" id="psc-sidebar-toggle" autocomplete="off">
 
     <label for="psc-sidebar-toggle" class="psc-overlay" aria-hidden="true"></label>
@@ -148,6 +157,7 @@
             </form>
 
             <div class="psc-topbar__actions">
+                @include('partials.admin.theme-toggle')
                 @if ($viewerIsSuperAdmin)
                     <a href="{{ route('admin.moderation.index') }}" class="psc-icon-btn" title="{{ __('Onay bekleyen') }}">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
@@ -196,6 +206,22 @@
         </main>
     </div>
     @stack('scripts')
+    <script>
+        document.querySelectorAll('[data-psc-theme-toggle]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                const root = document.documentElement;
+                const next = root.getAttribute('data-psc-theme') === 'dark' ? 'light' : 'dark';
+                if (next === 'dark') {
+                    root.setAttribute('data-psc-theme', 'dark');
+                } else {
+                    root.removeAttribute('data-psc-theme');
+                }
+                try {
+                    localStorage.setItem('psc-theme', next);
+                } catch (e) {}
+            });
+        });
+    </script>
 </body>
 
 </html>

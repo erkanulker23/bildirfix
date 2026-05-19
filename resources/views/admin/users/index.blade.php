@@ -43,6 +43,7 @@
                             <th>{{ __('E-posta onayı') }}</th>
                             <th>{{ __('Telefon') }}</th>
                             <th>{{ __('Rol') }}</th>
+                            <th>{{ __('Şikâyet') }}</th>
                             <th class="text-right">{{ __('İşlem') }}</th>
                         </tr>
                     </thead>
@@ -67,6 +68,9 @@
                                     @endif
                                 </td>
                                 <td><span class="psc-badge psc-badge--neutral">{{ $u->role->value }}</span></td>
+                                <td>
+                                    <span class="psc-badge psc-badge--neutral tabular-nums">{{ number_format((int) ($u->posts_count ?? 0)) }}</span>
+                                </td>
                                 <td class="text-right">
                                     <a href="{{ route('admin.users.edit', $u) }}" class="psc-table__link">{{ __('Düzenle') }}</a>
                                 </td>

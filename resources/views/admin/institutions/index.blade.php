@@ -4,12 +4,12 @@
 
 @section('content')
     <div class="space-y-6">
-        <motion.div class="psc-page-head">
+        <div class="psc-page-head">
             <div>
                 <h1 class="psc-page-title">{{ __('Kurumlar ve bağlantılı hesaplar') }}</h1>
                 <p class="psc-page-desc">{{ __('Kurum adı, tür, şehir, e-posta veya ID ile arayın.') }}</p>
             </div>
-        </motion.div>
+        </div>
 
         <form method="get" class="psc-filter">
             <div class="psc-filter__grid">
@@ -79,6 +79,6 @@
             </div>
         </div>
 
-        <div>{{ $institutions->links() }}</motion.div>
+        <div>{{ $institutions->links() }}</div>
     </div>
 @endsection

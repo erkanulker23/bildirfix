@@ -38,7 +38,7 @@ class UserAdminController extends Controller
             $q->whereNull('email_verified_at');
         }
 
-        $users = $q->paginate(35)->withQueryString();
+        $users = $q->withCount('posts')->paginate(35)->withQueryString();
 
         return view('admin.users.index', [
             'users' => $users,

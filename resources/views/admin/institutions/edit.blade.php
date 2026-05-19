@@ -17,21 +17,21 @@
                 @csrf
                 @method('PATCH')
 
-                <div class="flex items-center gap-4 rounded-lg border border-slate-100 bg-slate-50 p-4">
-                    <img src="{{ $institution->displayLogoUrl() }}" alt="" width="64" height="64" class="h-16 w-16 rounded-xl border object-cover">
-                    <div>
-                        <p class="psc-field__label mb-0">{{ __('Logo') }}</p>
-                        <p class="text-xs text-slate-500">{{ __('Dosya veya URL') }}</p>
-                    </div>
-                </div>
-
+                @php
+                    $hasCustomLogo = filled($institution->logo_url);
+                @endphp
+                @include('partials.admin.upload-preview', [
+                    'label' => __('Kurum logosu'),
+                    'previewUrl' => $hasCustomLogo ? $institution->displayLogoUrl() : null,
+                    'previewClass' => 'h-16 w-16 rounded-xl object-cover',
+                    'removeName' => $hasCustomLogo ? 'remove_logo' : null,
+                    'removeLabel' => __('Logoyu kaldır'),
+                    'inputName' => 'logo',
+                    'accept' => 'image/png,image/jpeg,image/webp',
+                ])
                 <div>
-                    <label class="psc-field__label">{{ __('Logo dosyası') }}</label>
-                    <input name="logo" type="file" accept="image/png,image/jpeg,image/webp" class="mt-2 w-full text-sm">
-                </div>
-                <div>
-                    <label class="psc-field__label">{{ __('Logo URL') }}</label>
-                    <input name="logo_url" type="text" value="{{ old('logo_url', $institution->logo_url) }}" class="psc-input mt-2">
+                    <label class="psc-field__label">{{ __('Logo URL') }} <span class="font-normal normal-case text-slate-400">({{ __('veya dosya') }})</span></label>
+                    <input name="logo_url" type="text" value="{{ old('logo_url', $institution->logo_url) }}" class="psc-input mt-2" placeholder="https://…">
                 </div>
                 <div>
                     <label class="psc-field__label">{{ __('Kurum adı') }}</label>

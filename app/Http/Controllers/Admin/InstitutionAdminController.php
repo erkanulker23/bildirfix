@@ -24,6 +24,7 @@ class InstitutionAdminController extends Controller
 
         $query = Institution::query()
             ->with(['city:id,name', 'accountUser:id,name,email'])
+            ->withCount('posts as complaints_count')
             ->orderBy('name');
 
         if ($q !== '') {
@@ -74,6 +75,7 @@ class InstitutionAdminController extends Controller
             'verified' => ['required', 'integer', 'in:0,1'],
             'logo' => ['nullable', 'image', 'max:2048'],
             'logo_url' => ['nullable', 'string', 'max:2048'],
+            'remove_logo' => ['sometimes', 'boolean'],
             'website' => ['nullable', 'string', 'max:2048'],
             'public_email' => ['nullable', 'string', 'email', 'max:255'],
             'phone' => ['nullable', 'string', 'max:64'],
@@ -100,6 +102,10 @@ class InstitutionAdminController extends Controller
         ]);
 
         $data['verified'] = ((int) $data['verified']) === 1;
+
+        if ($request->boolean('remove_logo')) {
+            $data['logo_url'] = null;
+        }
 
         if ($request->hasFile('logo')) {
             $dir = public_path('images/institutions');

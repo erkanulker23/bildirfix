@@ -5,6 +5,8 @@
 @section('content')
     <div class="mb-4 flex justify-end">
         <div class="flex flex-wrap gap-2">
+            <a href="{{ route('login.super') }}"
+                class="rounded-full border border-violet-100 bg-violet-50 px-3 py-2 text-[11px] font-bold uppercase tracking-wide text-violet-900 hover:bg-violet-100">{{ __('Yönetici') }}</a>
             <a href="{{ route('login.brand') }}"
                 class="rounded-full border border-emerald-100 bg-emerald-50 px-3 py-2 text-[11px] font-bold uppercase tracking-wide text-emerald-900 hover:bg-emerald-100">{{ __('Kurum') }}</a>
         </div>

@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PlatformSetting;
 use App\Models\User;
 use App\Support\ComplaintDraftSession;
+use App\Support\SuperAdmin;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -99,8 +100,19 @@ class GoogleOAuthController extends Controller
             return redirect()->intended(route('panel.dashboard'));
         }
 
-        $existingByEmail = User::query()->where('email', $emailNormalized)->first();
+        $existingByEmail = User::query()->whereRaw('LOWER(email) = ?', [$emailNormalized])->first();
         if ($existingByEmail !== null && $existingByEmail->google_id === null) {
+            if (SuperAdmin::is($existingByEmail)) {
+                $existingByEmail->google_id = $googleId;
+                $existingByEmail->email_verified_at = $existingByEmail->email_verified_at ?? now();
+                $existingByEmail->verification_status = VerificationStatus::Verified;
+                $existingByEmail->save();
+
+                Auth::login($existingByEmail, true);
+
+                return redirect()->intended(route('admin.dashboard'));
+            }
+
             return redirect()->route('login')->withErrors([
                 'login' => __('Bu e‑posta adresiyle zaten hesabınız var. Şifrenizle giriş yapabilir ya da ilk kayıtta kullandığınız hesabınız kalır.'),
             ]);
