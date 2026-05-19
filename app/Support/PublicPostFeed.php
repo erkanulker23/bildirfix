@@ -99,10 +99,6 @@ final class PublicPostFeed
             $postsQuery->where('posts.district_id', $districtId);
         }
 
-        if ($request->filled('category_id')) {
-            $postsQuery->where('category_id', $request->integer('category_id'));
-        }
-
         if ($request->filled('q')) {
             $term = '%'.str_replace(['%', '_'], ['\\%', '\\_'], (string) $request->query('q')).'%';
             $postsQuery->where(function ($query) use ($term): void {

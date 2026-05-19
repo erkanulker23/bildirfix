@@ -16,24 +16,14 @@ final class PageHero
         }
 
         return match ($routeName) {
-            'campaigns.index' => self::make(
-                __('Toplumsal dayanışma'),
-                __('Kampanyaları'),
-                __('Keşfedin'),
-                __('Kullanıcılar kampanya başlatır; onaylanan projeler herkese açılır. Destek tek tıkla kayıtlı kullanıcılarla bağlanır.'),
-            ),
+            'campaigns.index' => null,
             'campaigns.create' => self::make(
                 __('Yeni kampanya'),
                 __('Kampanya'),
                 __('Başlatın'),
                 __('Toplumsal farkındalık için kampanyanızı oluşturun; yayın öncesi moderasyon sürecinden geçer.'),
             ),
-            'feed.index' => self::make(
-                __('Canlı akış'),
-                __('Kent'),
-                __('Akışı'),
-                __('Şehir genelinde paylaşılan bildirimler, destek ve yorumlar tek akışta.'),
-            ),
+            'feed.index' => null,
             'cities.explore' => self::make(
                 __('Türkiye geneli'),
                 __('Şehrini'),
@@ -47,12 +37,7 @@ final class PageHero
                 __('Yazın'),
                 __('Sorularınız ve geri bildirimleriniz için formu kullanabilirsiniz.'),
             ),
-            'how-it-works' => self::make(
-                __('Rehber'),
-                __('Nasıl'),
-                __('Çalışır?'),
-                __('Bildirim oluşturmadan moderasyona, kurum süreçlerinden kampanyalara kadar adım adım.'),
-            ),
+            'how-it-works' => null,
             'legal.privacy' => self::make(
                 __('Yasal'),
                 __('Gizlilik'),

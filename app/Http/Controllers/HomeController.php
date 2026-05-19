@@ -11,8 +11,8 @@ use App\Models\Campaign;
 use App\Models\City;
 use App\Models\Institution;
 use App\Models\Post;
-use App\Models\Story;
 use App\Models\User;
+use App\Support\HomeSpotlightFeed;
 use App\Support\PublicPostFeed;
 use App\Support\PublicStoryFeed;
 use App\Support\Seo;
@@ -66,38 +66,10 @@ class HomeController extends Controller
 
         $featuredCampaigns = $featuredCampaignQuery->orderByDesc('supporter_count')->take(16)->get();
 
-        $spotlightVideoPosts = Post::query()
-            ->publicApproved()
-            ->whereNotNull('media_url')
-            ->where(function ($q): void {
-                $q->where('media_url', 'like', '%youtu%')
-                    ->orWhere('media_url', 'like', '%youtube%')
-                    ->orWhere('media_url', 'like', '%vimeo%');
-            })
-            ->with(['user:id,name', 'category:id,name', 'city:id,name'])
-            ->latest()
-            ->limit(2)
-            ->get();
-
-        $spotlightImagePosts = Post::query()
-            ->publicApproved()
-            ->whereNotNull('media_url')
-            ->where(function ($q): void {
-                $q->where('media_url', 'not like', '%youtu%')
-                    ->where('media_url', 'not like', '%youtube%')
-                    ->where('media_url', 'not like', '%vimeo%');
-            })
-            ->with(['user:id,name', 'category:id,name', 'city:id,name'])
-            ->latest()
-            ->limit(6)
-            ->get();
-
-        $spotlightStories = Story::query()
-            ->active()
-            ->with(['user:id,name', 'city:id,name'])
-            ->latest()
-            ->limit(14)
-            ->get();
+        $spotlight = HomeSpotlightFeed::forRequest(request());
+        $spotlightVideoPosts = $spotlight['videos'];
+        $spotlightImagePosts = $spotlight['images'];
+        $spotlightStories = $spotlight['stories'];
 
         $cityComplaintSub = Post::query()
             ->publicApproved()

@@ -16,7 +16,7 @@
             <p class="mt-2 text-sm font-medium leading-relaxed text-slate-600">{{ __('Google hesabınla tek adımda üye olabilirsin.') }}</p>
             @include('partials.auth-google-oauth', ['mode' => 'register', 'class' => 'mt-5'])
         @else
-            <p class="mt-2 text-sm font-medium leading-relaxed text-slate-600">{{ __('Kent bildir için telefon numaran doğrulanana kadar paylaşım yapılmaz.') }}</p>
+            <p class="mt-2 text-sm font-medium leading-relaxed text-slate-600">{{ __('Kent bildir ve kampanya için telefon numaran doğrulanana kadar içerik yayınlanmaz.') }}</p>
         @endif
 
         <form method="POST" action="{{ route('register') }}" class="{{ ! empty($googleOAuthEnabled) ? 'mt-2' : 'mt-6' }} space-y-4">

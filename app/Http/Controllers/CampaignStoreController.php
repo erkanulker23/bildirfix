@@ -15,6 +15,13 @@ class CampaignStoreController extends Controller
 {
     public function __invoke(Request $request): RedirectResponse
     {
+        $user = $request->user();
+        abort_unless(
+            $user !== null && ($user->isSuperAdmin() || $user->isAdmin() || $user->hasVerifiedPhone()),
+            403,
+            __('Kampanya göndermek için üye olup telefonunuzu doğrulamanız gerekir.'),
+        );
+
         $data = $request->validate([
             'purpose' => ['required', 'string', 'min:10', 'max:2000'],
             'personal_story' => ['nullable', 'string', 'max:5000'],

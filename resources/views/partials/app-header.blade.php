@@ -65,7 +65,7 @@
                             class="hidden min-h-11 min-w-11 items-center justify-center rounded-full px-2.5 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 md:inline-flex">{{ __('Üye ol') }}</a>
                     @endauth
                     <a href="{{ $complaintWriteHref }}"
-                        class="btn-primary inline-flex shrink-0 !px-2.5 !py-2 text-[13px] ring-2 ring-white sm:!px-3.5">
+                        class="btn-primary hidden shrink-0 !px-2.5 !py-2 text-[13px] ring-2 ring-white md:inline-flex sm:!px-3.5">
                         <span class="text-base leading-none sm:mr-1" aria-hidden="true">+</span>
                         <span class="hidden sm:inline">{{ __('Kent sorunu bildir') }}</span>
                         <span class="sm:hidden">{{ __('Bildir') }}</span>

@@ -9,6 +9,7 @@ use App\Enums\PostStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Neighborhood;
 use App\Models\Post;
+use App\Models\User;
 use App\Services\ComplaintMediaService;
 use App\Support\ComplaintDraftSession;
 use Illuminate\Http\RedirectResponse;
@@ -17,37 +18,67 @@ use Illuminate\Support\Str;
 
 class QuickComplaintController extends Controller
 {
-    public function store(Request $request, ComplaintMediaService $mediaService): RedirectResponse
+    /**
+     * Üye olmayan veya telefonu doğrulanmamış kullanıcılar için yalnızca oturum taslağı.
+     * Veritabanına kayıt oluşturulmaz.
+     */
+    public function storeDraft(Request $request, ComplaintMediaService $mediaService): RedirectResponse
     {
-        $data = $request->validate(ComplaintDraftSession::validationRules($request));
-
         $user = $request->user();
 
-        $needsDraftMedia = $user === null
-            || (! $user->isSuperAdmin() && ! $user->isAdmin() && ! $user->hasVerifiedPhone());
+        if ($user !== null && self::canPublishComplaint($user)) {
+            return redirect()
+                ->route('posts.create')
+                ->with('status', __('Giriş yaptınız. Bildirimi şimdi gönderebilirsiniz.'));
+        }
 
-        $draftMedia = $needsDraftMedia ? $mediaService->storeDraftUploads($request) : [];
+        $data = $request->validate(ComplaintDraftSession::validationRules($request));
+        $draftMedia = $mediaService->storeDraftUploads($request);
+
+        ComplaintDraftSession::put($request, array_merge($data, [
+            'draft_media' => $draftMedia,
+        ]));
 
         if ($user === null) {
-            ComplaintDraftSession::put($request, array_merge($data, [
-                'draft_media' => $draftMedia,
-            ]));
-
             return redirect()
                 ->route('register')
-                ->with('status', __('Form dolduruldu. Son adım: üye ol ve telefonunu doğrula — bildirimin otomatik gönderilir.'));
+                ->with('status', __('Form kaydedildi. Son adım: üye ol ve telefonunu doğrula — bildirimin otomatik gönderilir.'));
         }
 
-        if (! $user->isSuperAdmin() && ! $user->isAdmin() && ! $user->hasVerifiedPhone()) {
-            ComplaintDraftSession::put($request, array_merge($data, [
-                'draft_media' => $draftMedia,
-            ]));
+        return redirect()
+            ->route('verify.phone.form')
+            ->with('status', __('Telefon doğrulamasından sonra bildirimin otomatik kaydedilecek.'));
+    }
 
-            return redirect()
-                ->route('verify.phone.form')
-                ->with('status', __('Telefon doğrulamasından sonra bildirimin otomatik kaydedilecek.'));
+    /**
+     * Onaylı üye + doğrulanmış telefon ile doğrudan yayın (taslak değil).
+     */
+    public function store(Request $request, ComplaintMediaService $mediaService): RedirectResponse
+    {
+        $user = $request->user();
+        abort_unless($user !== null && self::canPublishComplaint($user), 403);
+
+        $data = $request->validate(ComplaintDraftSession::validationRules($request));
+
+        $post = $this->createPostFromValidated($user, $data, $mediaService, $request);
+
+        return redirect()->route('home')->with('status', __('Şikâyet kaydedildi (#:id). Onay sonrası herkese açılacak.', ['id' => $post->id]));
+    }
+
+    public static function canPublishComplaint(?User $user): bool
+    {
+        if ($user === null) {
+            return false;
         }
 
+        return $user->isSuperAdmin() || $user->isAdmin() || $user->hasVerifiedPhone();
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    private function createPostFromValidated(User $user, array $data, ComplaintMediaService $mediaService, Request $request): Post
+    {
         $districtId = (int) $data['district_id'];
         $nbTid = (int) $data['neighborhood_turkiye_id'];
         $nbName = trim((string) $data['neighborhood_name']);
@@ -111,6 +142,6 @@ class QuickComplaintController extends Controller
             ])->save();
         }
 
-        return redirect()->route('home')->with('status', __('Şikâyet kaydedildi (#:id). Onay sonrası herkese açılacak.', ['id' => $post->id]));
+        return $post;
     }
 }

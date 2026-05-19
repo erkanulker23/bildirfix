@@ -91,7 +91,7 @@
     @endif
 
     @if (empty($minimalChrome ?? false) && ! empty($pageHero) && empty($hidePageHero ?? false))
-        <div class="relative left-1/2 z-0 w-screen max-w-[100vw] -translate-x-1/2">
+        <div class="home-fluid relative z-0">
             <x-page-hero
                 :overline="$pageHero['overline'] ?? null"
                 :title="$pageHero['title'] ?? ''"

@@ -19,7 +19,7 @@
 
             <form method="get" action="{{ route('home') }}" role="search"
                 class="mt-9 flex flex-col gap-2 rounded-full border border-neutral-200/70 bg-white p-2 shadow-[0_12px_40px_-22px_rgba(15,23,42,0.35)] sm:flex-row sm:items-center sm:rounded-full">
-                @foreach (request()->only(['city_id', 'category_id', 'relax_city', 'lat', 'lng', 'feed']) as $k => $v)
+                @foreach (request()->only(['city_id', 'relax_city', 'lat', 'lng', 'feed']) as $k => $v)
                     @if (! (is_string($v) && trim($v) === '') && $v !== null)
                         <input type="hidden" name="{{ $k }}" value="{{ $v }}">
                     @endif

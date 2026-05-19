@@ -1,4 +1,4 @@
-@if (empty($minimalChrome ?? false) && ! request()->routeIs('posts.create'))
+@if (empty($minimalChrome ?? false) && ! request()->routeIs('posts.create', 'complaints.quick.create', 'home'))
     <div class="pointer-events-none fixed inset-x-0 bottom-0 z-40 md:hidden" aria-hidden="true">
         <div class="pointer-events-auto mx-auto max-w-lg px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
             <a href="{{ route('posts.create') }}"

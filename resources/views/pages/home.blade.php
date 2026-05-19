@@ -5,7 +5,6 @@
 @php
     $feedPreserve = array_filter([
         'city_id' => $activeCityId,
-        'category_id' => request()->integer('category_id') ?: null,
         'q' => ($searchQuery ?? '') !== '' ? $searchQuery : null,
         'lat' => $nearLat,
         'lng' => $nearLng,
@@ -66,7 +65,6 @@
                 $isRecent = ($activeFeed ?? '') === 'recent';
                 $basePreserve = array_filter([
                     'city_id' => $activeCityId,
-                    'category_id' => request()->integer('category_id') ?: null,
                     'q' => ($searchQuery ?? '') !== '' ? $searchQuery : null,
                     'lat' => $nearLat,
                     'lng' => $nearLng,
@@ -105,7 +103,7 @@
                     <span aria-hidden="true">🔥</span>{{ __('Trend') }}
                 </a>
 
-                <a href="{{ route('home', array_merge($feedPreserve, ['category_id' => null])) }}"
+                <a href="{{ route('home', $feedPreserve) }}"
                     class="flex shrink-0 snap-item-start items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-all {{ $pillIdle }}">
                     <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         aria-hidden="true">

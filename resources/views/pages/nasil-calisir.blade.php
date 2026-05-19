@@ -19,7 +19,7 @@
 @section('content')
     {{-- Hero --}}
     <section
-        class="relative left-1/2 z-0 mb-12 w-screen max-w-[100vw] -translate-x-1/2 border-b border-neutral-200/80 bg-gradient-to-b from-neutral-50 via-white to-[#eef1f8]">
+        class="home-fluid relative z-0 mb-12 border-b border-neutral-200/80 bg-gradient-to-b from-neutral-50 via-white to-[#eef1f8]">
         <div class="pointer-events-none absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-violet-100/40 to-transparent blur-2xl"
             aria-hidden="true"></div>
         <div class="relative mx-auto max-w-[900px] px-4 py-12 sm:px-5 sm:py-16 lg:py-20">
@@ -263,19 +263,6 @@
             <p class="mt-5 text-[13px] leading-relaxed text-neutral-600">
                 {{ __('Kısa görsel «hikâyeler» ana sayfa ve akışta yer alır; konum izni verirseniz yakınınızdaki kayıtlar öne çıkar. Kurum sayfalarında belediye veya şirkete ait bildirimler listelenir.') }}
             </p>
-        </section>
-
-        {{-- Kategoriler --}}
-        <section aria-labelledby="kategoriler">
-            <h2 id="kategoriler" class="font-heading text-xl font-black tracking-tight text-neutral-900 sm:text-2xl">
-                {{ __('Bildirim kategorileri') }}
-            </h2>
-            <div class="mt-4 flex flex-wrap gap-2">
-                @foreach (['Altyapı', 'Ulaşım', 'Çevre ve Temizlik', 'Gürültü', 'Güvenlik'] as $catName)
-                    <span
-                        class="inline-flex rounded-full bg-neutral-100 px-3.5 py-1.5 text-[12px] font-bold text-neutral-800 ring-1 ring-neutral-200/80">{{ __($catName) }}</span>
-                @endforeach
-            </div>
         </section>
 
         {{-- Kurumlar --}}

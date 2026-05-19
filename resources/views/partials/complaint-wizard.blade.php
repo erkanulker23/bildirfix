@@ -14,7 +14,7 @@
 
             return false;
         };
-        if ($match(['description', 'category_id', 'images', 'videos', 'media_url', 'institution_ids'])) {
+        if ($match(['description', 'images', 'videos', 'media_url', 'institution_ids'])) {
             $wizardStep = 1;
         } elseif ($match(['city_id', 'district_id', 'neighborhood_turkiye_id', 'neighborhood_name', 'latitude', 'longitude'])) {
             $wizardStep = 2;
@@ -27,7 +27,6 @@
 <div class="complaint-wizard mx-auto w-full min-w-0 max-w-xl px-3 pb-28 pt-6 sm:px-0"
     x-data="dsQuickComplaint({
         wizardStep: @js($wizardStep),
-        categoryId: @js(old('category_id', $d['category_id'] ?? '')),
         cityId: @js((string) old('city_id', $cityId)),
         districtId: @js((string) old('district_id', $d['district_id'] ?? '')),
         neighborhoodTurkiyeId: @js((string) old('neighborhood_turkiye_id', $d['neighborhood_turkiye_id'] ?? '')),
@@ -55,6 +54,12 @@
 
     @php
         $geoHint = \App\Models\District::query()->whereNotNull('turkiye_id')->doesntExist();
+        $complaintUser = auth()->user();
+        $canPublishComplaint = \App\Http\Controllers\Web\QuickComplaintController::canPublishComplaint($complaintUser);
+        $complaintFormAction = $canPublishComplaint ? route('posts.store') : route('complaints.draft.store');
+        $complaintSubmitLabel = $canPublishComplaint
+            ? __('Gönder')
+            : ($complaintUser ? __('Telefonu doğrula ve gönder') : __('Üye ol ve tamamla'));
     @endphp
     @if ($geoHint)
         <div class="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-[13px] font-semibold text-amber-950">
@@ -63,10 +68,9 @@
         </div>
     @endif
 
-    <form id="quick-complaint-form" method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data"
+    <form id="quick-complaint-form" method="POST" action="{{ $complaintFormAction }}" enctype="multipart/form-data"
         @submit="guardQuickComplaint($event)">
         @csrf
-        <input type="hidden" name="category_id" x-bind:value="categoryId">
         <input type="hidden" name="latitude" x-bind:value="latitude !== '' && latitude !== null ? latitude : ''">
         <input type="hidden" name="longitude" x-bind:value="longitude !== '' && longitude !== null ? longitude : ''">
         <template x-for="row in selectedInstitutions" :key="row.id">
@@ -123,28 +127,6 @@
                 </div>
                 <p class="mt-1.5 text-[12px] font-medium text-primary" x-show="speechListening" x-cloak>{{ __('Dinleniyor… Konuştuğunuz metin anında yazılır.') }}</p>
                     @error('description')
-                        <p class="mt-2 text-sm font-medium text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
-                    <p class="mb-2 text-xs font-bold uppercase tracking-wide text-neutral-500">{{ __('Kategori') }}
-                        <span class="font-normal normal-case text-neutral-400">({{ __('isteğe bağlı') }})</span></p>
-                    <div class="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
-                        @foreach ($categories as $cat)
-                            <button type="button"
-                                class="inline-flex min-h-[46px] min-w-0 w-full items-center gap-2 rounded-full border-2 px-3 py-2 text-left text-[13px] font-bold leading-snug transition sm:w-auto sm:px-4 sm:text-sm"
-                                @click="categoryId = '{{ $cat->id }}'"
-                                :class="categoryId === '{{ $cat->id }}'
-                                    ? 'border-primary bg-primary-light text-primary shadow-sm ring-1 ring-primary/25'
-                                    : 'border-neutral-100 bg-neutral-50 text-neutral-800 hover:border-neutral-200'">
-                                <span
-                                    class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white text-sm font-black text-primary ring-1 ring-primary/15">{{ mb_substr($cat->name, 0, 1) }}</span>
-                                <span class="min-w-0 flex-1 break-words">{{ $cat->name }}</span>
-                            </button>
-                        @endforeach
-                    </div>
-                    @error('category_id')
                         <p class="mt-2 text-sm font-medium text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
@@ -426,10 +408,15 @@
                     @enderror
                 </div>
 
-                @guest
+                @unless ($canPublishComplaint)
                     <p class="rounded-xl bg-amber-50 px-4 py-3 text-sm font-medium text-amber-950 ring-1 ring-amber-100">
-                        {{ __('Üye değilsen gönderimden sonra kayıt ve telefon doğrulamasına yönlendirilirsin.') }}</p>
-                @endguest
+                        @if ($complaintUser)
+                            {{ __('Bildirim veritabanına ancak telefon doğrulamasından sonra kaydedilir.') }}
+                        @else
+                            {{ __('Üye olmadan bildirim yayınlanamaz. Form kaydedilir; kayıt ve telefon doğrulamasından sonra otomatik gönderilir.') }}
+                        @endif
+                    </p>
+                @endunless
 
                 <x-turnstile-widget class="rounded-xl border border-neutral-100 bg-neutral-50 px-3 py-4" />
 
@@ -437,7 +424,7 @@
                 <button type="button" @click="prevStep()"
                     class="rounded-full border border-neutral-300 bg-white px-6 py-2.5 text-sm font-bold text-neutral-900 hover:bg-neutral-50">{{ __('Geri') }}</button>
                 <button type="submit"
-                    class="rounded-full bg-amber-400 px-8 py-2.5 text-sm font-black text-neutral-900 hover:bg-amber-300">{{ __('Gönder') }}</button>
+                    class="rounded-full bg-amber-400 px-8 py-2.5 text-sm font-black text-neutral-900 hover:bg-amber-300">{{ $complaintSubmitLabel }}</button>
             </div>
         </div>
     </form>

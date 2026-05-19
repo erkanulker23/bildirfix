@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\City;
 use App\Models\District;
 use App\Support\PublicPostFeed;
@@ -32,7 +31,6 @@ final class FeedIndexController extends Controller
 
         $posts = PublicPostFeed::paginate(request(), 15, $activeDistrictId ? (int) $activeDistrictId : null);
         $cities = City::query()->orderBy('name')->get(['id', 'name', 'plate']);
-        $categories = Category::query()->orderBy('sort_order')->orderBy('name')->get(['id', 'name', 'slug']);
         $districts = $cityId !== null
             ? District::query()->where('city_id', $cityId)->orderBy('name')->get(['id', 'name'])
             : collect();
@@ -43,7 +41,6 @@ final class FeedIndexController extends Controller
         return view('feed.index', [
             'posts' => $posts,
             'cities' => $cities,
-            'categories' => $categories,
             'districts' => $districts,
             'activeCityId' => $cityId,
             'activeDistrictId' => $activeDistrictId,

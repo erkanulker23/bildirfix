@@ -7,7 +7,7 @@
 
 @section('content')
     @isset($platformStats)
-        <div class="relative left-1/2 z-0 w-screen max-w-[100vw] -translate-x-1/2 border-b border-neutral-800 bg-neutral-900 text-white">
+        <div class="home-fluid relative z-0 border-b border-neutral-800 bg-neutral-900 text-white">
             @php
                 $showResolvedStat = (int) ($platformStats['resolved'] ?? 0) > 0;
                 $showLiveCampaigns = (int) ($platformStats['campaigns_live'] ?? 0) > 0;
@@ -49,144 +49,11 @@
     @php
         $feedWithoutGeo = array_filter([
             'city_id' => $activeCityId,
-            'category_id' => request()->integer('category_id') ?: null,
             'q' => $searchQuery !== '' ? $searchQuery : null,
         ], fn ($v) => $v !== null && $v !== '');
     @endphp
 
-    {{-- Hero — açık yüzey, yeşil arama + mor tonlu ana çağrı (referans: modern tüketici platformu stili) --}}
-    <section
-        class="relative left-1/2 z-0 mb-10 w-screen max-w-[100vw] -translate-x-1/2 rounded-none border-y border-neutral-200/80 bg-gradient-to-b from-neutral-50 via-white to-[#eef1f8] shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]"
-        aria-labelledby="hero-baslik">
-        <div class="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-indigo-100/35 to-transparent blur-2xl"
-            aria-hidden="true"></div>
-        <div
-            class="relative z-[1] mx-auto grid max-w-[1250px] gap-10 px-5 py-9 sm:gap-12 sm:px-8 sm:py-12 lg:grid-cols-[minmax(0,1.06fr)_minmax(260px,.94fr)] lg:items-center lg:gap-14">
-            <div>
-                <p class="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-emerald-700 shadow-sm ring-1 ring-emerald-200/80">
-                    <svg class="h-3.5 w-3.5 text-emerald-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd"
-                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
-                    </svg>
-                    {{ __('Kent şikâyet ve çözüm ağı') }}</p>
-                <h1 id="hero-baslik"
-                    class="mt-4 font-heading text-[clamp(1.75rem,3.6vw,2.75rem)] font-black leading-[1.08] tracking-tight text-neutral-800">
-                    {{ __('Çözüm için') }}
-                    <span class="text-neutral-950">{{ config('app.name') }}</span>
-                </h1>
-                <p class="mt-3 max-w-xl text-[15px] leading-relaxed text-neutral-600">{{ __('Kaldırım, çevre, ulaşım ve benzeri kent yaşamı bildirimi; fotoğraf ve konum ile kuruma görünür kılın.') }}</p>
-                @if (! empty($geoActive))
-                    <p class="mt-4 inline-flex items-center gap-2 rounded-lg bg-emerald-50 px-3 py-2 text-[13px] font-semibold text-emerald-950 ring-1 ring-emerald-200/80">
-                        <span class="h-2 w-2 shrink-0 rounded-full bg-emerald-500" aria-hidden="true"></span>
-                        {{ __('Konum sıralaması açık.') }}</p>
-                @endif
-
-                <form method="get" action="{{ route('feed.index') }}" role="search"
-                    class="mt-8 flex flex-col gap-2 rounded-full border border-neutral-200/80 bg-white p-2 shadow-[0_14px_44px_-24px_rgba(79,70,229,0.2)] sm:flex-row sm:items-center sm:rounded-full">
-                    @foreach (request()->only(['city_id', 'category_id', 'relax_city', 'lat', 'lng']) as $k => $v)
-                        @if (! (is_string($v) && trim($v) === '') && $v !== null)
-                            <input type="hidden" name="{{ $k }}" value="{{ $v }}">
-                        @endif
-                    @endforeach
-                    <label class="sr-only" for="hero-arama">{{ __('Kent sorununda ara…') }}</label>
-                    <div class="flex min-h-[3.125rem] min-w-0 flex-1 items-center gap-2 pl-5 text-neutral-500">
-                        <svg class="h-6 w-6 shrink-0 text-neutral-400" fill="none" stroke="currentColor" stroke-width="2"
-                            viewBox="0 0 24 24" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M21 21l-5.2-5.2M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" />
-                        </svg>
-                        <input id="hero-arama" type="search" name="q" value="{{ old('q', $searchQuery) }}"
-                            autocomplete="off"
-                            placeholder="{{ __('Kent sorununun özünü ara…') }}"
-                            class="w-full flex-1 border-0 bg-transparent py-3 text-[16px] font-medium text-neutral-900 outline-none placeholder:text-neutral-500 sm:text-[15px]">
-                    </div>
-                    <button type="submit"
-                        class="shrink-0 rounded-full bg-emerald-400 px-7 py-3.5 text-[14px] font-black text-neutral-950 shadow-md shadow-teal-500/35 transition hover:bg-emerald-300 sm:self-stretch md:rounded-full md:py-3">
-                        {{ __('Ara') }}
-                    </button>
-                </form>
-
-                <div class="mt-6 flex flex-wrap items-center gap-2">
-                    @auth
-                        <a href="{{ route('posts.create') }}"
-                            class="inline-flex items-center justify-center gap-1 rounded-full bg-violet-600 px-5 py-2.5 text-[13px] font-bold text-white shadow-[0_6px_20px_-4px_rgba(91,33,182,0.45)] transition hover:bg-violet-700"><span class="text-base font-black leading-none" aria-hidden="true">+</span>{{ __('Kent sorunu bildir') }}</a>
-                        <a href="{{ route('feed.index') }}"
-                            class="inline-flex items-center justify-center rounded-full border border-neutral-300/90 bg-white px-4 py-2.5 text-[13px] font-bold text-neutral-800 hover:border-violet-300 hover:bg-violet-50/50">{{ __('Canlı akış') }}</a>
-                    @else
-                        <a href="{{ route('posts.create') }}"
-                            class="inline-flex items-center justify-center gap-1 rounded-full bg-violet-600 px-5 py-2.5 text-[13px] font-bold text-white shadow-[0_6px_20px_-4px_rgba(91,33,182,0.45)] transition hover:bg-violet-700"><span class="text-base font-black leading-none" aria-hidden="true">+</span>{{ __('Kent sorunu bildir') }}</a>
-                        <a href="{{ route('register') }}"
-                            class="inline-flex items-center justify-center rounded-full border border-neutral-300/90 bg-white px-4 py-2.5 text-[13px] font-bold text-neutral-800 hover:border-violet-200 hover:bg-violet-50/40">{{ __('Üye ol') }}</a>
-                        <a href="{{ route('login') }}"
-                            class="inline-flex items-center justify-center rounded-full border border-neutral-300/90 bg-white px-4 py-2.5 text-[13px] font-bold text-neutral-800 hover:bg-neutral-50">{{ __('Giriş') }}</a>
-                    @endauth
-                    <a href="{{ route('contact') }}"
-                        class="inline-flex items-center justify-center px-4 py-2 text-[13px] font-semibold text-neutral-600 underline underline-offset-4 hover:text-violet-700">{{ __('İletişim') }}</a>
-                </div>
-            </div>
-
-            {{-- Geometrik kolaj — masaüstünde sınırlı boyut (dev görüntü taşmasını önler) --}}
-            <div class="relative mx-auto isolate aspect-square w-full max-w-[min(100%,20rem)] sm:max-w-xs md:max-w-sm lg:max-w-[17.5rem] xl:max-w-[19rem]"
-                aria-hidden="true">
-                <div class="absolute -right-[6%] -top-[4%] h-[62%] w-[58%] overflow-hidden rounded-3xl bg-primary shadow-lg ring-2 ring-white sm:ring-[5px]">
-                    <img src="{{ asset('images/hero/collage-woman-purple.jpg') }}" alt=""
-                        class="h-full w-full object-cover object-[center_top] mix-blend-luminosity" loading="lazy" decoding="async">
-                    <span class="absolute inset-0 bg-gradient-to-br from-[#8b7cff]/50 to-[#422dc7]/65 mix-blend-color"></span>
-                </div>
-                <div
-                    class="absolute bottom-[26%] left-0 h-[43%] w-[43%] overflow-hidden rounded-full border-4 border-white bg-neutral-900 shadow-lg ring-2 ring-emerald-400/85 sm:border-[6px] sm:shadow-xl sm:ring-[3px]">
-                    <img src="{{ asset('images/hero/collage-man-circle.jpg') }}" alt=""
-                        class="h-full w-full object-cover object-top" loading="lazy" decoding="async">
-                </div>
-                <div
-                    class="absolute bottom-[-2%] right-[6%] h-[54%] w-[52%] overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-amber-300 to-orange-400 p-1 shadow-lg ring-2 ring-white sm:rounded-[2rem] sm:p-[6px] sm:shadow-xl sm:ring-[5px]">
-                    <div class="h-full w-full overflow-hidden rounded-[1.55rem]">
-                        <img src="{{ asset('images/hero/collage-woman-yellow.jpg') }}" alt=""
-                            class="h-full w-full object-cover object-center" loading="lazy" decoding="async">
-                    </div>
-                </div>
-                <div
-                    class="absolute left-[4%] top-[8%] flex h-[28%] w-[36%] items-center justify-center gap-1.5 rounded-3xl bg-primary shadow-lg ring-2 ring-white/40">
-                    <span class="h-2.5 w-2.5 rounded-full bg-white/95"></span>
-                    <span class="h-2.5 w-2.5 rounded-full bg-white/65"></span>
-                    <span class="h-2.5 w-2.5 rounded-full bg-white/40"></span>
-                </div>
-                <div
-                    class="absolute left-[52%] top-[14%] flex h-[15%] w-[15%] min-h-[52px] min-w-[52px] items-center justify-center rounded-full bg-amber-300 shadow-md ring-[3px] ring-white">
-                    <svg class="h-[55%] w-[55%] text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path
-                            d="M11.049 3.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.887a1 1 0 00-1.176 0l-3.976 2.887c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                    </svg>
-                </div>
-                <div class="pointer-events-none absolute left-[-14%] top-[52%] h-[42%] w-[36%] rounded-full bg-teal-200/45 blur-2xl"></div>
-                <div class="pointer-events-none absolute bottom-[12%] left-[38%] h-[26%] w-[22%] rounded-full bg-neutral-900/85"></div>
-                <div
-                    class="pointer-events-none absolute -bottom-[8%] -left-[8%] h-[42%] w-[48%] rounded-full border-[14px] border-teal-200/80 border-l-transparent border-t-transparent">
-                </div>
-            </div>
-        </div>
-
-        @isset($platformStats)
-            <div class="relative z-[1] border-t border-neutral-200/60 bg-white/70 backdrop-blur-md">
-                <dl class="mx-auto grid max-w-[1250px] gap-3 px-5 py-4 sm:gap-5 sm:px-8 {{ (int) ($platformStats['resolved'] ?? 0) > 0 ? 'grid-cols-3' : 'grid-cols-2' }}">
-                    @if ((int) ($platformStats['resolved'] ?? 0) > 0)
-                    <div class="rounded-2xl bg-white px-2 py-3 text-center shadow-sm ring-1 ring-neutral-200/50 sm:rounded-3xl sm:py-4">
-                        <dt class="text-[10px] font-bold uppercase tracking-wide text-neutral-500">{{ __('Çözülen şikâyet') }}</dt>
-                        <dd class="mt-1 text-lg font-black tabular-nums text-neutral-900 sm:text-xl">{{ number_format((int) $platformStats['resolved'], 0, ',', '.') }}</dd>
-                    </div>
-                    @endif
-                    <div class="rounded-2xl bg-white px-2 py-3 text-center shadow-sm ring-1 ring-neutral-200/50 sm:rounded-3xl sm:py-4">
-                        <dt class="text-[10px] font-bold uppercase tracking-wide text-neutral-500">{{ __('Son 30 günde kayıt') }}</dt>
-                        <dd class="mt-1 text-lg font-black tabular-nums text-neutral-900 sm:text-xl">{{ number_format((int) $platformStats['last30'], 0, ',', '.') }}</dd>
-                    </div>
-                    <div class="rounded-2xl bg-gradient-to-br from-emerald-50 to-white px-2 py-3 text-center shadow-sm ring-1 ring-emerald-200/50 sm:rounded-3xl sm:py-4">
-                        <dt class="text-[10px] font-bold uppercase tracking-wide text-emerald-800">{{ __('Kanıtlı içerik') }}</dt>
-                        <dd class="mt-1 text-lg font-black tabular-nums text-neutral-900 sm:text-xl">%{{ number_format((int) $platformStats['evidence_pct'], 0, ',', '.') }}</dd>
-                    </div>
-                </dl>
-            </div>
-        @endisset
-    </section>
+    @include('partials.home-hero-section')
 
     @include('partials.home-how-it-works')
 
@@ -337,7 +204,7 @@
     @endif
 
     @isset($platformStats)
-        <section class="relative left-1/2 mb-14 w-screen max-w-[100vw] -translate-x-1/2 scroll-mt-8 bg-gradient-to-b from-neutral-900 via-neutral-900 to-neutral-950 py-10 text-white sm:mb-16 sm:py-12"
+        <section class="home-fluid relative mb-14 scroll-mt-8 bg-gradient-to-b from-neutral-900 via-neutral-900 to-neutral-950 py-10 text-white sm:mb-16 sm:py-12"
             aria-labelledby="sayilar-baslik">
             <div class="pointer-events-none absolute inset-0 opacity-40 bg-[radial-gradient(ellipse_at_80%_0%,rgba(167,139,250,0.35),transparent_55%),radial-gradient(ellipse_at_10%_80%,rgba(52,211,153,0.2),transparent_50%)]"
                 aria-hidden="true"></div>
@@ -430,7 +297,7 @@
     @endisset
 
     <section
-        class="relative left-1/2 mb-12 w-screen max-w-[100vw] -translate-x-1/2 scroll-mt-10 overflow-hidden border-y border-neutral-200/80 bg-gradient-to-b from-neutral-50 via-white to-[#f0f4fa] py-10 text-neutral-900 sm:mb-14 sm:py-12"
+        class="home-fluid relative mb-12 scroll-mt-10 overflow-hidden border-y border-neutral-200/80 bg-gradient-to-b from-neutral-50 via-white to-[#f0f4fa] py-10 text-neutral-900 sm:mb-14 sm:py-12"
         aria-labelledby="lider-sikayet-baslik">
         <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(125deg,rgba(16,185,129,0.08)_0%,transparent_42%),linear-gradient(225deg,rgba(139,92,246,0.07)_0%,transparent_45%)]"
             aria-hidden="true"></div>
@@ -540,26 +407,12 @@
         <div class="grid gap-4 lg:grid-cols-12 lg:items-stretch">
             <div class="space-y-3 lg:col-span-5">
                 @if ($__vv->isEmpty())
-                    @foreach (
-                        [
-                            'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=960&q=80',
-                            'https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=960&q=80',
-                        ] as $pvUrl)
-                        <div class="relative overflow-hidden rounded-3xl bg-neutral-100 ring-1 ring-neutral-200">
-                            <img src="{{ $pvUrl }}" alt=""
-                                class="aspect-video w-full object-cover" loading="lazy" decoding="async">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent"></div>
-                            <span
-                                class="absolute left-4 top-3 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-neutral-950">{{ __('video') }}</span>
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <span
-                                    class="flex h-14 w-14 items-center justify-center rounded-full bg-white/95 text-xl shadow-xl ring-2 ring-black/5"
-                                    aria-hidden="true">▶</span>
-                            </div>
-                            <p class="absolute bottom-3 left-4 right-4 text-[13px] font-bold text-white drop-shadow">
-                                {{ __('İlk video şikâyetinle vitrin burada canlanır.') }}</p>
-                        </div>
-                    @endforeach
+                    <div class="flex aspect-video flex-col items-center justify-center rounded-3xl border-2 border-dashed border-neutral-200 bg-neutral-50/80 p-6 text-center ring-1 ring-neutral-100">
+                        <span class="text-3xl opacity-40" aria-hidden="true">▶</span>
+                        <p class="mt-3 text-sm font-bold text-neutral-800">{{ __('Henüz video içerik yok') }}</p>
+                        <p class="mt-1 max-w-xs text-[12px] font-medium text-neutral-500">{{ __('Onaylı bildirimlerde video veya YouTube bağlantısı yayınlandığında burada görünür.') }}</p>
+                        <a href="{{ route('posts.create') }}" class="btn-primary mt-4 inline-flex rounded-full px-5 py-2 text-xs font-bold">{{ __('Bildir') }}</a>
+                    </div>
                 @else
                     @foreach ($__vv as $post)
                         @php
@@ -592,20 +445,10 @@
             </div>
             <div class="grid grid-cols-2 gap-2 sm:gap-3 lg:col-span-4">
                 @if ($__vi->isEmpty())
-                    @foreach (
-                        [
-                            'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=640&q=80',
-                            'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=640&q=80',
-                            'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=640&q=80',
-                            'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?auto=format&fit=crop&w=640&q=80',
-                        ] as $tiUrl)
-                        <div class="relative aspect-[4/3] overflow-hidden rounded-2xl bg-neutral-100 ring-1 ring-black/5">
-                            <img src="{{ $tiUrl }}" alt="" loading="lazy" decoding="async"
-                                class="h-full w-full object-cover">
-                            <span
-                                class="absolute left-2 top-2 rounded-full bg-white/90 px-2 py-0.5 text-[9px] font-black uppercase text-neutral-900 shadow">{{ __('foto') }}</span>
-                        </div>
-                    @endforeach
+                    <div class="col-span-2 flex aspect-[4/3] flex-col items-center justify-center rounded-2xl border-2 border-dashed border-neutral-200 bg-neutral-50/80 p-4 text-center">
+                        <p class="text-sm font-bold text-neutral-800">{{ __('Henüz fotoğraf yok') }}</p>
+                        <p class="mt-1 text-[11px] font-medium text-neutral-500">{{ __('Medya eklenmiş onaylı bildirimler burada listelenir.') }}</p>
+                    </div>
                 @else
                     @php $vitrinTilesShown = 0; @endphp
                     @foreach ($__vi->take(16) as $post)
@@ -633,20 +476,9 @@
                         </a>
                     @endforeach
                     @if ($vitrinTilesShown === 0)
-                        @foreach (
-                            [
-                                'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=640&q=80',
-                                'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=640&q=80',
-                                'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=640&q=80',
-                                'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?auto=format&fit=crop&w=640&q=80',
-                            ] as $tiUrl)
-                            <div class="relative aspect-[4/3] overflow-hidden rounded-2xl bg-neutral-100 ring-1 ring-black/5">
-                                <img src="{{ $tiUrl }}" alt="" loading="lazy" decoding="async"
-                                    class="h-full w-full object-cover">
-                                <span
-                                    class="absolute left-2 top-2 rounded-full bg-white/90 px-2 py-0.5 text-[9px] font-black uppercase text-neutral-900 shadow">{{ __('foto') }}</span>
-                            </div>
-                        @endforeach
+                        <div class="col-span-2 flex aspect-[4/3] items-center justify-center rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-4 text-center text-[11px] font-medium text-neutral-500">
+                            {{ __('Gösterilecek fotoğraf bulunamadı.') }}
+                        </div>
                     @endif
                 @endif
             </div>
@@ -731,7 +563,7 @@
         </section>
     @endif
 
-    <section class="relative left-1/2 mb-6 w-screen max-w-[100vw] -translate-x-1/2 overflow-hidden rounded-none border-y border-violet-200/50 bg-gradient-to-r from-violet-600 via-indigo-600 to-emerald-500 px-5 py-10 text-white sm:px-8 sm:py-12"
+    <section class="home-fluid relative mb-6 overflow-hidden rounded-none border-y border-violet-200/50 bg-gradient-to-r from-violet-600 via-indigo-600 to-emerald-500 px-5 py-10 text-white sm:px-8 sm:py-12"
         aria-labelledby="akis-cta-baslik">
         <div class="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'40\' height=\'40\' viewBox=\'0 0 40 40\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23fff\' fill-opacity=\'0.06\'%3E%3Cpath d=\'M20 0L40 20 20 40 0 20z\'/%3E%3C/g%3E%3C/svg%3E')] opacity-90"
             aria-hidden="true"></div>

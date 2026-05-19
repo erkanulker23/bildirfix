@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
-use App\Support\PageHero;
 use App\Support\Seo;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -17,7 +16,7 @@ final class BlogShowController extends Controller
         $post = BlogPost::query()
             ->visibleOnPublicSite()
             ->where('slug', $slug)
-            ->with('author:id,name')
+            ->with(['author:id,name', 'category:id,name,slug'])
             ->firstOrFail();
 
         $canonical = route('blog.show', ['slug' => $post->slug], absolute: true);
@@ -48,11 +47,9 @@ final class BlogShowController extends Controller
 
         return view('blog.show', [
             'post' => $post,
-            'pageHero' => PageHero::fromTitle(
-                $post->title,
-                __('Blog'),
-                $description,
-            ),
+            'hidePageHero' => true,
+            'shareUrl' => $canonical,
+            'shareTitle' => $post->title,
             'seo' => $seo,
             'structuredData' => $structuredData,
         ]);

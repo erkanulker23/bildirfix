@@ -102,10 +102,6 @@ Alpine.data('dsQuickComplaint', (initial = {}) => ({
         Number(initial.wizardStep) >= 1 && Number(initial.wizardStep) <= 3
             ? Number(initial.wizardStep)
             : 0,
-    categoryId:
-        initial.categoryId !== undefined && initial.categoryId !== null && String(initial.categoryId) !== ''
-            ? String(initial.categoryId)
-            : '',
     urls: typeof initial.urls === 'object' && initial.urls !== null ? initial.urls : {},
     cityId: String(initial.cityId ?? ''),
     districtId: String(initial.districtId ?? ''),

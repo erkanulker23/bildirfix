@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\City;
 use App\Models\Institution;
 use App\Support\ComplaintDraftSession;
@@ -20,8 +19,6 @@ class CreatePostWizardController extends Controller
         $cityId = $request->integer('city_id')
             ?: (isset($draft['city_id']) ? (int) $draft['city_id'] : null)
             ?: City::query()->where('plate', 34)->value('id');
-
-        $categories = Category::query()->orderBy('sort_order')->orderBy('name')->get(['id', 'name', 'slug']);
 
         $cities = City::query()->orderBy('plate')->get(['id', 'name', 'plate']);
 
@@ -50,7 +47,6 @@ class CreatePostWizardController extends Controller
             ->get(['id', 'name', 'logo_url']);
 
         return view('pages.create-post', [
-            'categories' => $categories,
             'selectedInstitutions' => $selectedInstitutions,
             'suggestedInstitutions' => $suggestedInstitutions,
             'cityId' => $cityId,

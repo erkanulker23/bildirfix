@@ -1,6 +1,7 @@
 @props([
     'url',
     'title',
+    'heading' => null,
 ])
 
 @php
@@ -18,7 +19,7 @@
 
 <section {{ $attributes->merge(['class' => 'rounded-2xl border border-slate-200/90 bg-white p-5 shadow-sm ring-1 ring-slate-100']) }}
     aria-labelledby="post-share-sidebar-heading">
-    <h2 id="post-share-sidebar-heading" class="text-sm font-black uppercase tracking-[0.14em] text-slate-900">{{ __('Paylaşım') }}</h2>
+    <h2 id="post-share-sidebar-heading" class="text-sm font-black uppercase tracking-[0.14em] text-slate-900">{{ $heading ?? __('Paylaşım') }}</h2>
     <p class="mt-2 text-xs font-medium leading-relaxed text-slate-600">{{ __('Bağlantıyı kopyalayın veya doğrudan paylaşın — hesap gerekmez.') }}</p>
 
     <div class="mt-4 flex flex-col gap-2">

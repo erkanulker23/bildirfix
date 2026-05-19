@@ -1,6 +1,6 @@
 {{-- Kampanya / CSR şeridi --}}
 <section
-    class="relative left-1/2 z-0 mb-10 w-screen max-w-[100vw] -translate-x-1/2 overflow-hidden rounded-3xl bg-gradient-to-br from-white via-indigo-50/90 to-violet-100/80 px-5 py-8 shadow-[0_24px_60px_-40px_rgba(67,56,202,0.45)] sm:px-8 sm:py-10"
+    class="home-fluid relative z-0 mb-10 overflow-hidden rounded-3xl bg-gradient-to-br from-white via-indigo-50/90 to-violet-100/80 px-5 py-8 shadow-[0_24px_60px_-40px_rgba(67,56,202,0.45)] sm:px-8 sm:py-10"
     aria-labelledby="kampanya-csr-baslik">
     <div class="pointer-events-none absolute -right-24 -top-16 h-56 w-56 rounded-full bg-violet-400/25 blur-3xl" aria-hidden="true"></div>
     <div class="pointer-events-none absolute -bottom-20 -left-16 h-48 w-48 rounded-full bg-emerald-300/30 blur-3xl" aria-hidden="true"></div>

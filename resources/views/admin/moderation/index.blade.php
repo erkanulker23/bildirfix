@@ -75,6 +75,7 @@
                                 'rejectRoute' => route('admin.moderation.reject', $post),
                                 'unpublishRoute' => route('admin.moderation.unpublish', $post),
                                 'statusFilter' => $statusFilter,
+                                'categories' => $categories,
                             ])
                         </li>
                     @endforeach

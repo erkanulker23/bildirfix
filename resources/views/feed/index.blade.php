@@ -7,7 +7,6 @@
         $feedWithoutGeo = array_filter([
             'city_id' => $activeCityId,
             'district_id' => $activeDistrictId ?? null,
-            'category_id' => request()->integer('category_id') ?: null,
             'q' => $searchQuery !== '' ? $searchQuery : null,
             'feed' => request('feed') ?: null,
         ], fn ($v) => $v !== null && $v !== '');
@@ -16,7 +15,7 @@
     @endphp
 
     <div
-        class="relative left-1/2 z-0 mb-8 w-screen max-w-[100vw] -translate-x-1/2 border-b border-neutral-200/80 bg-gradient-to-b from-neutral-50 via-white to-[#eef1f8] text-neutral-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
+        class="home-fluid relative z-0 mb-8 border-b border-neutral-200/80 bg-gradient-to-b from-neutral-50 via-white to-[#eef1f8] text-neutral-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
         <div class="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-indigo-100/35 to-transparent blur-2xl"
             aria-hidden="true"></div>
         <div class="relative mx-auto max-w-[1200px] px-4 py-8 sm:px-5 sm:py-10">
@@ -49,7 +48,7 @@
                 <div class="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-100 pb-4">
                     <div>
                         <h2 id="akis-siralama" class="text-lg font-black text-neutral-950">{{ __('Filtreler ve sıralama') }}</h2>
-                        <p class="mt-1 text-[13px] font-medium text-neutral-600">{{ __('İl ve kategoriyle daraltın; konum açıksa sıralamaya dahil edilir.') }}</p>
+                        <p class="mt-1 text-[13px] font-medium text-neutral-600">{{ __('İl ve ilçe ile daraltın; konum açıksa sıralamaya dahil edilir.') }}</p>
                     </div>
                     <span class="rounded-full bg-violet-50 px-3 py-1.5 text-[12px] font-black tabular-nums text-violet-900 ring-1 ring-violet-200">
                         {{ number_format($posts->total(), 0, ',', '.') }} {{ __('kayıt') }}</span>
@@ -62,7 +61,7 @@
                         class="rounded-full px-4 py-2 text-[12px] font-black transition {{ request('feed') === 'recent' ? 'bg-violet-600 text-white shadow-md' : 'border border-neutral-200 bg-neutral-50 text-neutral-800 hover:border-violet-300' }}">{{ __('En yeni') }}</a>
                 </div>
 
-                <form method="get" action="{{ route('feed.index') }}" id="akisfiltre-form-feed" class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-12">
+                <form method="get" action="{{ route('feed.index') }}" id="akisfiltre-form-feed" class="mt-5 grid gap-3 sm:grid-cols-2">
                     @if (request()->filled('feed'))
                         <input type="hidden" name="feed" value="{{ request('feed') }}">
                     @endif
@@ -74,7 +73,7 @@
                         <input type="hidden" name="lng" value="{{ $nearLng }}">
                         <input type="hidden" name="relax_city" id="relax_city_sent" value="{{ ! empty($relaxNearby) ? '1' : '0' }}">
                     @endif
-                    <div class="sm:col-span-1 lg:col-span-4">
+                    <div>
                         <label class="text-[11px] font-bold uppercase tracking-wide text-neutral-500">{{ __('İl') }}</label>
                         <select name="city_id" title="{{ __('Şehir') }}"
                             class="mt-1.5 w-full rounded-2xl border-0 bg-neutral-100 px-4 py-3 text-sm font-bold text-neutral-900 shadow-inner outline-none ring-2 ring-transparent focus:ring-violet-500"
@@ -84,7 +83,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="sm:col-span-1 lg:col-span-4">
+                    <div>
                         <label class="text-[11px] font-bold uppercase tracking-wide text-neutral-500">{{ __('İlçe') }}</label>
                         <select name="district_id"
                             class="mt-1.5 w-full rounded-2xl border-0 bg-neutral-100 px-4 py-3 text-sm font-semibold outline-none ring-2 ring-transparent focus:ring-violet-500"
@@ -95,19 +94,8 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="sm:col-span-1 lg:col-span-4">
-                        <label class="text-[11px] font-bold uppercase tracking-wide text-neutral-500">{{ __('Kategori') }}</label>
-                        <select name="category_id"
-                            class="mt-1.5 w-full rounded-2xl border-0 bg-neutral-100 px-4 py-3 text-sm font-semibold outline-none ring-2 ring-transparent focus:ring-violet-500"
-                            onchange="this.form.submit()">
-                            <option value="">{{ __('Tüm kategoriler') }}</option>
-                            @foreach ($categories as $cat)
-                                <option value="{{ $cat->id }}" @selected(request()->integer('category_id') === $cat->id)>{{ $cat->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
                     @if (! empty($geoActive))
-                        <div class="flex items-end sm:col-span-2 lg:col-span-12">
+                        <div class="flex items-end sm:col-span-2">
                             <label class="flex w-full cursor-pointer items-start gap-3 rounded-2xl bg-emerald-50/90 px-4 py-3 font-bold text-emerald-950 ring-1 ring-emerald-100">
                                 <input type="checkbox" class="mt-0.5 h-5 w-5 rounded border-emerald-300 text-emerald-600"
                                     id="relax_toggle" @checked(! empty($relaxNearby))
@@ -121,7 +109,7 @@
                 @if ($activeDistrictId)
                     <p class="mt-3 flex flex-wrap items-center gap-2 text-[13px] font-semibold text-violet-900">
                         <span>{{ __('İlçe filtresi etkin.') }}</span>
-                        <a href="{{ route('feed.index', array_filter(['city_id' => $activeCityId, 'category_id' => request()->integer('category_id') ?: null, 'q' => $searchQuery !== '' ? $searchQuery : null, 'feed' => request('feed') ?: null])) }}"
+                        <a href="{{ route('feed.index', array_filter(['city_id' => $activeCityId, 'q' => $searchQuery !== '' ? $searchQuery : null, 'feed' => request('feed') ?: null])) }}"
                             class="rounded-full border border-violet-200 bg-white px-3 py-1 text-[12px] font-bold text-violet-800 hover:bg-violet-50">{{ __('İlçeyi kaldır') }}</a>
                     </p>
                 @endif
@@ -166,19 +154,6 @@
                         <span>{{ __('Konum ve etkileşime göre sıralama kuralları görünür') }}</span>
                     </li>
                 </ul>
-            </section>
-
-            <section class="rounded-2xl border border-neutral-200/80 bg-white p-5 shadow-sm">
-                <h3 class="text-[14px] font-black text-neutral-950">{{ __('Kategoriler') }}</h3>
-                <p class="mt-1 text-[12px] font-medium text-neutral-500">{{ __('Tek dokunuşla filtrele') }}</p>
-                <div class="mt-4 flex flex-wrap gap-2">
-                    @foreach ($categories as $cat)
-                        <a href="{{ route('feed.index', array_merge($feedWithoutGeo, ['category_id' => $cat->id])) }}"
-                            class="inline-flex items-center rounded-full border px-3 py-1.5 text-[12px] font-bold transition {{ request()->integer('category_id') === $cat->id ? 'border-violet-400 bg-violet-50 text-violet-950 ring-2 ring-violet-200' : 'border-neutral-200 bg-neutral-50 text-neutral-800 hover:border-violet-200 hover:bg-white' }}">
-                            {{ $cat->name }}
-                        </a>
-                    @endforeach
-                </div>
             </section>
         </aside>
     </div>

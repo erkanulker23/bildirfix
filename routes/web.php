@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdPlacementAdminController;
 use App\Http\Controllers\Admin\BlogPostController;
 use App\Http\Controllers\Admin\CampaignAdminController;
+use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\CampaignModerationController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\HomepageSettingsController;
@@ -131,14 +132,21 @@ Route::middleware('auth')->group(function (): void {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
 
-Route::post('paylasim-olustur', [QuickComplaintController::class, 'store'])
+Route::post('paylasim-taslak', [QuickComplaintController::class, 'storeDraft'])
     ->middleware(['throttle:create-content', 'turnstile'])
-    ->name('posts.store');
-Route::post('bildir', [QuickComplaintController::class, 'store'])
+    ->name('complaints.draft.store');
+Route::post('bildir-taslak', [QuickComplaintController::class, 'storeDraft'])
     ->middleware(['throttle:create-content', 'turnstile'])
-    ->name('complaints.quick.store');
+    ->name('complaints.quick.draft.store');
 
 Route::middleware(['auth', 'verified.phone'])->group(function (): void {
+    Route::post('paylasim-olustur', [QuickComplaintController::class, 'store'])
+        ->middleware(['throttle:create-content', 'turnstile'])
+        ->name('posts.store');
+    Route::post('bildir', [QuickComplaintController::class, 'store'])
+        ->middleware(['throttle:create-content', 'turnstile'])
+        ->name('complaints.quick.store');
+
     Route::get('kampanya-baslat', CampaignCreateController::class)->name('campaigns.create');
     Route::post('kampanya-baslat', CampaignStoreController::class)
         ->middleware(['throttle:create-content'])
@@ -210,6 +218,11 @@ Route::middleware(['auth', 'verified.phone', 'role:admin,super_admin'])
             Route::get('kullanicilar/{user}/duzenle', [UserAdminEditController::class, 'edit'])->name('users.edit');
             Route::patch('kullanicilar/{user}', [UserAdminEditController::class, 'update'])->name('users.update');
             Route::post('kullanicilar/{user}/sifre-sifirla', [UserAdminEditController::class, 'sendPasswordReset'])->name('users.send-password-reset');
+            Route::get('iletisim-mesajlari', [ContactMessageController::class, 'index'])->name('contact-messages.index');
+            Route::get('iletisim-mesajlari/{contactMessage}', [ContactMessageController::class, 'show'])->name('contact-messages.show');
+            Route::post('iletisim-mesajlari/{contactMessage}/okunmadi', [ContactMessageController::class, 'markUnread'])->name('contact-messages.mark-unread');
+            Route::delete('iletisim-mesajlari/{contactMessage}', [ContactMessageController::class, 'destroy'])->name('contact-messages.destroy');
+
             Route::get('kurumlar', [InstitutionAdminController::class, 'index'])->name('institutions.index');
             Route::get('kurumlar/{institution}/duzenle', [InstitutionAdminController::class, 'edit'])->name('institutions.edit');
             Route::patch('kurumlar/{institution}', [InstitutionAdminController::class, 'update'])->name('institutions.update');

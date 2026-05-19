@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\PostModerationStatus;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -44,6 +45,7 @@ class PostModerationController extends Controller
         return view('admin.moderation.index', [
             'posts' => $posts,
             'statusFilter' => $filter,
+            'categories' => Category::query()->orderBy('sort_order')->orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -57,12 +59,21 @@ class PostModerationController extends Controller
 
         $previous = $post->moderation_status;
 
-        $post->forceFill([
+        $fill = [
             'moderation_status' => PostModerationStatus::Approved,
             'moderated_at' => now(),
             'moderated_by_user_id' => $request->user()->id,
             'moderation_note' => null,
-        ])->save();
+        ];
+
+        if ($previous === PostModerationStatus::Pending) {
+            $validated = $request->validate([
+                'category_id' => ['nullable', 'integer', 'exists:categories,id'],
+            ]);
+            $fill['category_id'] = $validated['category_id'] ?? null;
+        }
+
+        $post->forceFill($fill)->save();
 
         $message = $previous === PostModerationStatus::Pending
             ? __('Şikâyet yayına alındı.')

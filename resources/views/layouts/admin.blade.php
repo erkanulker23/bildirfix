@@ -27,7 +27,8 @@
     if ($viewerIsSuperAdmin && $adminUser !== null) {
         $pendingBell = (int) (\App\Models\Post::query()->where('moderation_status', \App\Enums\PostModerationStatus::Pending)->count()
             + \App\Models\Campaign::query()->where('moderation_status', \App\Enums\CampaignModerationStatus::Pending)->count()
-            + \App\Models\BlogPost::query()->where('moderation_status', \App\Enums\PostModerationStatus::Pending)->count());
+            + \App\Models\BlogPost::query()->where('moderation_status', \App\Enums\PostModerationStatus::Pending)->count()
+            + \App\Models\ContactMessage::query()->whereNull('read_at')->count());
     }
     $navActive = fn (string $pattern): string => request()->routeIs($pattern) ? 'psc-nav-link--active' : '';
 @endphp
@@ -85,6 +86,14 @@
                     <a href="{{ route('admin.institutions.index') }}" class="psc-nav-link {{ $navActive('admin.institutions.*') }}">
                         @include('partials.psc.icons', ['name' => 'building'])
                         {{ __('Kurumlar') }}
+                    </a>
+                    <a href="{{ route('admin.contact-messages.index') }}" class="psc-nav-link {{ $navActive('admin.contact-messages.*') }}">
+                        @include('partials.psc.icons', ['name' => 'mail'])
+                        {{ __('İletişim') }}
+                        @php $unreadContact = \App\Models\ContactMessage::query()->whereNull('read_at')->count(); @endphp
+                        @if ($unreadContact > 0)
+                            <span class="ml-auto rounded-full bg-amber-500 px-2 py-0.5 text-[10px] font-black text-white">{{ $unreadContact > 99 ? '99+' : $unreadContact }}</span>
+                        @endif
                     </a>
                     <a href="{{ route('admin.campaigns.registry') }}" class="psc-nav-link {{ $navActive('admin.campaigns.*') }}">
                         @include('partials.psc.icons', ['name' => 'campaign'])

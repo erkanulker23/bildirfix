@@ -9,9 +9,18 @@
 
 <div class="psc-mod-actions">
     @if ($st->value === 'pending')
-        <form method="POST" action="{{ $approveRoute }}">
+        <form method="POST" action="{{ $approveRoute }}" class="psc-mod-actions__stack">
             @csrf
             <input type="hidden" name="durum" value="{{ $statusFilter }}">
+            @if ($item instanceof \App\Models\Post && ($categories ?? collect())->isNotEmpty())
+                <label class="block text-left text-[11px] font-bold uppercase tracking-wide text-[var(--psc-text-muted)]">{{ __('Kategori (moderasyon)') }}</label>
+                <select name="category_id" class="psc-select psc-select--sm mb-1 min-w-[12rem]">
+                    <option value="">{{ __('Atama yok') }}</option>
+                    @foreach ($categories as $cat)
+                        <option value="{{ $cat->id }}" @selected((int) old('category_id', $item->category_id) === (int) $cat->id)>{{ $cat->name }}</option>
+                    @endforeach
+                </select>
+            @endif
             <button type="submit" class="psc-btn psc-btn--success psc-btn--sm">{{ __('Yayına al') }}</button>
         </form>
         <form method="POST" action="{{ $rejectRoute }}" class="psc-mod-actions__stack">

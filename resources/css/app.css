@@ -56,6 +56,11 @@
 @layer base {
     html {
         scroll-behavior: smooth;
+        overflow-x: clip;
+    }
+
+    body {
+        overflow-x: clip;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -81,7 +86,10 @@
      * (slider / marquee / vitrin şeritleri için).
      */
     .home-fluid {
-        @apply relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2;
+        width: 100vw;
+        max-width: 100%;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
     }
 
     /** Beyaz kutu yerine hafif tonlu panel — diğer modüllerle görsel ayrım */
@@ -91,6 +99,138 @@
 
     .home-panel-head {
         @apply mb-8 border-b border-neutral-200 pb-6;
+    }
+
+    /** Ana sayfa hero — koyu gradient, cam arama kutusu */
+    .home-hero {
+        background: linear-gradient(135deg, #0a0f1a 0%, #1a1040 42%, #0d3d32 100%);
+        border-bottom: 1px solid rgb(255 255 255 / 0.08);
+    }
+
+    .home-hero__mesh {
+        overflow: hidden;
+    }
+
+    .home-hero__blob {
+        position: absolute;
+        border-radius: 9999px;
+        filter: blur(72px);
+        opacity: 0.55;
+    }
+
+    .home-hero__blob--emerald {
+        top: -12%;
+        left: -8%;
+        width: 42%;
+        height: 55%;
+        background: rgb(16 185 129 / 0.45);
+    }
+
+    .home-hero__blob--violet {
+        top: 8%;
+        right: -6%;
+        width: 38%;
+        height: 48%;
+        background: rgb(124 58 237 / 0.4);
+    }
+
+    .home-hero__blob--amber {
+        bottom: -18%;
+        left: 32%;
+        width: 28%;
+        height: 38%;
+        background: rgb(245 158 11 / 0.22);
+    }
+
+    .home-hero__grid {
+        background-image:
+            linear-gradient(rgb(255 255 255 / 0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgb(255 255 255 / 0.04) 1px, transparent 1px);
+        background-size: 48px 48px;
+        mask-image: linear-gradient(to bottom, black 0%, transparent 88%);
+    }
+
+    .home-hero__badge {
+        border: 1px solid rgb(52 211 153 / 0.35);
+        background: rgb(16 185 129 / 0.12);
+        box-shadow: 0 0 24px rgb(52 211 153 / 0.15);
+    }
+
+    .home-hero__brand {
+        background: linear-gradient(92deg, #6ee7b7 0%, #a5f3fc 38%, #c4b5fd 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .home-hero__search-btn {
+        background: linear-gradient(135deg, #34d399 0%, #2dd4bf 100%);
+    }
+
+    .home-hero__cta-primary {
+        @apply inline-flex items-center justify-center gap-1.5 rounded-full px-6 py-3 text-[13px] font-black text-white shadow-[0_10px_32px_-8px_rgba(124,58,237,0.55)] transition hover:brightness-110;
+        background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+    }
+
+    .home-hero__cta-secondary {
+        @apply inline-flex items-center justify-center rounded-full border border-white/25 bg-white/10 px-5 py-3 text-[13px] font-bold text-white backdrop-blur-sm transition hover:bg-white/20;
+    }
+
+    .home-hero__cta-ghost {
+        @apply inline-flex items-center justify-center rounded-full px-4 py-3 text-[13px] font-semibold text-white/70 transition hover:text-white;
+    }
+
+    .home-hero__stat {
+        @apply rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-center backdrop-blur-sm;
+    }
+
+    .home-hero__stat dt {
+        @apply text-[10px] font-bold uppercase tracking-wide text-white/50;
+    }
+
+    .home-hero__stat dd {
+        @apply mt-1 font-heading text-xl font-black tabular-nums text-white sm:text-2xl;
+    }
+
+    .home-hero__stat--accent {
+        @apply border-emerald-400/25 bg-emerald-500/10;
+    }
+
+    .home-hero__stat--accent dt {
+        @apply text-emerald-200/80;
+    }
+
+    .home-hero__float-slow {
+        animation: home-hero-float 7s ease-in-out infinite;
+    }
+
+    .home-hero__float-mid {
+        animation: home-hero-float 5.5s ease-in-out infinite;
+        animation-delay: -1.2s;
+    }
+
+    .home-hero__float-fast {
+        animation: home-hero-float 4.5s ease-in-out infinite;
+        animation-delay: -2.4s;
+    }
+
+    @keyframes home-hero-float {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-8px);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .home-hero__float-slow,
+        .home-hero__float-mid,
+        .home-hero__float-fast {
+            animation: none;
+        }
     }
 }
 

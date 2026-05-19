@@ -29,5 +29,4 @@
     @if ($hint)
         <p class="mt-1 text-xs text-[var(--psc-text-muted)]">{{ $hint }}</p>
     @endif
-    {{ $slot }}
 </div>

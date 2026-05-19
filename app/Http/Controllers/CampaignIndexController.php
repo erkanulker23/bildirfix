@@ -46,6 +46,7 @@ class CampaignIndexController extends Controller
             'topicGroups' => config('campaign_topics.groups', []),
             'activeCityFilter' => $cityId ?: null,
             'activeTopicFilter' => $topicId ?: null,
+            'hidePageHero' => true,
             'seo' => [
                 'description' => (string) config('seo.default_meta_description'),
                 'canonical' => route('campaigns.index', [], true),
