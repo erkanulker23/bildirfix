@@ -3,6 +3,7 @@
 use App\Support\SuperAdmin;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schedule;
 
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
@@ -24,3 +25,5 @@ Artisan::command('bildir:ensure-super-admin {--password=}', function () {
 
     return 0;
 })->purpose('Tanımlı süper yönetici hesabını oluşturur veya şifresini sıfırlar');
+
+Schedule::command('bildir:import-external')->hourly();

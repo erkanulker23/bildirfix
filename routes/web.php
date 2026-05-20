@@ -11,7 +11,9 @@ use App\Http\Controllers\Admin\InstitutionAdminController;
 use App\Http\Controllers\Admin\LegalPagesController;
 use App\Http\Controllers\Admin\MailSettingsController;
 use App\Http\Controllers\Admin\PlatformSettingController;
+use App\Http\Controllers\Admin\ExternalImportController;
 use App\Http\Controllers\Admin\PostModerationController;
+use App\Http\Controllers\Admin\PostRegistryController;
 use App\Http\Controllers\Admin\SiteIntegrationController;
 use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\Admin\UserAdminEditController;
@@ -193,6 +195,15 @@ Route::middleware(['auth', 'verified.phone', 'role:admin,super_admin'])
         Route::get('dashboard', AdminDashboardController::class)->name('dashboard');
 
         Route::middleware('role:super_admin')->group(function (): void {
+            Route::get('sikayetler', [PostRegistryController::class, 'index'])->name('posts.registry');
+            Route::get('dis-aktarim', [ExternalImportController::class, 'index'])->name('external-imports.index');
+            Route::get('dis-aktarim/yeni', [ExternalImportController::class, 'create'])->name('external-imports.create');
+            Route::post('dis-aktarim', [ExternalImportController::class, 'store'])->name('external-imports.store');
+            Route::get('dis-aktarim/{externalImport}/duzenle', [ExternalImportController::class, 'edit'])->name('external-imports.edit');
+            Route::patch('dis-aktarim/{externalImport}', [ExternalImportController::class, 'update'])->name('external-imports.update');
+            Route::delete('dis-aktarim/{externalImport}', [ExternalImportController::class, 'destroy'])->name('external-imports.destroy');
+            Route::post('dis-aktarim/{externalImport}/calistir', [ExternalImportController::class, 'run'])->name('external-imports.run');
+
             Route::get('moderasyon', [PostModerationController::class, 'index'])->name('moderation.index');
             Route::post('moderasyon/{post}/onayla', [PostModerationController::class, 'approve'])->name('moderation.approve');
             Route::post('moderasyon/{post}/reddet', [PostModerationController::class, 'reject'])->name('moderation.reject');

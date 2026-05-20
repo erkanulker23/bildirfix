@@ -20,6 +20,11 @@ class Post extends Model
         'media_url',
         'media',
         'type',
+        'external_source',
+        'external_id',
+        'source_url',
+        'external_import_source_id',
+        'imported_at',
         'city_id',
         'district_id',
         'neighborhood_id',
@@ -49,7 +54,19 @@ class Post extends Model
             'status' => PostStatus::class,
             'moderation_status' => PostModerationStatus::class,
             'moderated_at' => 'datetime',
+            'imported_at' => 'datetime',
         ];
+    }
+
+    public function externalImportSource(): BelongsTo
+    {
+        return $this->belongsTo(ExternalImportSource::class, 'external_import_source_id');
+    }
+
+    public function isImported(): bool
+    {
+        return is_string($this->external_source) && $this->external_source !== ''
+            && is_string($this->external_id) && $this->external_id !== '';
     }
 
     /**

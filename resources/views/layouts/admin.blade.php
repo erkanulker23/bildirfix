@@ -71,6 +71,10 @@
                         @include('partials.psc.icons', ['name' => 'complaint'])
                         {{ __('Şikâyetler') }}
                     </a>
+                    <a href="{{ route('admin.posts.registry') }}" class="psc-nav-link {{ $navActive('admin.posts.*') }}">
+                        @include('partials.psc.icons', ['name' => 'complaint'])
+                        {{ __('Tüm şikâyetler') }}
+                    </a>
                     <a href="{{ route('admin.campaign-moderation.index') }}" class="psc-nav-link {{ $navActive('admin.campaign-moderation.*') }}">
                         @include('partials.psc.icons', ['name' => 'campaign'])
                         {{ __('Kampanyalar') }}
@@ -107,6 +111,10 @@
 
                 <div class="psc-nav-group">
                     <p class="psc-nav-group__label">{{ __('Sistem') }}</p>
+                    <a href="{{ route('admin.external-imports.index') }}" class="psc-nav-link {{ $navActive('admin.external-imports.*') }}">
+                        @include('partials.psc.icons', ['name' => 'settings'])
+                        {{ __('Dış kaynak içe aktarım') }}
+                    </a>
                     <a href="{{ route('admin.platform-settings.edit') }}" class="psc-nav-link {{ $navActive('admin.platform-settings.*') }}">
                         @include('partials.psc.icons', ['name' => 'settings'])
                         {{ __('Platform / Google OAuth') }}

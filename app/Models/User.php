@@ -21,6 +21,8 @@ use Laravel\Sanctum\HasApiTokens;
     'email',
     'phone',
     'google_id',
+    'external_source',
+    'external_import_key',
     'password',
     'role',
     'verification_status',
